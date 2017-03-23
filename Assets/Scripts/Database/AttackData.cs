@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum AttackType
 {
-    Guts,
-    Power,
-    Tech
+    QUICK,
+    TECHNICAL,
+    STRONG
 }
 
 public class AttackData {

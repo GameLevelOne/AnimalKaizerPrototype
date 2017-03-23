@@ -6,7 +6,7 @@ public class SpecialMove : MonoBehaviour {
 
     public SpecialMoveSO specialMoveSO;
 
-    public void InitSpecialMove(SpecialMoveSO spmSO = null)
+    public SpecialMove(SpecialMoveSO spmSO)
     {
         if (spmSO != null)
         {

@@ -9,7 +9,7 @@ public class Character : MonoBehaviour {
     public SpecialMove specialMove;
     int curLife;
 
-    public void InitCharacter(CharacterSO charSO=null)
+    public Character(CharacterSO charSO)
     {
         if (charSO!=null)
         {

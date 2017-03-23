@@ -6,7 +6,7 @@ public class Support : MonoBehaviour {
 
     public SupportSO supportSO;
 
-    public void InitSupport(SupportSO supSO = null)
+    public Support(SupportSO supSO)
     {
         if (supSO != null)
         {

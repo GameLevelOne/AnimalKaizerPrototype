@@ -1,0 +1,195 @@
+fileFormatVersion: 2
+guid: cfbb6610b155d57478f03f666c6aeae3
+timeCreated: 1490254413
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: tuyul_fire
+    100004: tuyul_fire_rig
+    100006: tuyul_fire_rig L Finger0
+    100008: tuyul_fire_rig L Finger01
+    100010: tuyul_fire_rig L Finger0Nub
+    100012: tuyul_fire_rig L Finger1
+    100014: tuyul_fire_rig L Finger11
+    100016: tuyul_fire_rig L Finger1Nub
+    100018: tuyul_fire_rig L Finger2
+    100020: tuyul_fire_rig L Finger21
+    100022: tuyul_fire_rig L Finger2Nub
+    100024: tuyul_fire_rig L Finger3
+    100026: tuyul_fire_rig L Finger31
+    100028: tuyul_fire_rig L Finger3Nub
+    100030: tuyul_fire_rig L Finger4
+    100032: tuyul_fire_rig L Finger41
+    100034: tuyul_fire_rig L Finger4Nub
+    100036: tuyul_fire_rig R Finger0
+    100038: tuyul_fire_rig R Finger01
+    100040: tuyul_fire_rig R Finger0Nub
+    100042: tuyul_fire_rig R Finger1
+    100044: tuyul_fire_rig R Finger11
+    100046: tuyul_fire_rig R Finger1Nub
+    100048: tuyul_fire_rig R Finger2
+    100050: tuyul_fire_rig R Finger21
+    100052: tuyul_fire_rig R Finger2Nub
+    100054: tuyul_fire_rig R Finger3
+    100056: tuyul_fire_rig R Finger31
+    100058: tuyul_fire_rig R Finger3Nub
+    100060: tuyul_fire_rig R Finger4
+    100062: tuyul_fire_rig R Finger41
+    100064: tuyul_fire_rig R Finger4Nub
+    100066: tuyul_fire_rig_Footsteps
+    100068: tuyul_fire_rig_Head
+    100070: tuyul_fire_rig_HeadNub
+    100072: tuyul_fire_rig_L Calf
+    100074: tuyul_fire_rig_L Clavicle
+    100076: tuyul_fire_rig_L Foot
+    100078: tuyul_fire_rig_L Forearm
+    100080: tuyul_fire_rig_L Hand
+    100082: tuyul_fire_rig_L Thigh
+    100084: tuyul_fire_rig_L Toe0
+    100086: tuyul_fire_rig_L Toe0Nub
+    100088: tuyul_fire_rig_L UpperArm
+    100090: tuyul_fire_rig_Neck
+    100092: tuyul_fire_rig_Pelvis
+    100094: tuyul_fire_rig_R Calf
+    100096: tuyul_fire_rig_R Clavicle
+    100098: tuyul_fire_rig_R Foot
+    100100: tuyul_fire_rig_R Forearm
+    100102: tuyul_fire_rig_R Hand
+    100104: tuyul_fire_rig_R Thigh
+    100106: tuyul_fire_rig_R Toe0
+    100108: tuyul_fire_rig_R Toe0Nub
+    100110: tuyul_fire_rig_R UpperArm
+    100112: tuyul_fire_rig_Spine
+    100114: tuyul_fire_rig_Spine1
+    400000: //RootNode
+    400002: tuyul_fire
+    400004: tuyul_fire_rig
+    400006: tuyul_fire_rig L Finger0
+    400008: tuyul_fire_rig L Finger01
+    400010: tuyul_fire_rig L Finger0Nub
+    400012: tuyul_fire_rig L Finger1
+    400014: tuyul_fire_rig L Finger11
+    400016: tuyul_fire_rig L Finger1Nub
+    400018: tuyul_fire_rig L Finger2
+    400020: tuyul_fire_rig L Finger21
+    400022: tuyul_fire_rig L Finger2Nub
+    400024: tuyul_fire_rig L Finger3
+    400026: tuyul_fire_rig L Finger31
+    400028: tuyul_fire_rig L Finger3Nub
+    400030: tuyul_fire_rig L Finger4
+    400032: tuyul_fire_rig L Finger41
+    400034: tuyul_fire_rig L Finger4Nub
+    400036: tuyul_fire_rig R Finger0
+    400038: tuyul_fire_rig R Finger01
+    400040: tuyul_fire_rig R Finger0Nub
+    400042: tuyul_fire_rig R Finger1
+    400044: tuyul_fire_rig R Finger11
+    400046: tuyul_fire_rig R Finger1Nub
+    400048: tuyul_fire_rig R Finger2
+    400050: tuyul_fire_rig R Finger21
+    400052: tuyul_fire_rig R Finger2Nub
+    400054: tuyul_fire_rig R Finger3
+    400056: tuyul_fire_rig R Finger31
+    400058: tuyul_fire_rig R Finger3Nub
+    400060: tuyul_fire_rig R Finger4
+    400062: tuyul_fire_rig R Finger41
+    400064: tuyul_fire_rig R Finger4Nub
+    400066: tuyul_fire_rig_Footsteps
+    400068: tuyul_fire_rig_Head
+    400070: tuyul_fire_rig_HeadNub
+    400072: tuyul_fire_rig_L Calf
+    400074: tuyul_fire_rig_L Clavicle
+    400076: tuyul_fire_rig_L Foot
+    400078: tuyul_fire_rig_L Forearm
+    400080: tuyul_fire_rig_L Hand
+    400082: tuyul_fire_rig_L Thigh
+    400084: tuyul_fire_rig_L Toe0
+    400086: tuyul_fire_rig_L Toe0Nub
+    400088: tuyul_fire_rig_L UpperArm
+    400090: tuyul_fire_rig_Neck
+    400092: tuyul_fire_rig_Pelvis
+    400094: tuyul_fire_rig_R Calf
+    400096: tuyul_fire_rig_R Clavicle
+    400098: tuyul_fire_rig_R Foot
+    400100: tuyul_fire_rig_R Forearm
+    400102: tuyul_fire_rig_R Hand
+    400104: tuyul_fire_rig_R Thigh
+    400106: tuyul_fire_rig_R Toe0
+    400108: tuyul_fire_rig_R Toe0Nub
+    400110: tuyul_fire_rig_R UpperArm
+    400112: tuyul_fire_rig_Spine
+    400114: tuyul_fire_rig_Spine1
+    4300000: tuyul_fire
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: tuyul_fire
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

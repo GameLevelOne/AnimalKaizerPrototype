@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-    public CharacterSO characterSO;
+    public CharacterSO charData;
+    public Support support;
+    public SpecialMove specialMove;
     int curLife;
 
     public void InitCharacter(CharacterSO charSO=null)
     {
         if (charSO!=null)
         {
-            characterSO = charSO;
-            curLife = characterSO.charHealth;
+            charData = charSO;
+            curLife = charData.charHealth;
         }
+
+    }
+    public void Combine(Support supportObject)
+    {
+        support = supportObject;
+    }
+    public void Combine(SpecialMove specialMoveObject)
+    {
+        specialMove = specialMoveObject;
     }
 
     public int MaxLife 
     {
         get
         {
-            return characterSO.charHealth;
+            return charData.charHealth;
         }
     }
     public int Life

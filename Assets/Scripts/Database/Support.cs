@@ -14,4 +14,12 @@ public class Support : MonoBehaviour {
         }
     }
 
+    public int Def
+    {
+        get
+        {
+            return supportSO.supportDefense;
+        }
+    }
+
 }

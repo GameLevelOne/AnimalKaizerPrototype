@@ -1,0 +1,215 @@
+fileFormatVersion: 2
+guid: 4e4285b0ba70a284fbef882ff78441e3
+timeCreated: 1490259287
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: genderuwo_fire
+    100004: genderuwo_fire_ Head
+    100006: genderuwo_fire_ HeadNub
+    100008: genderuwo_fire_ L Calf
+    100010: genderuwo_fire_ L Clavicle
+    100012: genderuwo_fire_ L Foot
+    100014: genderuwo_fire_ L Forearm
+    100016: genderuwo_fire_ L Hand
+    100018: genderuwo_fire_ L Thigh
+    100020: genderuwo_fire_ L Toe0
+    100022: genderuwo_fire_ L Toe0Nub
+    100024: genderuwo_fire_ L UpperArm
+    100026: genderuwo_fire_ Neck
+    100028: genderuwo_fire_ Pelvis
+    100030: genderuwo_fire_ R Calf
+    100032: genderuwo_fire_ R Clavicle
+    100034: genderuwo_fire_ R Foot
+    100036: genderuwo_fire_ R Forearm
+    100038: genderuwo_fire_ R Hand
+    100040: genderuwo_fire_ R Thigh
+    100042: genderuwo_fire_ R Toe0
+    100044: genderuwo_fire_ R Toe0Nub
+    100046: genderuwo_fire_ R UpperArm
+    100048: genderuwo_fire_ Spine
+    100050: genderuwo_fire_ Spine1
+    100052: genderuwo_fire_ Spine2
+    100054: genderuwo_fire_rig
+    100056: genderuwo_fire_rig L Finger0
+    100058: genderuwo_fire_rig L Finger01
+    100060: genderuwo_fire_rig L Finger02
+    100062: genderuwo_fire_rig L Finger0Nub
+    100064: genderuwo_fire_rig L Finger1
+    100066: genderuwo_fire_rig L Finger11
+    100068: genderuwo_fire_rig L Finger12
+    100070: genderuwo_fire_rig L Finger1Nub
+    100072: genderuwo_fire_rig L Finger2
+    100074: genderuwo_fire_rig L Finger21
+    100076: genderuwo_fire_rig L Finger22
+    100078: genderuwo_fire_rig L Finger2Nub
+    100080: genderuwo_fire_rig L Finger3
+    100082: genderuwo_fire_rig L Finger31
+    100084: genderuwo_fire_rig L Finger32
+    100086: genderuwo_fire_rig L Finger3Nub
+    100088: genderuwo_fire_rig L Finger4
+    100090: genderuwo_fire_rig L Finger41
+    100092: genderuwo_fire_rig L Finger42
+    100094: genderuwo_fire_rig L Finger4Nub
+    100096: genderuwo_fire_rig R Finger0
+    100098: genderuwo_fire_rig R Finger01
+    100100: genderuwo_fire_rig R Finger02
+    100102: genderuwo_fire_rig R Finger0Nub
+    100104: genderuwo_fire_rig R Finger1
+    100106: genderuwo_fire_rig R Finger11
+    100108: genderuwo_fire_rig R Finger12
+    100110: genderuwo_fire_rig R Finger1Nub
+    100112: genderuwo_fire_rig R Finger2
+    100114: genderuwo_fire_rig R Finger21
+    100116: genderuwo_fire_rig R Finger22
+    100118: genderuwo_fire_rig R Finger2Nub
+    100120: genderuwo_fire_rig R Finger3
+    100122: genderuwo_fire_rig R Finger31
+    100124: genderuwo_fire_rig R Finger32
+    100126: genderuwo_fire_rig R Finger3Nub
+    100128: genderuwo_fire_rig R Finger4
+    100130: genderuwo_fire_rig R Finger41
+    100132: genderuwo_fire_rig R Finger42
+    100134: genderuwo_fire_rig R Finger4Nub
+    400000: //RootNode
+    400002: genderuwo_fire
+    400004: genderuwo_fire_ Head
+    400006: genderuwo_fire_ HeadNub
+    400008: genderuwo_fire_ L Calf
+    400010: genderuwo_fire_ L Clavicle
+    400012: genderuwo_fire_ L Foot
+    400014: genderuwo_fire_ L Forearm
+    400016: genderuwo_fire_ L Hand
+    400018: genderuwo_fire_ L Thigh
+    400020: genderuwo_fire_ L Toe0
+    400022: genderuwo_fire_ L Toe0Nub
+    400024: genderuwo_fire_ L UpperArm
+    400026: genderuwo_fire_ Neck
+    400028: genderuwo_fire_ Pelvis
+    400030: genderuwo_fire_ R Calf
+    400032: genderuwo_fire_ R Clavicle
+    400034: genderuwo_fire_ R Foot
+    400036: genderuwo_fire_ R Forearm
+    400038: genderuwo_fire_ R Hand
+    400040: genderuwo_fire_ R Thigh
+    400042: genderuwo_fire_ R Toe0
+    400044: genderuwo_fire_ R Toe0Nub
+    400046: genderuwo_fire_ R UpperArm
+    400048: genderuwo_fire_ Spine
+    400050: genderuwo_fire_ Spine1
+    400052: genderuwo_fire_ Spine2
+    400054: genderuwo_fire_rig
+    400056: genderuwo_fire_rig L Finger0
+    400058: genderuwo_fire_rig L Finger01
+    400060: genderuwo_fire_rig L Finger02
+    400062: genderuwo_fire_rig L Finger0Nub
+    400064: genderuwo_fire_rig L Finger1
+    400066: genderuwo_fire_rig L Finger11
+    400068: genderuwo_fire_rig L Finger12
+    400070: genderuwo_fire_rig L Finger1Nub
+    400072: genderuwo_fire_rig L Finger2
+    400074: genderuwo_fire_rig L Finger21
+    400076: genderuwo_fire_rig L Finger22
+    400078: genderuwo_fire_rig L Finger2Nub
+    400080: genderuwo_fire_rig L Finger3
+    400082: genderuwo_fire_rig L Finger31
+    400084: genderuwo_fire_rig L Finger32
+    400086: genderuwo_fire_rig L Finger3Nub
+    400088: genderuwo_fire_rig L Finger4
+    400090: genderuwo_fire_rig L Finger41
+    400092: genderuwo_fire_rig L Finger42
+    400094: genderuwo_fire_rig L Finger4Nub
+    400096: genderuwo_fire_rig R Finger0
+    400098: genderuwo_fire_rig R Finger01
+    400100: genderuwo_fire_rig R Finger02
+    400102: genderuwo_fire_rig R Finger0Nub
+    400104: genderuwo_fire_rig R Finger1
+    400106: genderuwo_fire_rig R Finger11
+    400108: genderuwo_fire_rig R Finger12
+    400110: genderuwo_fire_rig R Finger1Nub
+    400112: genderuwo_fire_rig R Finger2
+    400114: genderuwo_fire_rig R Finger21
+    400116: genderuwo_fire_rig R Finger22
+    400118: genderuwo_fire_rig R Finger2Nub
+    400120: genderuwo_fire_rig R Finger3
+    400122: genderuwo_fire_rig R Finger31
+    400124: genderuwo_fire_rig R Finger32
+    400126: genderuwo_fire_rig R Finger3Nub
+    400128: genderuwo_fire_rig R Finger4
+    400130: genderuwo_fire_rig R Finger41
+    400132: genderuwo_fire_rig R Finger42
+    400134: genderuwo_fire_rig R Finger4Nub
+    4300000: genderuwo_fire
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: genderuwo_fire
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

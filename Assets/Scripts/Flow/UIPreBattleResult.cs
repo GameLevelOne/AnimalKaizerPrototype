@@ -42,4 +42,9 @@ public static UIPreBattleResult Instance;
 			if(i < 2) Text_Details_SpecialMoves[i].text = UISpecialMoveSelection.Instance.SpecialMove_Details[i].text;
 		}
 	}
+	
+	public void ButtonBack_OnClick(){
+		Content.SetActive(false);
+		UISpecialMoveSelection.Instance.Show();
+	}
 }

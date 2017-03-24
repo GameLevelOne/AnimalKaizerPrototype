@@ -61,4 +61,9 @@ public class UISupportSelections : MonoBehaviour {
 		UIContent.SetActive(false);
 		UISpecialMoveSelection.Instance.Show();
 	}
+	
+	public void ButtonBack_OnClick(){
+		UIContent.SetActive(false);
+		UICharacterSelections.Instance.Show();
+	}
 }

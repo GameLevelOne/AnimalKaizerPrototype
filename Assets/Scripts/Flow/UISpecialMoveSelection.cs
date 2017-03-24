@@ -58,4 +58,9 @@ public class UISpecialMoveSelection : MonoBehaviour {
 		UIContent.SetActive(false);
 		UIPreBattleResult.Instance.Show();
 	}
+	
+	public void ButtonBack_OnClick(){
+		UIContent.SetActive(false);
+		UISupportSelections.Instance.Show();
+	}
 }

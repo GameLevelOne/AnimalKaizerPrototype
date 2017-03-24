@@ -26,6 +26,11 @@ public class UICharacterSelections : MonoBehaviour {
 		ShowDetails();
 	}
 	
+	public void Show(){
+		UIContent.SetActive(true);
+		ShowDetails();
+	}
+	
 	public void OnBeginDrag(){
 		x = Input.mousePosition.x;
 		distance = Scroll_Content.transform.position.x - x;

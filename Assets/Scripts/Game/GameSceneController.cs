@@ -28,6 +28,10 @@ public class GameSceneController : MonoBehaviour {
     private float waitTimer = 0f;
 
     private int p1CurrAttackTypeIdx = 0;
+    private int p2CurrAttackTypeIdx = 0;
+    private int p1CurrPowerIdx = 0;
+    private int p2CurrPowerIdx = 0;
+    private int currRollIdx = 0;
 
     private eCurrentGameState currGameState = eCurrentGameState.Countdown;
 
@@ -41,24 +45,48 @@ public class GameSceneController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //random attack type
-        if (currGameState == eCurrentGameState.RandomizeAttackType)
+        if (Input.GetMouseButtonDown(0))
         {
-            RandomizeAttackPower(attackTypeList, p1AttackType);
-        }
-        else if(currGameState == eCurrentGameState.RandomizePowerType){
-            RandomizeAttackPower(powerList, p1Power);
-        }
-
-        
-
-        if (Input.GetMouseButtonDown(0)) {
             if (currGameState == eCurrentGameState.RandomizeAttackType)
             {
                 isWaiting = true;
+                Debug.Log("p1 attack type:" + attackTypeList[p1CurrAttackTypeIdx]);
             }
-            else if(currGameState == eCurrentGameState.RandomizePowerType){
+            else if (currGameState == eCurrentGameState.RandomizePowerType)
+            {
                 isWaiting = true;
+                Debug.Log("p1 power:" + powerList[p1CurrPowerIdx]);
+            }
+        }
+
+        //random attack type
+        if (!isWaiting)
+        {
+            //p1
+            if (currGameState == eCurrentGameState.RandomizeAttackType)
+            {
+                Debug.Log("random atk");
+                //RandomizeAttackPower(attackTypeList, p1AttackType, p1CurrAttackTypeIdx);
+                p1CurrAttackTypeIdx = rollIdx(attackTypeList.Length-1);
+                p1AttackType.text = attackTypeList[p1CurrAttackTypeIdx];
+            }
+            else if (currGameState == eCurrentGameState.RandomizePowerType)
+            {
+                Debug.Log("random pow");
+                p1CurrPowerIdx = rollIdx(powerList.Length-1);
+                p1Power.text = powerList[p1CurrPowerIdx];
+            }
+        } else if (isWaiting){
+            //p2
+            if (currGameState == eCurrentGameState.RandomizeAttackType)
+            {
+                p2CurrAttackTypeIdx = rollIdx(attackTypeList.Length-1);
+                p2AttackType.text = attackTypeList[p1CurrAttackTypeIdx];
+            }
+            else if (currGameState == eCurrentGameState.RandomizePowerType)
+            {
+                p2CurrPowerIdx = rollIdx(powerList.Length-1);
+                p2Power.text = powerList[p1CurrAttackTypeIdx];
             }
         }
 
@@ -68,25 +96,33 @@ public class GameSceneController : MonoBehaviour {
 
         if (waitTimer > 1) {
             waitTimer = 0;
+            isWaiting = false;
+
             if (currGameState == eCurrentGameState.RandomizeAttackType)
             {
-                //show enemy's attack type then switch to randomize power
-                p2AttackType.text = attackTypeList[Random.Range(0, (attackTypeList.Length - 1))];
                 currGameState = eCurrentGameState.RandomizePowerType;
+
+                //show enemy's attack type then switch to randomize power
+                //p2CurrAttackTypeIdx = Random.Range(0, (attackTypeList.Length - 1));
+                p2AttackType.text = attackTypeList[p2CurrAttackTypeIdx];
+                
+                Debug.Log("p2 attack type:" + attackTypeList[p2CurrAttackTypeIdx]);
             }
             else if(currGameState == eCurrentGameState.RandomizePowerType){
-                //show enemy's power
-                p2Power.text = powerList[Random.Range(0, (powerList.Length - 1))];
                 currGameState = eCurrentGameState.Battle;
-            }
 
-            isWaiting = false;
+                //show enemy's power
+                //p2CurrPowerIdx = Random.Range(0, (powerList.Length - 1));
+                p2Power.text = powerList[p2CurrPowerIdx];
+                
+                Debug.Log("p2 power:" + powerList[p2CurrPowerIdx]);
+            }
         }
 
 	}
 
     IEnumerator StartCountdown() {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         timer.text = "3";
         yield return new WaitForSeconds(1);
         timer.text = "2";
@@ -99,16 +135,17 @@ public class GameSceneController : MonoBehaviour {
         currGameState = eCurrentGameState.RandomizeAttackType;
     }
 
-    void RandomizeAttackPower(string[] currList,Text currTarget) {
-        currTarget.text = currList[p1CurrAttackTypeIdx];
-
-        if (p1CurrAttackTypeIdx == (currList.Length - 1))
+    int rollIdx(int max) {
+        //TODO: fix this
+        if (currRollIdx == max)
         {
-            p1CurrAttackTypeIdx=0;
+            currRollIdx = 0;
         }
         else
         {
-            p1CurrAttackTypeIdx++;
+            currRollIdx++;
         }
+
+        return currRollIdx;
     }
 }

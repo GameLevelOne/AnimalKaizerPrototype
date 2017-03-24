@@ -7,14 +7,14 @@ public class UICharacterSelections : MonoBehaviour {
 	public static UICharacterSelections Instance;
 	
 	public Text Title;
-	public Text[] Character_Details = new Text[3];
+	public Text[] Character_Details = new Text[4];
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
 	public CharacterSO[] Characters = new CharacterSO[2];
 	public GameObject PlayerData;
 	
 	
-	int SelectedIndex = 0;
+	public int SelectedIndex = 0;
 	float x, distance;
 
 	void Awake(){
@@ -52,6 +52,7 @@ public class UICharacterSelections : MonoBehaviour {
 		Character_Details[0].text = "Name = "+Characters[SelectedIndex].charName;
 		Character_Details[1].text = "Health = "+Characters[SelectedIndex].charHealth.ToString();
 		Character_Details[2].text = "Power = "+Characters[SelectedIndex].charPower.ToString();
+		Character_Details[3].text = "Element = "+Characters[SelectedIndex].charType;
 	}
 	
 	public void ButtonSelect_OnClick(){

@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UISupportSelections : MonoBehaviour {
-	public static UISupportSelections Instance;
+public class UISpecialMoveSelection : MonoBehaviour {
+	public static UISpecialMoveSelection Instance;
 	
 	public Text Title;
-	public Text[] Support_Details = new Text[4];
+	public Text[] SpecialMove_Details = new Text[2];
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
-	public SupportSO[] Supports = new SupportSO[2];
+	public SpecialMoveSO[] SpecialMoves = new SpecialMoveSO[2];
 	public GameObject PlayerData;
 	
 	public int SelectedIndex = 0;
 	float x, distance;
-
+	
 	void Awake(){
 		Instance = this;
 	}
 	
 	public void Show(){
-		Title.text = "Support Selection";
+		Title.text = "Special Move Selection";
 		UIContent.SetActive(true);
 		ShowDetails();
 	}
@@ -47,18 +47,15 @@ public class UISupportSelections : MonoBehaviour {
 		}
 		ShowDetails();
 	}
-
-
+	
 	void ShowDetails(){
-		Support_Details[0].text = "Name = "+Supports[SelectedIndex].supportName;
-		Support_Details[1].text = "Enhance = "+Supports[SelectedIndex].supportEnhance;
-		Support_Details[2].text = "Focus = "+Supports[SelectedIndex].supportFocus.ToString();
-		Support_Details[3].text = "Defence = "+Supports[SelectedIndex].supportDefense.ToString();
+		SpecialMove_Details[0].text = "Name = "+SpecialMoves[SelectedIndex].specialMoveName;
+		SpecialMove_Details[1].text = "Enhance = "+SpecialMoves[SelectedIndex].specialMoveType;
 	}
 	
 	public void ButtonSelect_OnClick(){
-		PlayerData.GetComponent<Support>().supportSO = Supports[SelectedIndex];
+		PlayerData.GetComponent<SpecialMove>().specialMoveSO = SpecialMoves[SelectedIndex];
 		UIContent.SetActive(false);
-		UISpecialMoveSelection.Instance.Show();
+		UIPreBattleResult.Instance.Show();
 	}
 }

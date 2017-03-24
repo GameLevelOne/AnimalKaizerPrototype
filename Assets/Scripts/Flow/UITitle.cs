@@ -2,5 +2,5 @@
 using UnityEngine.SceneManagement;
 
 public class UITitle : MonoBehaviour {
-	public void OnTapAnywhere(){SceneManager.LoadScene(1);}
+	public void OnTapAnywhere(){SceneManager.LoadScene("Scene Selection");}
 }

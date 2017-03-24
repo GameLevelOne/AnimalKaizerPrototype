@@ -43,6 +43,10 @@ public static UIPreBattleResult Instance;
 		}
 	}
 	
+	public void ButtonOK_OnClick(){
+		
+	}
+	
 	public void ButtonBack_OnClick(){
 		Content.SetActive(false);
 		UISpecialMoveSelection.Instance.Show();

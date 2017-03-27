@@ -44,6 +44,7 @@ public static UIPreBattleResult Instance;
 	}
 	
 	public void ButtonOK_OnClick(){
+		Content.SetActive(false);
 		
 	}
 	

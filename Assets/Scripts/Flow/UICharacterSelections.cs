@@ -11,7 +11,6 @@ public class UICharacterSelections : MonoBehaviour {
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
 	public CharacterSO[] Characters = new CharacterSO[2];
-	public GameObject PlayerData;
 	
 	
 	public int SelectedIndex = 0;
@@ -23,10 +22,14 @@ public class UICharacterSelections : MonoBehaviour {
 	
 	void Start(){
 		Title.text = "Character Selection";
-		ShowDetails();
+		Show();
 	}
 	
 	public void Show(){
+		UISupportSelections.Instance.hide();
+		UISpecialMoveSelection.Instance.hide();
+		UIPreBattleResult.Instance.hide();
+
 		UIContent.SetActive(true);
 		ShowDetails();
 	}
@@ -61,7 +64,7 @@ public class UICharacterSelections : MonoBehaviour {
 	}
 	
 	public void ButtonSelect_OnClick(){
-		PlayerData.GetComponent<Character>().charData = Characters[SelectedIndex];
+		PlayerDataController.Instance.SetCharacter(Characters[SelectedIndex]);
 		UIContent.SetActive(false);
 		UISupportSelections.Instance.Show();
 	}

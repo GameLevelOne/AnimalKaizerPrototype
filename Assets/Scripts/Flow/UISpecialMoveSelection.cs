@@ -11,7 +11,6 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
 	public SpecialMoveSO[] SpecialMoves = new SpecialMoveSO[2];
-	public GameObject PlayerData;
 	
 	public int SelectedIndex = 0;
 	float x, distance;
@@ -25,7 +24,11 @@ public class UISpecialMoveSelection : MonoBehaviour {
 		UIContent.SetActive(true);
 		ShowDetails();
 	}
-	
+
+	public void hide(){
+		UIContent.SetActive(false);
+	}
+
 	public void OnBeginDrag(){
 		x = Input.mousePosition.x;
 		distance = Scroll_Content.transform.position.x - x;
@@ -54,7 +57,7 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	public void ButtonSelect_OnClick(){
-		PlayerData.GetComponent<SpecialMove>().specialMoveSO = SpecialMoves[SelectedIndex];
+		PlayerDataController.Instance.SetSpecialMove(SpecialMoves[SelectedIndex]);
 		UIContent.SetActive(false);
 		UIPreBattleResult.Instance.Show();
 	}

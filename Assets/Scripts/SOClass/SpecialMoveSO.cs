@@ -6,6 +6,9 @@ using UnityEngine;
 public class SpecialMoveSO : ScriptableObject {
     public string specialMoveName = "NewSecialMove";
     public CharacterType specialMoveType = 0;
+
+	public int specialMovePower = 1000;
+
     public SkillData[] specialMoveEffect;
 	
 }

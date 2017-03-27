@@ -4,10 +4,15 @@ using UnityEngine;
 
 public static class DamageCalculator {
 
-    public static int CalculateDamage(Character attacker, int attackIndex, Character defender, float drawMultiplier)
+	public static int CalculateDamage(Character attacker, int attackIndex, Character defender, float drawMultiplier, bool winStruggle = false)
     {
-        int strength = (int)(drawMultiplier * attacker.charData.charPower);
+		int power = attackIndex < 3 ? attacker.charData.charPower : attacker.specialMove.specialMoveSO.specialMovePower;
+		if (winStruggle) {
+			power *= 2;
+		}
+		int strength = (int)(drawMultiplier * power);
         int damage = defender.support.Def - strength;
         return damage < 0 ? 0 : damage;
     }
+
 }

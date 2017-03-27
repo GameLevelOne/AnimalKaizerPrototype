@@ -4,10 +4,9 @@ using UnityEngine;
 
 public enum CharacterType 
 {
-    Fire,
-    Water,
-    Earth,
-    Wind
+    DEF,
+    ATK,
+    SPD
 }
 
 [CreateAssetMenu(fileName= "Char_", menuName = "Cards/Character", order = 1)]

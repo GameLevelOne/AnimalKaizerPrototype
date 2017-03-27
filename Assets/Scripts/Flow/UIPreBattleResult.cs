@@ -41,8 +41,8 @@ public static UIPreBattleResult Instance;
 //		Img_Thumbnails[0].sprite = Spr_Characters[UICharacterSelections.Instance.SelectedIndex];
 //		Img_Thumbnails[1].sprite = Spr_Supports[UISupportSelections.Instance.SelectedIndex];
 
-		Img_Thumbnails[0].sprite = Spr_Characters[(int)getCharEnum(charName)];
-		Img_Thumbnails[1].sprite = Spr_Characters[(int)getCharEnum(charSupportName)];
+		Img_Thumbnails[0].sprite = Spr_Characters[getCharCode(charName)];
+		Img_Thumbnails[1].sprite = Spr_Characters[getCharCode(charSupportName)];
 
 		Img_Thumbnails[2].sprite = Spr_SpecialMoves[UISpecialMoveSelection.Instance.SelectedIndex];
 
@@ -53,16 +53,17 @@ public static UIPreBattleResult Instance;
 		}
 	}
 
-	eCharacter getCharEnum(string name){
+	int getCharCode(string name){
+		int temp = -1;
 		switch (name){
-		case "Genderuwo"	: return eCharacter.GENDERUWO; break;
-		case "Kunti"		: return eCharacter.KUNTI; break;
-		case "Kolorijo" 	: return eCharacter.KOLORIJO; break;
-		case "Pocong" 		: return eCharacter.POCONG; break;
-		case "Tuyul" 		: return eCharacter.TUYUL; break;
-		case "Suster Ngesot": return eCharacter.SUSTER; break;
-		default: return eCharacter.GENDERUWO;
+		case "Genderuwo"	: temp = 0; break;
+		case "Kunti"		: temp = 1; break;
+		case "Kolorijo" 	: temp = 2; break;
+		case "Pocong" 		: temp = 3; break;
+		case "Tuyul" 		: temp = 4; break;
+		case "Suster Ngesot": temp = 5; break;
 		}
+		return temp;
 	}
 
 	public void ButtonOK_OnClick(){

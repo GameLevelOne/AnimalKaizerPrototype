@@ -5,6 +5,7 @@ using UnityEngine;
 public class AnimBlink : MonoBehaviour {
 
 	float t = 0;
+	
 	void FixedUpdate(){
 		t += Time.deltaTime;
 		if (t >= 0 && t < 0.5f) {

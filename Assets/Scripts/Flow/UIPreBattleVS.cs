@@ -54,10 +54,10 @@ public class UIPreBattleVS : MonoBehaviour {
 		Text_Enemy_Name.text = enemy_name;
 		Text_Enemy_Support.text = enemy_support_name;
 
-		Img_Player_Character.sprite = Spr_Characters[(int)getCharEnum(player_name)];
-		Img_Player_Support.sprite = Spr_Characters[(int)getCharEnum(player_support_name)];
-		Img_Enemy_Character.sprite = Spr_Characters[(int)getCharEnum(enemy_name)];
-		Img_Enemy_Support.sprite = Spr_Characters[(int)getCharEnum(enemy_support_name)];
+		Img_Player_Character.sprite = Spr_Characters[getCharCode(player_name)];
+		Img_Player_Support.sprite = Spr_Characters[getCharCode(player_support_name)];
+		Img_Enemy_Character.sprite = Spr_Characters[getCharCode(enemy_name)];
+		Img_Enemy_Support.sprite = Spr_Characters[getCharCode(enemy_support_name)];
 		Img_Player_Character.SetNativeSize();
 		Img_Player_Support.SetNativeSize();
 		Img_Enemy_Character.SetNativeSize();
@@ -69,15 +69,16 @@ public class UIPreBattleVS : MonoBehaviour {
 		UIContent.SetActive(false);
 	}
 
-	eCharacter getCharEnum(string name){
+	int getCharCode(string name){
+		int temp = -1;
 		switch (name){
-		case "Genderuwo"	: return eCharacter.GENDERUWO; break;
-		case "Kunti"		: return eCharacter.KUNTI; break;
-		case "Kolorijo" 	: return eCharacter.KOLORIJO; break;
-		case "Pocong" 		: return eCharacter.POCONG; break;
-		case "Tuyul" 		: return eCharacter.TUYUL; break;
-		case "Suster Ngesot": return eCharacter.SUSTER; break;
-		default: return eCharacter.GENDERUWO;
+		case "Genderuwo"	: temp = 0; break;
+		case "Kunti"		: temp = 1; break;
+		case "Kolorijo" 	: temp = 2; break;
+		case "Pocong" 		: temp = 3; break;
+		case "Tuyul" 		: temp = 4; break;
+		case "Suster Ngesot": temp = 5; break;
 		}
+		return temp;
 	}
 }

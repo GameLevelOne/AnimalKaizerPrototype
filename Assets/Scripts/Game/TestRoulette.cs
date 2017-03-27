@@ -6,28 +6,29 @@ public class TestRoulette : MonoBehaviour {
     public RouletteTrigger rouletteTrigger;
 
     public GameObject[] boxes = new GameObject[3];
-    public GameObject rouletteAttackParent;
+
+    [HideInInspector]
+    public bool stopSpin = false;
+
+    private Vector3[] attackBoxPos = new Vector3[3];
 
     private GameObject temp;
-    private bool stopSpin = false;
-    private float yOffset = 0f;
 
 	// Use this for initialization
 	void Start () {
-		
+        for (int i = 0; i < 3; i++) {
+            attackBoxPos[i] = boxes[i].transform.localPosition;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (Input.GetMouseButtonDown(0)) {
 
-            yOffset = -180 - rouletteTrigger.currObj.transform.position.y;
-            Debug.Log("yOffset:" + yOffset);
-            rouletteTrigger.currObj.transform.localPosition = new Vector3(0, -180, 0);
-
             for (int i = 0; i < boxes.Length; i++)
             {
-                boxes[i].transform.localPosition -= new Vector3(0, yOffset, 0);
+                //boxes[i].transform.localPosition -= new Vector3(0, yOffset, 0);
+                boxes[i].transform.localPosition = attackBoxPos[i];
             }
 
             Debug.Log("click");

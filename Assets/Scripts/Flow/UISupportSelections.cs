@@ -29,6 +29,10 @@ public class UISupportSelections : MonoBehaviour {
 		UIContent.SetActive(false);
 	}
 
+	public void OnPointerDown(){
+		StopAllCoroutines();
+	}
+
 	public void OnBeginDrag(){
 		x = Input.mousePosition.x;
 		distance = Scroll_Content.transform.position.x - x;
@@ -42,10 +46,12 @@ public class UISupportSelections : MonoBehaviour {
 		float xx = Scroll_Content .GetComponent<RectTransform>().anchoredPosition.x;
 
 		if (xx >= 200 || (xx < 200 && xx >= 0)) {
-			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = new Vector2 (200, 0);
+//			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = new Vector2 (200, 0);
+			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (200,0),0.2f));
 			SelectedIndex = 0;
 		} else if ((xx < 0 && xx > -200) || xx <= -200) {
-			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = new Vector2 (-200, 0);
+//			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = new Vector2 (-200, 0);
+			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (-200,0),0.2f));
 			SelectedIndex = 1;
 		}
 		ShowDetails();
@@ -68,5 +74,14 @@ public class UISupportSelections : MonoBehaviour {
 	public void ButtonBack_OnClick(){
 		UIContent.SetActive(false);
 		UICharacterSelections.Instance.Show();
+	}
+
+	IEnumerator _SmoothMove(Vector2 startpos, Vector2 endpos, float duration){
+		float t = 0;
+		while(t <= 1){
+			t += Time.deltaTime / duration;
+			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(startpos,endpos, Mathf.SmoothStep(0,1,t));	
+			yield return null;
+		}
 	}
 }

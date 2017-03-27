@@ -9,7 +9,7 @@ public class PlayerDataController : MonoBehaviour {
 	void Awake(){
 		Instance = this;
 		DontDestroyOnLoad(gameObject);
-		//SceneManager.LoadScene("Scene Title");
+		SceneManager.LoadScene("Scene Title");
 
 	}
 

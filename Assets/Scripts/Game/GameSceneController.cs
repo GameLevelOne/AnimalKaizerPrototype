@@ -9,18 +9,25 @@ public enum eCurrentGameState {
     RandomizePowerType,
     CompareDamage,
     ApplyDamage,
-    EndTurn
+    AttackAnim,
+    EndTurn,
+    AddRound,
+    EndRound,
+    EndGame
 }
 
 public class GameSceneController : MonoBehaviour {
     public RouletteTrigger rouletteTrigger;
 
-    public GameObject panelCountdown;
-    public GameObject p1PlayerParent, p1SupportParent, p2PlayerParent, p2SupportParent;
+    public GameObject panelCountdown,panelEndBattle;
+    public GameObject p1PlayerParent, p1SupportParent, p2PlayerParent, p2SupportParent, 
+        p1AtkRoulette, p1PowerRoulette, p2AtkRoulette, p2PowerRoulette;
 
-    public Text timer, textRound, p1NameDisplay, p2NameDisplay, p1PowerDisplay, p2PowerDisplay;
+    public Text timer, textRound, textEnd, p1NameDisplay, p2NameDisplay, p1PowerDisplay, p2PowerDisplay, p1WinCount, p2WinCount;
 
     public Image p1HPBar,p2HPBar;
+
+    public Animator charaAnim;
 
     public GameObject[] charactersObj = new GameObject[6];
     public GameObject[] p1RouletteAtkBox = new GameObject[3];
@@ -44,12 +51,18 @@ public class GameSceneController : MonoBehaviour {
     private string p2CurrAtkType;
     private string p1CurrPower;
     private string p2CurrPower;
+    private string charaAnim_TriggerAttack = "attack";
+    private string charaAnim_TriggerAttacked = "attacked";
 
     private bool isWaiting = false;
     private bool stopSpinRouletteAtk = true;
     private bool stopSpinRoulettePower = true;
+    private bool enterCountdown = false;
+    private bool p1Win = false;
+    private bool waitForAttackAnim = false;
 
     private float waitTimer = 0f;
+    private float animTimer = 0f;
 
     private int p1CurrAttackTypeIdx = 0;
     private int p2CurrAttackTypeIdx = 0;
@@ -84,17 +97,24 @@ public class GameSceneController : MonoBehaviour {
         p2Char.Life = p2Char.MaxLife;
 
         Debug.Log("p1 HP: " + p1Char.Life);
-        Debug.Log("p2 HP: " + p1Char.Life);
+        Debug.Log("p2 HP: " + p2Char.Life);
 
         stageSetup(p1Char.charData.charName, p1Char.support.supportSO.supportName, 
             p2Char.charData.charName, p2Char.support.supportSO.supportName);
         
-        StartCoroutine(StartCountdown());
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (currGameState == eCurrentGameState.Countdown && !enterCountdown) {
+            enterCountdown = true;
+            p1AtkRoulette.SetActive(false);
+            p1PowerRoulette.SetActive(false);
+            p2AtkRoulette.SetActive(false);
+            p2PowerRoulette.SetActive(false);
+            StartCoroutine(StartCountdown());
+        }
 
         #region mouse/touch input
         if (Input.GetMouseButtonDown(0))
@@ -110,7 +130,7 @@ public class GameSceneController : MonoBehaviour {
                 }
 
                 p1CurrAtkType = getRouletteValue(p1RouletteAtkBox);
-                Debug.Log("currAtkType:"+p1CurrAtkType);
+                Debug.Log("p1 currAtkType:"+p1CurrAtkType);
 
                 isWaiting = true;
             }
@@ -125,7 +145,7 @@ public class GameSceneController : MonoBehaviour {
                 }
 
                 p1CurrPower = getRouletteValue(p1RoulettePowerBox);
-                Debug.Log("currPower:" + p1CurrPower);
+                Debug.Log("p2 currPower:" + p1CurrPower);
 
                 isWaiting = true;
             }
@@ -138,17 +158,17 @@ public class GameSceneController : MonoBehaviour {
             //p1
             if (currGameState == eCurrentGameState.RandomizeAttackType)
             {
-                Debug.Log("random atk");
                 //RandomizeAttackPower(attackTypeList, p1AttackType, p1CurrAttackTypeIdx);
                 //p1CurrAttackTypeIdx = rollIdx(attackTypeList.Length-1);
                 //p1AttackType.text = attackTypeList[p1CurrAttackTypeIdx];
+                p1AtkRoulette.SetActive(true);
                 spinRoulette(p1RouletteAtkBox);
             }
             else if (currGameState == eCurrentGameState.RandomizePowerType)
             {
-                Debug.Log("random pow");
                 //p1CurrPowerIdx = rollIdx(powerList.Length-1);
                 //p1Power.text = powerList[p1CurrPowerIdx];
+                p1PowerRoulette.SetActive(true);
                 spinRoulette(p1RoulettePowerBox);
             }
         } else if (isWaiting){
@@ -157,12 +177,14 @@ public class GameSceneController : MonoBehaviour {
             {
                 //p2CurrAttackTypeIdx = rollIdx(attackTypeList.Length-1);
                 //p2AttackType.text = attackTypeList[p1CurrAttackTypeIdx];
+                p2AtkRoulette.SetActive(true);
                 spinRoulette(p2RouletteAtkBox);
             }
             else if (currGameState == eCurrentGameState.RandomizePowerType)
             {
                 //p2CurrPowerIdx = rollIdx(powerList.Length-1);
                 //p2Power.text = powerList[p1CurrAttackTypeIdx];
+                p2PowerRoulette.SetActive(true);
                 spinRoulette(p2RoulettePowerBox);
             }
         }
@@ -186,8 +208,6 @@ public class GameSceneController : MonoBehaviour {
 
             if (currGameState == eCurrentGameState.RandomizeAttackType)
             {
-                currGameState = eCurrentGameState.RandomizePowerType;
-
                 //show enemy's attack type then switch to randomize power
                 //p2CurrAttackTypeIdx = Random.Range(0, (attackTypeList.Length - 1));
                 //p2AttackType.text = attackTypeList[p2CurrAttackTypeIdx];
@@ -201,12 +221,11 @@ public class GameSceneController : MonoBehaviour {
                 }
 
                 p2CurrAtkType = getRouletteValue(p2RouletteAtkBox);
-                Debug.Log("currAtkType:" + p2CurrAtkType);
+                Debug.Log("p2 currAtkType:" + p2CurrAtkType);
+                currGameState = eCurrentGameState.RandomizePowerType;
 
             }
             else if(currGameState == eCurrentGameState.RandomizePowerType){
-                currGameState = eCurrentGameState.CompareDamage;
-
                 //show enemy's power
                 //p2CurrPowerIdx = Random.Range(0, (powerList.Length - 1));
                 //p2Power.text = powerList[p2CurrPowerIdx];
@@ -221,7 +240,8 @@ public class GameSceneController : MonoBehaviour {
                 }
 
                 p2CurrPower = getRouletteValue(p2RoulettePowerBox);
-                Debug.Log("currPower:" + p2CurrPower);
+                Debug.Log("p2 currPower:" + p2CurrPower);
+                currGameState = eCurrentGameState.CompareDamage;
             }
         }
 
@@ -242,12 +262,12 @@ public class GameSceneController : MonoBehaviour {
                 {
                     Debug.Log("p1Power: " + p1Char.charData.charPower);
                     //currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier,false);
-                    currDmg = 3000;
+                    currDmg = 5000;
                 }
                 else {
                     Debug.Log("p2Power: " + p2Char.charData.charPower);
                     //currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier,false);
-                    currDmg = 3000;
+                    currDmg = 5000;
                 }
                 Debug.Log("currDmg:" + currDmg);
                 currGameState = eCurrentGameState.ApplyDamage;
@@ -258,51 +278,125 @@ public class GameSceneController : MonoBehaviour {
             Debug.Log("apply dmg");
             if (p1Pow > p2Pow)
             {
-                p2Char.Life -= currDmg;
+                charaAnim.SetTrigger(charaAnim_TriggerAttack);
+                Debug.Log("p2currHP: " + p2Char.Life);
+                if ((p2Char.Life-currDmg) <= 0)
+                    p2Char.Life = 0;
+                else
+                    p2Char.Life -= currDmg;
+                
+                p2HPBar.fillAmount = (float) p2Char.Life / p2Char.MaxLife;
+
                 Debug.Log(p2Char.Life);
                 Debug.Log(p2Char.MaxLife);
-                p2HPBar.fillAmount = p2Char.Life / p2Char.MaxLife;
 
                 if (p2Char.Life <= 0) {
                     p1RoundCount++;
+                    Debug.Log("p1RoundCount: " + p1RoundCount); //start new round
+                    p1Win = true;
                 }
             }
-            else {
-                p1Char.Life -= currDmg;
+            else
+            {
+                charaAnim.SetTrigger(charaAnim_TriggerAttacked);
+                Debug.Log("p1currHP: " + p1Char.Life);
+                if ((p1Char.Life-currDmg) <= 0)
+                    p1Char.Life = 0;
+                else
+                    p1Char.Life -= currDmg;
+
                 p1HPBar.fillAmount = (float) p1Char.Life / p1Char.MaxLife;
+
                 Debug.Log(p1Char.Life);
                 Debug.Log(p1Char.MaxLife);
+
                 if (p1Char.Life <= 0) {
-                    p1RoundCount++;
+                    p2RoundCount++;
+                    Debug.Log("p2RoundCount: " + p2RoundCount); //start new round
+                    p1Win = false;
                 }
             }
 
-            currGameState = eCurrentGameState.EndTurn;
+            waitForAttackAnim = true;
+            currGameState = eCurrentGameState.AttackAnim;
+        }
+
+        if (currGameState == eCurrentGameState.AttackAnim)
+        {
+            if (waitForAttackAnim)
+            {
+                animTimer += Time.deltaTime;
+            }
+
+            if (animTimer > 1.25f)
+            {
+                animTimer = 0f;
+                waitForAttackAnim = false;
+                currGameState = eCurrentGameState.EndTurn;
+            }
         }
 
         if (currGameState == eCurrentGameState.EndTurn) {
+            drawMultiplier = 1;
             Debug.Log("end round");
             if (p1RoundCount >= 2)
             {
                 //p1 wins
                 Debug.Log("p1 wins");
+                p1Win = true;
+                currGameState = eCurrentGameState.EndGame;
             }
             else if (p2RoundCount >= 2)
             {
                 //p2 wins
                 Debug.Log("p2 wins");
+                p1Win = false;
+                currGameState = eCurrentGameState.EndGame;
             }
             else {
-                //new turn
-                Debug.Log("new turn");
-                currGameState = eCurrentGameState.RandomizeAttackType;
+                if (p1Char.Life <= 0 || p2Char.Life <= 0)
+                {
+                    //new round
+                    Debug.Log("new round");
+                    if (p1Char.Life <= 0) {
+                        p1Win = false;
+                    }
+                    else
+                    {
+                        p1Win = true;
+                    }
+                    currGameState = eCurrentGameState.AddRound;
+                    resetHP();
+                }
+                else {
+                    //new turn (in the same round)
+                    Debug.Log("new turn");
+                    currGameState = eCurrentGameState.RandomizeAttackType;
+                }
             }
+        }
+
+        if (currGameState == eCurrentGameState.AddRound) {
+            currRound++;
+            currGameState = eCurrentGameState.EndRound;
+        }
+
+        if (currGameState == eCurrentGameState.EndRound) {
+            enterCountdown = false;
+            StartCoroutine(EndBattle(false,p1Win));
+        }
+
+        if (currGameState == eCurrentGameState.EndGame) {
+            //battle result
+            StartCoroutine(EndBattle(true, p1Win));
         }
 	}
 
     //end of Update//
 
     IEnumerator StartCountdown() {
+        timer.text = "";
+        panelCountdown.SetActive(true);
         yield return new WaitForSeconds(1);
         timer.text = "Round " + currRound.ToString();
         yield return new WaitForSeconds(2);
@@ -312,10 +406,41 @@ public class GameSceneController : MonoBehaviour {
         yield return new WaitForSeconds(1);
         timer.text = "1";
         yield return new WaitForSeconds(1);
-        timer.text = "START";
+        timer.text = "FIGHT";
         yield return new WaitForSeconds(1);
         panelCountdown.SetActive(false);
+        p1AtkRoulette.SetActive(true);
         currGameState = eCurrentGameState.RandomizeAttackType;
+    }
+
+    IEnumerator EndBattle(bool endGame,bool p1Win) {
+        textEnd.text = "";
+        panelEndBattle.SetActive(true);
+        p1WinCount.text = "Win: " + p1RoundCount.ToString();
+        p2WinCount.text = "Win: " + p2RoundCount.ToString();
+        yield return new WaitForSeconds(1);
+
+        if (p1Win)
+        {
+            textEnd.text = "P1 WINS";
+        }
+        else {
+            textEnd.text = "P2 WINS";
+        }
+
+        yield return new WaitForSeconds(2);
+
+        if (endGame)
+        {
+            textEnd.text = "GAME OVER";
+            yield return new WaitForSeconds(2);
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Scene ThankYou");
+        }
+        else {
+            panelEndBattle.SetActive(false);
+            textRound.text = "Round " + currRound.ToString();
+            currGameState = eCurrentGameState.Countdown;
+        }
     }
 
     void stageSetup(string p1PlayerName,string p1SupportName,string p2PlayerName,string p2SupportName) {
@@ -338,6 +463,10 @@ public class GameSceneController : MonoBehaviour {
     }
 
     void spinRoulette(GameObject[] currRoulette) {
+        for (int i = 0; i < currRoulette.Length; i++) {
+            currRoulette[i].SetActive(true);
+        }
+
         if (currGameState == eCurrentGameState.RandomizeAttackType) {
             stopSpinRouletteAtk = false;
         }
@@ -384,7 +513,21 @@ public class GameSceneController : MonoBehaviour {
         }
     }
 
+    void resetHP() {
+        p1Char.Life = p1Char.MaxLife;
+        p2Char.Life = p2Char.MaxLife;
+        p1HPBar.fillAmount = 1;
+        p2HPBar.fillAmount = 1;
+    }
+
     string getRouletteValue(GameObject[] currBox) {
+        for (int i = 0; i < currBox.Length; i++) {
+            if (i != (currBox.Length - 2))
+            {
+                currBox[i].SetActive(false);
+            }
+        }
+
         return currBox[currBox.Length - 2].GetComponent<Roulette>().value;
     }
 

@@ -11,7 +11,8 @@ public class UICharacterSelections : MonoBehaviour {
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
 	public CharacterSO[] Characters = new CharacterSO[2];
-	
+
+    Character p1Char;
 	
 	public int SelectedIndex = 0;
 	float x, distance;
@@ -70,8 +71,12 @@ public class UICharacterSelections : MonoBehaviour {
 	}
 	
 	public void ButtonSelect_OnClick(){
-		PlayerDataController.Instance.SetCharacter(Characters[SelectedIndex]);
-		UIContent.SetActive(false);
+		//PlayerDataController.Instance.SetCharacter(Characters[SelectedIndex]);
+
+        p1Char = new Character(Characters[SelectedIndex]);
+        PlayerDataController.Instance.SetCharacter(p1Char);
+        
+        UIContent.SetActive(false);
 		UISupportSelections.Instance.Show();
 	}
 

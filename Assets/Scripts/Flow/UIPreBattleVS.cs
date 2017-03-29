@@ -42,10 +42,12 @@ public class UIPreBattleVS : MonoBehaviour {
 	}
 
 	public void Show(){
-		Enemy = EnemyList.GetRandomEnemy();
+        Enemy = EnemyList.GetRandomEnemy();
+        PlayerDataController.Instance.SetEnemyCharacter(Enemy);
+
 		Title.enabled = false;
-		string player_name = PlayerDataController.Instance.getCharacterName();
-		string player_support_name = PlayerDataController.Instance.getSupportName();
+        string player_name = PlayerDataController.Instance.playerChar.charData.charName;
+		string player_support_name = PlayerDataController.Instance.playerChar.support.supportSO.supportName;
 		string enemy_name = Enemy.charData.charName;
 		string enemy_support_name = Enemy.support.supportSO.supportName;
 

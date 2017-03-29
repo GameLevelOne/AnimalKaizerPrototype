@@ -63,7 +63,11 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	public void ButtonSelect_OnClick(){
-		PlayerDataController.Instance.SetSpecialMove(SpecialMoves[SelectedIndex]);
+        SpecialMove p1SpMove;
+
+        p1SpMove = new SpecialMove(SpecialMoves[SelectedIndex]);
+        PlayerDataController.Instance.SetSpecialMove(p1SpMove);
+
 		UIContent.SetActive(false);
 		UIPreBattleResult.Instance.Show();
 	}

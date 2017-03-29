@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpecialMove : MonoBehaviour {
+public class SpecialMove{
 
     public SpecialMoveSO specialMoveSO;
 

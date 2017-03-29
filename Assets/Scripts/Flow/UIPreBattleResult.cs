@@ -35,8 +35,8 @@ public static UIPreBattleResult Instance;
 	}
 
 	void AssignAllPlayerData(){
-		string charName = PlayerDataController.Instance.getCharacterName();
-		string charSupportName = PlayerDataController.Instance.getSupportName();
+        string charName = PlayerDataController.Instance.playerChar.charData.charName;
+        string charSupportName = PlayerDataController.Instance.playerChar.support.supportSO.supportName;
 		//images
 //		Img_Thumbnails[0].sprite = Spr_Characters[UICharacterSelections.Instance.SelectedIndex];
 //		Img_Thumbnails[1].sprite = Spr_Supports[UISupportSelections.Instance.SelectedIndex];

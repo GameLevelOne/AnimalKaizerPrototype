@@ -66,7 +66,11 @@ public class UISupportSelections : MonoBehaviour {
 	}
 	
 	public void ButtonSelect_OnClick(){
-		PlayerDataController.Instance.SetSupport(Supports[SelectedIndex]);
+        Support p1Support;
+
+        p1Support = new Support(Supports[SelectedIndex]);
+        PlayerDataController.Instance.SetSupport(p1Support);
+
 		UIContent.SetActive(false);
 		UISpecialMoveSelection.Instance.Show();
 	}

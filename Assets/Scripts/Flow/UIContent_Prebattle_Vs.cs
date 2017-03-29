@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class UIContent_Prebattle_Vs : MonoBehaviour {
 	void GoToGameScene(){
-		UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+		UnityEngine.SceneManagement.SceneManager.LoadScene("Scene Game");
 	}
 }

@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 public class PlayerDataController : MonoBehaviour {
 	public static PlayerDataController Instance;
 
+    public EnemyListSO enemyList;
+
+    public Character playerChar,enemyChar;
+
 	void Awake(){
 		Instance = this;
 		DontDestroyOnLoad(gameObject);
@@ -19,16 +23,18 @@ public class PlayerDataController : MonoBehaviour {
 		GetComponent<SpecialMove>().specialMoveSO = null;
 	}
 
-	public void SetCharacter(CharacterSO character){
-		GetComponent<Character>().charData = character;
+	public void SetCharacter(Character p1){
+        playerChar = p1;
+    }
+	public void SetSupport(Support p1Support){
+        playerChar.support = p1Support;
 	}
-	public void SetSupport(SupportSO support){
-		GetComponent<Support>().supportSO = support;
+	public void SetSpecialMove(SpecialMove p1SpMove){
+        playerChar.specialMove = p1SpMove;
 	}
-	public void SetSpecialMove(SpecialMoveSO specialmove){
-		GetComponent<SpecialMove>().specialMoveSO = specialmove;
-	}
-
+    public void SetEnemyCharacter(Character enemy) {
+        enemyChar = enemy;
+    }
 	public string getCharacterName(){
 		return GetComponent<Character>().charData.charName;
 	}

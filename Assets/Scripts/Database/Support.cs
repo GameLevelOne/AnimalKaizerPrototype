@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Support : MonoBehaviour {
+public class Support {
 
     public SupportSO supportSO;
 

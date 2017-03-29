@@ -16,16 +16,13 @@ public class GameSceneController : MonoBehaviour {
     public RouletteTrigger rouletteTrigger;
 
     public GameObject panelCountdown;
+    public GameObject p1PlayerParent, p1SupportParent, p2PlayerParent, p2SupportParent;
 
-    public Text timer;
-    public Text p1AttackType;
-    public Text p2AttackType;
-    public Text p1Power;
-    public Text p2Power;
+    public Text timer, textRound, p1NameDisplay, p2NameDisplay, p1PowerDisplay, p2PowerDisplay;
 
-    public Image p1HPBar;
-    public Image p2HPBar;
+    public Image p1HPBar,p2HPBar;
 
+    public GameObject[] charactersObj = new GameObject[6];
     public GameObject[] p1RouletteAtkBox = new GameObject[3];
     public GameObject[] p2RouletteAtkBox = new GameObject[3];
     public GameObject[] p1RoulettePowerBox = new GameObject[4];
@@ -38,6 +35,8 @@ public class GameSceneController : MonoBehaviour {
 
     private Character p1Char, p2Char;
 
+    private GameObject boxTemp;
+
     private string[] attackTypeList = new string[3] { "Q", "T", "S" };
     private string[] powerList = new string[4] { "20", "30", "40", "50" };
 
@@ -45,8 +44,6 @@ public class GameSceneController : MonoBehaviour {
     private string p2CurrAtkType;
     private string p1CurrPower;
     private string p2CurrPower;
-
-    private GameObject boxTemp;
 
     private bool isWaiting = false;
     private bool stopSpinRouletteAtk = true;
@@ -58,11 +55,13 @@ public class GameSceneController : MonoBehaviour {
     private int p2CurrAttackTypeIdx = 0;
     private int p1CurrPowerIdx = 0;
     private int p2CurrPowerIdx = 0;
-    private int currRollIdx = 0;
     private int currDmg = 0;
     private int drawMultiplier = 1;
     private int p1RoundCount = 0;
     private int p2RoundCount = 0;
+    private int currRound = 1;
+    private int p1Pow = 0;
+    private int p2Pow = 0;
 
     private eCurrentGameState currGameState = eCurrentGameState.Countdown;
 
@@ -78,10 +77,18 @@ public class GameSceneController : MonoBehaviour {
             p2RoulettePowerBoxStartPos[i] = p2RoulettePowerBox[i].transform.localPosition;
         }
 
+        p1Char = PlayerDataController.Instance.playerChar;
+        p2Char = PlayerDataController.Instance.enemyChar;
+
         p1Char.Life = p1Char.MaxLife;
         p2Char.Life = p2Char.MaxLife;
 
-        //countdown
+        Debug.Log("p1 HP: " + p1Char.Life);
+        Debug.Log("p2 HP: " + p1Char.Life);
+
+        stageSetup(p1Char.charData.charName, p1Char.support.supportSO.supportName, 
+            p2Char.charData.charName, p2Char.support.supportSO.supportName);
+        
         StartCoroutine(StartCountdown());
 
 	}
@@ -218,11 +225,11 @@ public class GameSceneController : MonoBehaviour {
             }
         }
 
-        int p1Pow = int.Parse(p1CurrPower);
-        int p2Pow = int.Parse(p2CurrPower);
-
         if (currGameState == eCurrentGameState.CompareDamage) {
-            
+            Debug.Log("compare power");
+            p1Pow = int.Parse(p1CurrPower);
+            p2Pow = int.Parse(p2CurrPower);
+
             if (p1Pow == p2Pow)
             {
                 drawMultiplier++;
@@ -233,10 +240,14 @@ public class GameSceneController : MonoBehaviour {
                 //attackIndex = Q = 0,T=1,S=2
                 if (p1Pow > p2Pow)
                 {
-                    currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier);
+                    Debug.Log("p1Power: " + p1Char.charData.charPower);
+                    //currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier,false);
+                    currDmg = 3000;
                 }
                 else {
-                    currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier);
+                    Debug.Log("p2Power: " + p2Char.charData.charPower);
+                    //currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier,false);
+                    currDmg = 3000;
                 }
                 Debug.Log("currDmg:" + currDmg);
                 currGameState = eCurrentGameState.ApplyDamage;
@@ -244,9 +255,12 @@ public class GameSceneController : MonoBehaviour {
         }
 
         if (currGameState == eCurrentGameState.ApplyDamage) {
+            Debug.Log("apply dmg");
             if (p1Pow > p2Pow)
             {
                 p2Char.Life -= currDmg;
+                Debug.Log(p2Char.Life);
+                Debug.Log(p2Char.MaxLife);
                 p2HPBar.fillAmount = p2Char.Life / p2Char.MaxLife;
 
                 if (p2Char.Life <= 0) {
@@ -255,8 +269,9 @@ public class GameSceneController : MonoBehaviour {
             }
             else {
                 p1Char.Life -= currDmg;
-                p1HPBar.fillAmount = p1Char.Life / p1Char.MaxLife;
-
+                p1HPBar.fillAmount = (float) p1Char.Life / p1Char.MaxLife;
+                Debug.Log(p1Char.Life);
+                Debug.Log(p1Char.MaxLife);
                 if (p1Char.Life <= 0) {
                     p1RoundCount++;
                 }
@@ -266,16 +281,20 @@ public class GameSceneController : MonoBehaviour {
         }
 
         if (currGameState == eCurrentGameState.EndTurn) {
+            Debug.Log("end round");
             if (p1RoundCount >= 2)
             {
                 //p1 wins
+                Debug.Log("p1 wins");
             }
             else if (p2RoundCount >= 2)
             {
                 //p2 wins
+                Debug.Log("p2 wins");
             }
             else {
-                //new round
+                //new turn
+                Debug.Log("new turn");
                 currGameState = eCurrentGameState.RandomizeAttackType;
             }
         }
@@ -285,6 +304,8 @@ public class GameSceneController : MonoBehaviour {
 
     IEnumerator StartCountdown() {
         yield return new WaitForSeconds(1);
+        timer.text = "Round " + currRound.ToString();
+        yield return new WaitForSeconds(2);
         timer.text = "3";
         yield return new WaitForSeconds(1);
         timer.text = "2";
@@ -297,18 +318,23 @@ public class GameSceneController : MonoBehaviour {
         currGameState = eCurrentGameState.RandomizeAttackType;
     }
 
-    int rollIdx(int max) {
-        //TODO: fix this
-        if (currRollIdx == max)
-        {
-            currRollIdx = 0;
-        }
-        else
-        {
-            currRollIdx++;
-        }
+    void stageSetup(string p1PlayerName,string p1SupportName,string p2PlayerName,string p2SupportName) {
+        Vector3 tempPos = new Vector3(0, 0, 0);
 
-        return currRollIdx;
+        GameObject p1PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p1PlayerName)], tempPos, Quaternion.identity);
+        GameObject p1SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p1SupportName)], tempPos, Quaternion.identity);
+        GameObject p2PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p2PlayerName)], tempPos, Quaternion.identity);
+        GameObject p2SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p2SupportName)], tempPos, Quaternion.identity);
+
+        p1PlayerObj.transform.SetParent(p1PlayerParent.transform,false);
+        p1SupportObj.transform.SetParent(p1SupportParent.transform,false);
+        p2PlayerObj.transform.SetParent(p2PlayerParent.transform,false);
+        p2SupportObj.transform.SetParent(p2SupportParent.transform,false);
+
+        p1NameDisplay.text = p1PlayerName;
+        p2NameDisplay.text = p2PlayerName;
+        p1PowerDisplay.text = "Total Strength: "+p1Char.charData.charPower.ToString();
+        p2PowerDisplay.text = "Total Strength: "+p2Char.charData.charPower.ToString();
     }
 
     void spinRoulette(GameObject[] currRoulette) {
@@ -363,18 +389,27 @@ public class GameSceneController : MonoBehaviour {
     }
 
     int getAttackIndex(string currType) {
-        if (currType == "Q")
-        {
-            return 0;
+        int temp = -1;
+        switch (currType) {
+            case "Q": temp = 0; break;
+            case "T": temp = 1; break;
+            case "S": temp = 2; break;
         }
-        else if (currType == "T")
-        {
-            return 1;
-        }
-        else 
-        {
-            return 2;
-        }
+        return temp;
+    }
 
+    int getCharCode(string name)
+    {
+        int temp = -1;
+        switch (name)
+        {
+            case "Genderuwo": temp = 0; break;
+            case "Kunti": temp = 1; break;
+            case "Kolorijo": temp = 2; break;
+            case "Pocong": temp = 3; break;
+            case "Tuyul": temp = 4; break;
+            case "Suster Ngesot": temp = 5; break;
+        }
+        return temp;
     }
 }

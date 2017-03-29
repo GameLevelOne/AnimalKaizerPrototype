@@ -11,9 +11,16 @@ public class PlayerDataController : MonoBehaviour {
     public Character playerChar,enemyChar;
 
 	void Awake(){
-		Instance = this;
-		DontDestroyOnLoad(gameObject);
-		SceneManager.LoadScene("Scene Title");
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance!=this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+        //SceneManager.LoadScene("Scene Title");
 
 	}
 

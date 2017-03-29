@@ -59,10 +59,10 @@ public class UISupportSelections : MonoBehaviour {
 
 
 	void ShowDetails(){
-		Support_Details[0].text = "Name = "+Supports[SelectedIndex].supportName;
-		Support_Details[1].text = "Enhance = "+Supports[SelectedIndex].supportEnhance;
-		Support_Details[2].text = "Focus = "+Supports[SelectedIndex].supportFocus.ToString();
-		Support_Details[3].text = "Defence = "+Supports[SelectedIndex].supportDefense.ToString();
+		Support_Details[0].text = Supports[SelectedIndex].supportName;
+		Support_Details[1].text = Supports[SelectedIndex].supportEnhance.ToString();
+		Support_Details[2].text = Supports[SelectedIndex].supportFocus.ToString();
+		Support_Details[3].text = Supports[SelectedIndex].supportDefense.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

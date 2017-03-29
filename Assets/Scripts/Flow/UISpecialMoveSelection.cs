@@ -58,8 +58,8 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	void ShowDetails(){
-		SpecialMove_Details[0].text = "Name = "+SpecialMoves[SelectedIndex].specialMoveName;
-		SpecialMove_Details[1].text = "Enhance = "+SpecialMoves[SelectedIndex].specialMoveType;
+		SpecialMove_Details[0].text = SpecialMoves[SelectedIndex].specialMoveName;
+		SpecialMove_Details[1].text = SpecialMoves[SelectedIndex].specialMoveType.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

@@ -64,10 +64,10 @@ public class UICharacterSelections : MonoBehaviour {
 	}
 
 	void ShowDetails(){
-		Character_Details[0].text = "Name = "+Characters[SelectedIndex].charName;
-		Character_Details[1].text = "Health = "+Characters[SelectedIndex].charHealth.ToString();
-		Character_Details[2].text = "Power = "+Characters[SelectedIndex].charPower.ToString();
-		Character_Details[3].text = "Element = "+Characters[SelectedIndex].charType;
+		Character_Details[0].text = Characters[SelectedIndex].charName;
+		Character_Details[1].text = Characters[SelectedIndex].charHealth.ToString();
+		Character_Details[2].text = Characters[SelectedIndex].charPower.ToString();
+		Character_Details[3].text = Characters[SelectedIndex].charType.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

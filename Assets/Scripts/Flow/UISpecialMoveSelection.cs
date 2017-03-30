@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class UISpecialMoveSelection : MonoBehaviour {
 	public static UISpecialMoveSelection Instance;
 	
-	public Text Title;
+	public Image Title;
+	public Sprite TitleSource;
 	public Text[] SpecialMove_Details = new Text[2];
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
@@ -20,7 +21,7 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	public void Show(){
-		Title.text = "Special Move Selection";
+		Title.sprite = TitleSource;
 		UIContent.SetActive(true);
 		ShowDetails();
 	}
@@ -58,8 +59,8 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	void ShowDetails(){
-		SpecialMove_Details[0].text = SpecialMoves[SelectedIndex].specialMoveName;
-		SpecialMove_Details[1].text = SpecialMoves[SelectedIndex].specialMoveType.ToString();
+		SpecialMove_Details[0].text = "NAME: "+SpecialMoves[SelectedIndex].specialMoveName;
+		SpecialMove_Details[1].text = "ELEMENT: "+SpecialMoves[SelectedIndex].specialMoveType.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

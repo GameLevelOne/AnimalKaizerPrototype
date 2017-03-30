@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class UISupportSelections : MonoBehaviour {
 	public static UISupportSelections Instance;
 	
-	public Text Title;
+	public Image Title;
+	public Sprite TitleSource;
 	public Text[] Support_Details = new Text[4];
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
@@ -20,7 +21,7 @@ public class UISupportSelections : MonoBehaviour {
 	}
 	
 	public void Show(){
-		Title.text = "Support Selection";
+		Title.sprite = TitleSource;
 		UIContent.SetActive(true);
 		ShowDetails();
 	}
@@ -59,10 +60,10 @@ public class UISupportSelections : MonoBehaviour {
 
 
 	void ShowDetails(){
-		Support_Details[0].text = Supports[SelectedIndex].supportName;
-		Support_Details[1].text = Supports[SelectedIndex].supportEnhance.ToString();
-		Support_Details[2].text = Supports[SelectedIndex].supportFocus.ToString();
-		Support_Details[3].text = Supports[SelectedIndex].supportDefense.ToString();
+		Support_Details[0].text = "NAME: "+Supports[SelectedIndex].supportName;
+		Support_Details[1].text = "ENHANCE: "+Supports[SelectedIndex].supportEnhance.ToString();
+		Support_Details[2].text = "FOCUS: "+Supports[SelectedIndex].supportFocus.ToString();
+		Support_Details[3].text = "DEFENSE: "+Supports[SelectedIndex].supportDefense.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

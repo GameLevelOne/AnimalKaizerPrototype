@@ -8,6 +8,7 @@ public enum eCurrentGameState {
     RandomizeAttackType,
     RandomizePowerType,
     CompareDamage,
+    Struggle,
     ApplyDamage,
     AttackAnim,
     EndTurn,
@@ -19,7 +20,7 @@ public enum eCurrentGameState {
 public class GameSceneController : MonoBehaviour {
     public RouletteTrigger rouletteTrigger;
 
-    public GameObject panelCountdown,panelEndBattle;
+    public GameObject panelCountdown,panelEndBattle, panelStruggle;
     public GameObject p1PlayerParent, p1SupportParent, p2PlayerParent, p2SupportParent, 
         p1AtkRoulette, p1PowerRoulette, p2AtkRoulette, p2PowerRoulette;
 
@@ -60,6 +61,9 @@ public class GameSceneController : MonoBehaviour {
     private bool enterCountdown = false;
     private bool p1Win = false;
     private bool waitForAttackAnim = false;
+    private bool focusMove = false;
+    private bool enterStruggle = false;
+    private bool winStruggle = false;
 
     private float waitTimer = 0f;
     private float animTimer = 0f;
@@ -75,6 +79,7 @@ public class GameSceneController : MonoBehaviour {
     private int currRound = 1;
     private int p1Pow = 0;
     private int p2Pow = 0;
+    private int tapCount = 0;
 
     private eCurrentGameState currGameState = eCurrentGameState.Countdown;
 
@@ -249,28 +254,103 @@ public class GameSceneController : MonoBehaviour {
             Debug.Log("compare power");
             p1Pow = int.Parse(p1CurrPower);
             p2Pow = int.Parse(p2CurrPower);
+            int p1AtkInt = getAttackIndex(p1CurrAtkType);
+            int p2AtkInt = getAttackIndex(p2CurrAtkType);
+            bool p2Enhanced = false;
+
+            if (p2AtkInt == (int)p2Char.support.supportSO.supportEnhance) {
+                p2Enhanced = true;
+            }
+
+            if (p1AtkInt == (int)p1Char.support.supportSO.supportEnhance) {
+                //p1 focusatk
+                if (Random.value >= 0.5)
+                {
+                    Debug.Log("focus!");
+                    focusMove = true;
+                }
+                else {
+                    focusMove = false;
+                }
+            }
+
+            //test
+            //focusMove = true;
+            //p2Enhanced = true;
+
+            if (focusMove && p2Enhanced) {
+                enterStruggle = true;
+                currGameState = eCurrentGameState.Struggle;
+            }
 
             if (p1Pow == p2Pow)
             {
-                drawMultiplier++;
+                if (drawMultiplier < 10)
+                    drawMultiplier++;
+                else
+                    drawMultiplier = 10;
+
                 currGameState = eCurrentGameState.RandomizeAttackType;
                 Debug.Log("drawMultiplier:" + drawMultiplier);
             }
-            else {
-                //attackIndex = Q = 0,T=1,S=2
-                if (p1Pow > p2Pow)
+            else
+            {
+                if (!enterStruggle)
                 {
-                    Debug.Log("p1Power: " + p1Char.charData.charPower);
-                    //currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier,false);
-                    currDmg = 5000;
+                    //attackIndex = Q = 0,T=1,S=2
+                    if (p1Pow > p2Pow)
+                    {
+                        Debug.Log("p1Power: " + p1Char.charData.charPower);
+                        currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier, false);
+                        //currDmg = 5000;
+                    }
+                    else
+                    {
+                        Debug.Log("p2Power: " + p2Char.charData.charPower);
+                        currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier, false);
+                        //currDmg = 5000;
+                    }
+                    Debug.Log("currDmg:" + currDmg);
+                    resetBattleBool();
+                    currGameState = eCurrentGameState.ApplyDamage;
                 }
                 else {
-                    Debug.Log("p2Power: " + p2Char.charData.charPower);
-                    //currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier,false);
-                    currDmg = 5000;
+                    currGameState = eCurrentGameState.Struggle;
                 }
-                Debug.Log("currDmg:" + currDmg);
-                currGameState = eCurrentGameState.ApplyDamage;
+            }
+        }
+
+        if(currGameState == eCurrentGameState.Struggle)
+        {
+            Debug.Log("struggle");
+            panelStruggle.SetActive(true);
+            if (Input.GetMouseButtonDown(0)) {
+                Debug.Log("tapCount: " + tapCount);
+                if (tapCount < 10)
+                {
+                    tapCount++;
+                }
+                else {
+                    winStruggle = true;
+
+                    //attackIndex = Q = 0,T=1,S=2
+                    if (p1Pow > p2Pow)
+                    {
+                        Debug.Log("p1Power: " + p1Char.charData.charPower);
+                        currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier, true);
+                        //currDmg = 5000;
+                    }
+                    else
+                    {
+                        Debug.Log("p2Power: " + p2Char.charData.charPower);
+                        currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier, true);
+                        //currDmg = 5000;
+                    }
+                    Debug.Log("currDmg:" + currDmg);
+                    resetBattleBool();
+                    panelStruggle.SetActive(false);
+                    currGameState = eCurrentGameState.ApplyDamage;
+                }
             }
         }
 
@@ -520,6 +600,12 @@ public class GameSceneController : MonoBehaviour {
         p2HPBar.fillAmount = 1;
     }
 
+    void resetBattleBool() {
+        focusMove = false;
+        enterStruggle = false;
+        winStruggle = false;
+    }
+
     string getRouletteValue(GameObject[] currBox) {
         for (int i = 0; i < currBox.Length; i++) {
             if (i != (currBox.Length - 2))
@@ -534,9 +620,9 @@ public class GameSceneController : MonoBehaviour {
     int getAttackIndex(string currType) {
         int temp = -1;
         switch (currType) {
-            case "Q": temp = 0; break;
-            case "T": temp = 1; break;
-            case "S": temp = 2; break;
+            case "Q": temp = (int) AttackType.QUICK; break;
+            case "T": temp = (int) AttackType.TECHNICAL; break;
+            case "S": temp = (int) AttackType.STRONG; break;
         }
         return temp;
     }

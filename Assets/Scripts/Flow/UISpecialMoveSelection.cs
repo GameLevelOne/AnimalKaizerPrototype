@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class UISpecialMoveSelection : MonoBehaviour {
 	public static UISpecialMoveSelection Instance;
-	
-	public Text Title;
-	public Text[] SpecialMove_Details = new Text[2];
+
+    public GameObject[] Title = new GameObject[3];
+    public Text[] SpecialMove_Details = new Text[2];
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
 	public SpecialMoveSO[] SpecialMoves = new SpecialMoveSO[2];
@@ -20,8 +20,10 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	public void Show(){
-		Title.text = "Special Move Selection";
-		UIContent.SetActive(true);
+        Title[0].SetActive(false);
+        Title[1].SetActive(false);
+        Title[2].SetActive(true);
+        UIContent.SetActive(true);
 		ShowDetails();
 	}
 
@@ -58,8 +60,8 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	void ShowDetails(){
-		SpecialMove_Details[0].text = SpecialMoves[SelectedIndex].specialMoveName;
-		SpecialMove_Details[1].text = SpecialMoves[SelectedIndex].specialMoveType.ToString();
+		SpecialMove_Details[0].text = "Name:    "+SpecialMoves[SelectedIndex].specialMoveName;
+		SpecialMove_Details[1].text = "Type:    "+SpecialMoves[SelectedIndex].specialMoveType.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

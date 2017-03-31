@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class UICharacterSelections : MonoBehaviour {
 	public static UICharacterSelections Instance;
-	
-	public Text Title;
+
+    public GameObject[] Title = new GameObject[3];
 	public Text[] Character_Details = new Text[4];
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
@@ -21,13 +21,15 @@ public class UICharacterSelections : MonoBehaviour {
 		Instance = this;
 	}
 	
-	void Start(){
-		Title.text = "Character Selection";
+	void Start(){ 
 		Show();
 	}
 	
 	public void Show(){
-		UISupportSelections.Instance.hide();
+        Title[0].SetActive(true);
+        Title[1].SetActive(false);
+        Title[2].SetActive(false);
+        UISupportSelections.Instance.hide();
 		UISpecialMoveSelection.Instance.hide();
 		UIPreBattleResult.Instance.hide();
 
@@ -64,10 +66,10 @@ public class UICharacterSelections : MonoBehaviour {
 	}
 
 	void ShowDetails(){
-		Character_Details[0].text = Characters[SelectedIndex].charName;
-		Character_Details[1].text = Characters[SelectedIndex].charHealth.ToString();
-		Character_Details[2].text = Characters[SelectedIndex].charPower.ToString();
-		Character_Details[3].text = Characters[SelectedIndex].charType.ToString();
+		Character_Details[0].text = "Name:      "+Characters[SelectedIndex].charName;
+		Character_Details[1].text = "Health:    "+Characters[SelectedIndex].charHealth.ToString();
+		Character_Details[2].text = "Power:     "+Characters[SelectedIndex].charPower.ToString();
+		Character_Details[3].text = "Element:   "+Characters[SelectedIndex].charType.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

@@ -9,6 +9,7 @@ public enum AttackType
     STRONG
 }
 
+[System.Serializable]
 public class AttackData {
     public string attackName;
     public AttackType attackType;

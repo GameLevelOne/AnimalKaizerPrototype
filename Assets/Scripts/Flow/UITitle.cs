@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class UITitle : MonoBehaviour {
     public Image blackScreen;
-    float fadeTimer = 0f;
-    bool fadeIn = true;
-    bool startFade = false;
     
     void Start()
     {
@@ -36,11 +33,4 @@ public class UITitle : MonoBehaviour {
         }
     }
 
-    IEnumerator changeScene() {
-        fadeIn = false;
-        startFade = true;
-        yield return new WaitForSeconds(2);
-        startFade = false;
-        SceneManager.LoadScene("Scene Selection");
-    }
 }

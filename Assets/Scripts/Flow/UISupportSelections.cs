@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class UISupportSelections : MonoBehaviour {
 	public static UISupportSelections Instance;
-
-    public GameObject[] Title = new GameObject[3];
-    public Text[] Support_Details = new Text[4];
+	
+	public Image Title;
+	public Sprite TitleSource;
+	public Text[] Support_Details = new Text[4];
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
 	public SupportSO[] Supports = new SupportSO[2];
@@ -20,16 +21,13 @@ public class UISupportSelections : MonoBehaviour {
 	}
 	
 	public void Show(){
-        Title[0].SetActive(false);
-        Title[1].SetActive(true);
-        Title[2].SetActive(false);
-        UIContent.SetActive(true);
-        ShowDetails();
+		Title.sprite = TitleSource;
+		UIContent.SetActive(true);
+		ShowDetails();
 	}
 
 	public void hide(){
-        UIContent.SetActive(true);
-        UIContent.SetActive(false);
+		UIContent.SetActive(false);
 	}
 
 	public void OnPointerDown(){
@@ -62,10 +60,10 @@ public class UISupportSelections : MonoBehaviour {
 
 
 	void ShowDetails(){
-		Support_Details[0].text = "Name:        "+Supports[SelectedIndex].supportName;
-		Support_Details[1].text = "Enhance:     "+Supports[SelectedIndex].supportEnhance.ToString();
-		Support_Details[2].text = "Focus:       "+Supports[SelectedIndex].supportFocus.ToString();
-		Support_Details[3].text = "Defense:     "+Supports[SelectedIndex].supportDefense.ToString();
+		Support_Details[0].text = "NAME: "+Supports[SelectedIndex].supportName;
+		Support_Details[1].text = "ENHANCE: "+Supports[SelectedIndex].supportEnhance.ToString();
+		Support_Details[2].text = "FOCUS: "+Supports[SelectedIndex].supportFocus.ToString();
+		Support_Details[3].text = "DEFENSE: "+Supports[SelectedIndex].supportDefense.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

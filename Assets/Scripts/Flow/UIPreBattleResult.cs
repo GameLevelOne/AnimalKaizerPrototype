@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class UIPreBattleResult : MonoBehaviour {
 public static UIPreBattleResult Instance;
 	
-	public Text Title;
-	
+	public GameObject Title;
+
 	public Sprite[] Spr_Characters = new Sprite[6];
 	public Sprite[] Spr_Supports = new Sprite[2];
 	public Sprite[] Spr_SpecialMoves = new Sprite[2];
@@ -25,7 +25,7 @@ public static UIPreBattleResult Instance;
 	}
 	
 	public void Show(){
-		Title.text = "Pre Battle";
+		Title.SetActive (false);
 		Content.SetActive(true);
 		AssignAllPlayerData();
 	}
@@ -72,6 +72,7 @@ public static UIPreBattleResult Instance;
 	}
 	
 	public void ButtonBack_OnClick(){
+		Title.SetActive (true);
 		Content.SetActive(false);
 		UISpecialMoveSelection.Instance.Show();
 	}

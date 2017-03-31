@@ -15,8 +15,6 @@ public enum eCharacter{
 public class UIPreBattleVS : MonoBehaviour {
 	public static UIPreBattleVS Instance;
 
-	public Text Title;
-
 	public Sprite[] Spr_Characters = new Sprite[6];
 
 	public Image
@@ -45,7 +43,6 @@ public class UIPreBattleVS : MonoBehaviour {
         Enemy = EnemyList.GetRandomEnemy();
         PlayerDataController.Instance.SetEnemyCharacter(Enemy);
 
-		Title.enabled = false;
         string player_name = PlayerDataController.Instance.playerChar.charData.charName;
 		string player_support_name = PlayerDataController.Instance.playerChar.support.supportSO.supportName;
 		string enemy_name = Enemy.charData.charName;

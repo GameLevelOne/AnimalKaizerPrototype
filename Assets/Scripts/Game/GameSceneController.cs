@@ -514,6 +514,8 @@ public class GameSceneController : MonoBehaviour {
         {
             textEnd.text = "GAME OVER";
             yield return new WaitForSeconds(2);
+			if (p1Win)
+				PlayerPrefs.SetInt ("PlayerWin",1);
             UnityEngine.SceneManagement.SceneManager.LoadScene("Scene ThankYou");
         }
         else {

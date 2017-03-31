@@ -13,6 +13,8 @@ public class UICharacterSelections : MonoBehaviour {
 	public GameObject Scroll_Content ;
 	public CharacterSO[] Characters = new CharacterSO[2];
 
+	public Fader fader;
+
     Character p1Char;
 	
 	public int SelectedIndex = 0;
@@ -24,6 +26,7 @@ public class UICharacterSelections : MonoBehaviour {
 	
 	void Start(){
 		Title.sprite = TitleSource;
+		fader.FadeIn ();
 		Show();
 	}
 	

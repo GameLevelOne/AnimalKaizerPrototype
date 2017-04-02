@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum eCurrentGameState {
     Countdown = 0,
@@ -14,7 +15,8 @@ public enum eCurrentGameState {
     EndTurn,
     AddRound,
     EndRound,
-    EndGame
+    EndGame,
+    Transition
 }
 
 public class GameSceneController : MonoBehaviour {
@@ -24,7 +26,20 @@ public class GameSceneController : MonoBehaviour {
     public GameObject p1PlayerParent, p1SupportParent, p2PlayerParent, p2SupportParent, 
         p1AtkRoulette, p1PowerRoulette, p2AtkRoulette, p2PowerRoulette;
 
-    public Text timer, textRound, textEnd, p1NameDisplay, p2NameDisplay, p1PowerDisplay, p2PowerDisplay, p1WinCount, p2WinCount;
+    public Text p1NameDisplay, p2NameDisplay;
+
+    public Image textRound;
+    public Sprite[] roundSprite;
+    public Image p1WinCount;
+    public Image p2WinCount;
+    public Sprite[] countSprite;
+    public Image timer;
+    public Sprite fightSprite;
+    public Image textEnd;
+    public Sprite youWinSprite;
+    public Sprite youLoseSprite;
+    public Sprite gameOverSprite;
+
 
     public Image p1HPBar,p2HPBar;
 
@@ -83,8 +98,11 @@ public class GameSceneController : MonoBehaviour {
 
     private eCurrentGameState currGameState = eCurrentGameState.Countdown;
 
+    public Fader fader;
+
 	// Use this for initialization
 	void Start () {
+        fader.FadeIn();
         for (int i = 0; i < 3; i++) {
             p1RouletteAtkBoxStartPos[i] = p1RouletteAtkBox[i].transform.localPosition;
             p2RouletteAtkBoxStartPos[i] = p2RouletteAtkBox[i].transform.localPosition;
@@ -464,29 +482,30 @@ public class GameSceneController : MonoBehaviour {
         if (currGameState == eCurrentGameState.EndRound) {
             enterCountdown = false;
             StartCoroutine(EndBattle(false,p1Win));
-        }
-
-        if (currGameState == eCurrentGameState.EndGame) {
+            currGameState = eCurrentGameState.Transition;
+        } else if (currGameState == eCurrentGameState.EndGame) {
             //battle result
             StartCoroutine(EndBattle(true, p1Win));
+            currGameState = eCurrentGameState.Transition;
         }
 	}
 
     //end of Update//
 
     IEnumerator StartCountdown() {
-        timer.text = "";
+        timer.enabled = false;
         panelCountdown.SetActive(true);
         yield return new WaitForSeconds(1);
-        timer.text = "Round " + currRound.ToString();
+        timer.enabled = true;
+        timer.sprite = roundSprite[currRound-1];
         yield return new WaitForSeconds(2);
-        timer.text = "3";
+        timer.sprite = countSprite[2];
         yield return new WaitForSeconds(1);
-        timer.text = "2";
+        timer.sprite = countSprite[1];
         yield return new WaitForSeconds(1);
-        timer.text = "1";
+        timer.sprite = countSprite[0];
         yield return new WaitForSeconds(1);
-        timer.text = "FIGHT";
+        timer.sprite = fightSprite;
         yield return new WaitForSeconds(1);
         panelCountdown.SetActive(false);
         p1AtkRoulette.SetActive(true);
@@ -494,37 +513,59 @@ public class GameSceneController : MonoBehaviour {
     }
 
     IEnumerator EndBattle(bool endGame,bool p1Win) {
-        textEnd.text = "";
+        textEnd.enabled = false;
         panelEndBattle.SetActive(true);
-        p1WinCount.text = "Win: " + p1RoundCount.ToString();
-        p2WinCount.text = "Win: " + p2RoundCount.ToString();
+        if (p1RoundCount > 0)
+        {
+            p1WinCount.sprite = countSprite[p1RoundCount - 1];
+            p1WinCount.enabled = true;
+        }
+        else
+        {
+            p1WinCount.enabled = false;
+        }
+        if (p2RoundCount > 0)
+        {
+            p2WinCount.sprite = countSprite[p2RoundCount - 1];
+            p2WinCount.enabled = true;
+        }
+        else
+        {
+            p2WinCount.enabled = false;
+        }
         yield return new WaitForSeconds(1);
 
+        textEnd.enabled = true;
         if (p1Win)
         {
-            textEnd.text = "P1 WINS";
+            textEnd.sprite = youWinSprite;
         }
         else {
-            textEnd.text = "P2 WINS";
+            textEnd.sprite = youLoseSprite;
         }
 
         yield return new WaitForSeconds(2);
 
         if (endGame)
         {
-            textEnd.text = "GAME OVER";
+            textEnd.sprite = gameOverSprite;
             yield return new WaitForSeconds(2);
 			if (p1Win)
 				PlayerPrefs.SetInt ("PlayerWin",1);
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Scene ThankYou");
+            fader.FadeOut();
+            fader.OnFadeOutFinished += FinishedFadeOut;            
         }
         else {
             panelEndBattle.SetActive(false);
-            textRound.text = "Round " + currRound.ToString();
+            textRound.sprite = roundSprite[currRound-1];
             currGameState = eCurrentGameState.Countdown;
         }
     }
-
+    void FinishedFadeOut()
+    {
+        fader.OnFadeOutFinished -= FinishedFadeOut;
+        SceneManager.LoadScene("Scene ThankYou");
+    }
     void stageSetup(string p1PlayerName,string p1SupportName,string p2PlayerName,string p2SupportName) {
         Vector3 tempPos = new Vector3(0, 0, 0);
 
@@ -540,8 +581,6 @@ public class GameSceneController : MonoBehaviour {
 
         p1NameDisplay.text = p1PlayerName;
         p2NameDisplay.text = p2PlayerName;
-        p1PowerDisplay.text = "Total Strength: "+p1Char.charData.charPower.ToString();
-        p2PowerDisplay.text = "Total Strength: "+p2Char.charData.charPower.ToString();
     }
 
     void spinRoulette(GameObject[] currRoulette) {

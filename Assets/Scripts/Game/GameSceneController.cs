@@ -596,6 +596,9 @@ public class GameSceneController : MonoBehaviour {
         yield return new WaitForSeconds(1);
 
         textEnd.enabled = true;
+        Animator textAnim = textEnd.GetComponent<Animator>();
+        if (!textAnim.isInitialized)
+            textAnim.Rebind();
         if (p1Win)
         {
             textEnd.sprite = youWinSprite;
@@ -603,12 +606,13 @@ public class GameSceneController : MonoBehaviour {
         else {
             textEnd.sprite = youLoseSprite;
         }
-
+        textAnim.SetTrigger("RoundEnd");
         yield return new WaitForSeconds(2);
 
         if (endGame)
         {
             textEnd.sprite = gameOverSprite;
+            textAnim.SetTrigger("RoundGameOver");
             yield return new WaitForSeconds(2);
 			if (p1Win)
 				PlayerPrefs.SetInt ("PlayerWin",1);

@@ -9,6 +9,7 @@ public enum eCurrentGameState {
     RandomizeAttackType,
     RandomizePowerType,
     CompareDamage,
+    ComparePowerAnimation,
     Struggle,
     ApplyDamage,
     AttackAnim,
@@ -23,6 +24,7 @@ public class GameSceneController : MonoBehaviour {
     public RouletteTrigger rouletteTrigger;
 
     public GameObject panelCountdown,panelEndBattle, panelStruggle;
+    public GameObject panelComparePower;
     public GameObject p1PlayerParent, p1SupportParent, p2PlayerParent, p2SupportParent, 
         p1AtkRoulette, p1PowerRoulette, p2AtkRoulette, p2PowerRoulette;
 
@@ -39,6 +41,9 @@ public class GameSceneController : MonoBehaviour {
     public Sprite youWinSprite;
     public Sprite youLoseSprite;
     public Sprite gameOverSprite;
+    public Image p1PowerLabel;
+    public Image p2PowerLabel;
+    public Sprite[] powerSprite;
 
 
     public Image p1HPBar,p2HPBar;
@@ -307,8 +312,9 @@ public class GameSceneController : MonoBehaviour {
                     drawMultiplier++;
                 else
                     drawMultiplier = 10;
-
-                currGameState = eCurrentGameState.RandomizeAttackType;
+                StartCoroutine(ComparePowerAnim("Draw"));
+                currGameState = eCurrentGameState.ComparePowerAnimation;
+                enterStruggle = false;
                 Debug.Log("drawMultiplier:" + drawMultiplier);
             }
             else
@@ -321,21 +327,26 @@ public class GameSceneController : MonoBehaviour {
                         Debug.Log("p1Power: " + p1Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier, false);
                         //currDmg = 5000;
+                        StartCoroutine(ComparePowerAnim("P1Win"));
                     }
                     else
                     {
                         Debug.Log("p2Power: " + p2Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier, false);
                         //currDmg = 5000;
+                        StartCoroutine(ComparePowerAnim("P2Win"));
                     }
                     Debug.Log("currDmg:" + currDmg);
                     resetBattleBool();
-                    currGameState = eCurrentGameState.ApplyDamage;
+                    currGameState = eCurrentGameState.ComparePowerAnimation;
                 }
                 else {
                     currGameState = eCurrentGameState.Struggle;
                 }
             }
+        }
+        if (currGameState == eCurrentGameState.ComparePowerAnimation)
+        {
         }
 
         if(currGameState == eCurrentGameState.Struggle)
@@ -356,18 +367,20 @@ public class GameSceneController : MonoBehaviour {
                     {
                         Debug.Log("p1Power: " + p1Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier, true);
+                        StartCoroutine(ComparePowerAnim("P1Win"));
                         //currDmg = 5000;
                     }
                     else
                     {
                         Debug.Log("p2Power: " + p2Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier, true);
+                        StartCoroutine(ComparePowerAnim("P2Win"));
                         //currDmg = 5000;
                     }
                     Debug.Log("currDmg:" + currDmg);
                     resetBattleBool();
                     panelStruggle.SetActive(false);
-                    currGameState = eCurrentGameState.ApplyDamage;
+                    currGameState = eCurrentGameState.ComparePowerAnimation;
                 }
             }
         }
@@ -437,6 +450,7 @@ public class GameSceneController : MonoBehaviour {
         if (currGameState == eCurrentGameState.EndTurn) {
             drawMultiplier = 1;
             Debug.Log("end round");
+
             if (p1RoundCount >= 2)
             {
                 //p1 wins
@@ -492,21 +506,54 @@ public class GameSceneController : MonoBehaviour {
 
     //end of Update//
 
+    IEnumerator ComparePowerAnim(string animTrigger)
+    {
+        Animator anim = panelComparePower.GetComponent<Animator>();
+        p1PowerLabel.sprite = powerSprite[(p1Pow / 10) - 2];
+        p2PowerLabel.sprite = powerSprite[(p2Pow / 10) - 2];
+        anim.SetTrigger(animTrigger);
+        yield return new WaitForSeconds(2);
+        
+        p1AtkRoulette.SetActive(false);
+        p1PowerRoulette.SetActive(false);
+        p2AtkRoulette.SetActive(false);
+        p2PowerRoulette.SetActive(false);
+
+        if (p1Pow > p2Pow)
+        {
+            currGameState = eCurrentGameState.ApplyDamage;
+        }
+        else if (p1Pow < p2Pow)
+        {
+            currGameState = eCurrentGameState.ApplyDamage;
+        }
+        else
+        {
+            currGameState = eCurrentGameState.RandomizeAttackType;
+        }
+    }
+
     IEnumerator StartCountdown() {
+        Animator timerAnim = timer.GetComponent<Animator>();
         timer.enabled = false;
         panelCountdown.SetActive(true);
         yield return new WaitForSeconds(1);
         timer.enabled = true;
+        timerAnim.SetTrigger("Round");
         timer.sprite = roundSprite[currRound-1];
         yield return new WaitForSeconds(2);
+        timerAnim.SetTrigger("Count");
         timer.sprite = countSprite[2];
         yield return new WaitForSeconds(1);
+        timerAnim.SetTrigger("Count");
         timer.sprite = countSprite[1];
         yield return new WaitForSeconds(1);
+        timerAnim.SetTrigger("Count");
         timer.sprite = countSprite[0];
         yield return new WaitForSeconds(1);
+        timerAnim.SetTrigger("Fight");
         timer.sprite = fightSprite;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         panelCountdown.SetActive(false);
         p1AtkRoulette.SetActive(true);
         currGameState = eCurrentGameState.RandomizeAttackType;
@@ -581,6 +628,8 @@ public class GameSceneController : MonoBehaviour {
 
         p1NameDisplay.text = p1PlayerName;
         p2NameDisplay.text = p2PlayerName;
+
+        panelComparePower.SetActive(true);
     }
 
     void spinRoulette(GameObject[] currRoulette) {

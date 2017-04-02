@@ -44,7 +44,7 @@ public class GameSceneController : MonoBehaviour {
     public Image p1PowerLabel;
     public Image p2PowerLabel;
     public Sprite[] powerSprite;
-
+    public Text multiplierText;
 
     public Image p1HPBar,p2HPBar;
 
@@ -137,6 +137,7 @@ public class GameSceneController : MonoBehaviour {
 
         if (currGameState == eCurrentGameState.Countdown && !enterCountdown) {
             enterCountdown = true;
+            multiplierText.text = "";
             p1AtkRoulette.SetActive(false);
             p1PowerRoulette.SetActive(false);
             p2AtkRoulette.SetActive(false);
@@ -449,6 +450,7 @@ public class GameSceneController : MonoBehaviour {
 
         if (currGameState == eCurrentGameState.EndTurn) {
             drawMultiplier = 1;
+            multiplierText.text = "";
             Debug.Log("end round");
 
             if (p1RoundCount >= 2)
@@ -478,7 +480,6 @@ public class GameSceneController : MonoBehaviour {
                         p1Win = true;
                     }
                     currGameState = eCurrentGameState.AddRound;
-                    resetHP();
                 }
                 else {
                     //new turn (in the same round)
@@ -512,6 +513,10 @@ public class GameSceneController : MonoBehaviour {
         p1PowerLabel.sprite = powerSprite[(p1Pow / 10) - 2];
         p2PowerLabel.sprite = powerSprite[(p2Pow / 10) - 2];
         anim.SetTrigger(animTrigger);
+        if (animTrigger=="Draw")
+        {
+            StartCoroutine(MultiplierChange());
+        }
         yield return new WaitForSeconds(2);
         
         p1AtkRoulette.SetActive(false);
@@ -532,10 +537,18 @@ public class GameSceneController : MonoBehaviour {
             currGameState = eCurrentGameState.RandomizeAttackType;
         }
     }
+    IEnumerator MultiplierChange()
+    {
+        Animator anim = multiplierText.GetComponent<Animator>();
+        yield return new WaitForSeconds(1);
+        multiplierText.text = "" + drawMultiplier + "X DMG";
+        anim.SetTrigger("ScaleIn");
+    }
 
     IEnumerator StartCountdown() {
         Animator timerAnim = timer.GetComponent<Animator>();
         timer.enabled = false;
+        resetHP();
         panelCountdown.SetActive(true);
         yield return new WaitForSeconds(1);
         timer.enabled = true;

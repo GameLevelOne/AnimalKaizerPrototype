@@ -46,13 +46,13 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	public void OnEndDrag(){
 		float xx = Scroll_Content .GetComponent<RectTransform>().anchoredPosition.x;
 
-		if (xx >= 200 || (xx < 200 && xx >= 0)) {
+		if (xx >= 200 || (xx < 200 && xx >= 50)) {
 //			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = new Vector2 (200, 0);
 			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (200,0),0.2f));
 			SelectedIndex = 0;
-		} else if ((xx < 0 && xx > -200) || xx <= -200) {
+		} else if ((xx < 50 && xx > -300) || xx <= -300) {
 //			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = new Vector2 (-200, 0);
-			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (-200,0),0.2f));
+			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (-300,0),0.2f));
 			SelectedIndex = 1;
 		}
 		ShowDetails();

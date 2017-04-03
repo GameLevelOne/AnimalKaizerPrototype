@@ -49,16 +49,16 @@ public static UIPreBattleResult Instance;
 		Img_Thumbnails[2].sprite = Spr_SpecialMoves[getSpecialMoveIndex(charSpecialMoveName)];
 
 		//details (text)
-		Text_Detail_Character_Name.text = charName;
-		Text_Detail_Support_Name.text = charSupportName;
-		Text_Detail_SpecialMove_Name.text = charSpecialMoveName; 
-		Text_Detail_Character_Power.text = PlayerDataController.Instance.playerChar.charData.charPower.ToString(); 
-		Text_Detail_Character_Health.text = PlayerDataController.Instance.playerChar.charData.charHealth.ToString();
-		Text_Detail_Character_Type.text = PlayerDataController.Instance.playerChar.charData.charType.ToString();
+		Text_Detail_Character_Name.text 	= "Name : "+charName;
+		Text_Detail_Support_Name.text 		= "Support : "+charSupportName;
+		Text_Detail_SpecialMove_Name.text 	= "Special Move : "+charSpecialMoveName; 
+		Text_Detail_Character_Power.text 	= "Power : "+PlayerDataController.Instance.playerChar.charData.charPower.ToString(); 
+		Text_Detail_Character_Health.text 	= "Health : "+PlayerDataController.Instance.playerChar.charData.charHealth.ToString();
+		Text_Detail_Character_Type.text 	= "Type : "+PlayerDataController.Instance.playerChar.charData.charType.ToString();
 
 	}
 
-	int getCharIndex(string name){
+	public int getCharIndex(string name){
 		int temp = -1;
 		switch (name){
 		case "Genderuwo": temp = 0; break;
@@ -67,7 +67,7 @@ public static UIPreBattleResult Instance;
 		return temp;
 	}
 
-	int getSupportIndex(string name){
+	public int getSupportIndex(string name){
 		int temp = -1;
 		switch (name){
 		case "Pocong"		: temp = 0; break;
@@ -75,7 +75,7 @@ public static UIPreBattleResult Instance;
 		}
 		return temp;
 	}
-	int getSpecialMoveIndex(string name){
+	public int getSpecialMoveIndex(string name){
 		int temp = -1;
 		switch (name){
 		case "Mana Kepalaku": temp = 0; break;

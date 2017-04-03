@@ -8,7 +8,7 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	
 	public Image Title;
 	public Sprite TitleSource;
-	public Text[] SpecialMove_Details = new Text[2];
+	public Text[] SpecialMove_Details = new Text[3];
 	public GameObject UIContent ;
 	public GameObject Scroll_Content ;
 	public SpecialMoveSO[] SpecialMoves = new SpecialMoveSO[2];
@@ -59,8 +59,9 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	void ShowDetails(){
-		SpecialMove_Details[0].text = "NAME: "+SpecialMoves[SelectedIndex].specialMoveName;
-		SpecialMove_Details[1].text = "ELEMENT: "+SpecialMoves[SelectedIndex].specialMoveType.ToString();
+		SpecialMove_Details[0].text = "NAME : "+SpecialMoves[SelectedIndex].specialMoveName;
+		SpecialMove_Details[1].text = "TYPE : "+SpecialMoves[SelectedIndex].specialMoveType.ToString();
+		SpecialMove_Details[2].text = "POWER : "+SpecialMoves[SelectedIndex].specialMovePower.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

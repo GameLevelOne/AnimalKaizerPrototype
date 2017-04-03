@@ -802,14 +802,14 @@ public class GameSceneController : MonoBehaviour {
         Vector3 tempPos = new Vector3(0, 0, 0);
 
         GameObject p1PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p1PlayerName)], tempPos, Quaternion.identity);
-        GameObject p1SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p1SupportName)], tempPos, Quaternion.identity);
+//        GameObject p1SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p1SupportName)], tempPos, Quaternion.identity);
         GameObject p2PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p2PlayerName)], tempPos, Quaternion.identity);
-        GameObject p2SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p2SupportName)], tempPos, Quaternion.identity);
+//        GameObject p2SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p2SupportName)], tempPos, Quaternion.identity);
 
         p1PlayerObj.transform.SetParent(p1PlayerParent.transform,false);
-        p1SupportObj.transform.SetParent(p1SupportParent.transform,false);
+//        p1SupportObj.transform.SetParent(p1SupportParent.transform,false);
         p2PlayerObj.transform.SetParent(p2PlayerParent.transform,false);
-        p2SupportObj.transform.SetParent(p2SupportParent.transform,false);
+//        p2SupportObj.transform.SetParent(p2SupportParent.transform,false);
 
 		p1NameDisplay.text = p1PlayerName.ToUpper();
 		p2NameDisplay.text = p2PlayerName.ToUpper();

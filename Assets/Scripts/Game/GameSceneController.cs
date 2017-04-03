@@ -131,8 +131,8 @@ public class GameSceneController : MonoBehaviour {
         p1Char.Life = p1Char.MaxLife;
         p2Char.Life = p2Char.MaxLife;
 
-        Debug.Log("p1 HP: " + p1Char.Life);
-        Debug.Log("p2 HP: " + p2Char.Life);
+//        Debug.Log("p1 HP: " + p1Char.Life);
+//        Debug.Log("p2 HP: " + p2Char.Life);
 
         stageSetup(p1Char.charData.charName, p1Char.support.supportSO.supportName, 
             p2Char.charData.charName, p2Char.support.supportSO.supportName);
@@ -222,7 +222,7 @@ public class GameSceneController : MonoBehaviour {
                 }
 
                 p2CurrAtkType = getRouletteValue(p2RouletteAtkBox);
-                Debug.Log("p2 currAtkType:" + p2CurrAtkType);
+//                Debug.Log("p2 currAtkType:" + p2CurrAtkType);
                 currGameState = eCurrentGameState.RandomizePowerType;
 
             }
@@ -241,7 +241,7 @@ public class GameSceneController : MonoBehaviour {
                 }
 
                 p2CurrPower = getRouletteValue(p2RoulettePowerBox);
-                Debug.Log("p2 currPower:" + p2CurrPower);
+//                Debug.Log("p2 currPower:" + p2CurrPower);
                 currGameState = eCurrentGameState.CompareDamage;
             }
         }
@@ -249,7 +249,7 @@ public class GameSceneController : MonoBehaviour {
 		#region mouse/touch input
 		if (Input.GetMouseButtonDown(0))
 		{
-			if (currGameState == eCurrentGameState.RandomizeAttackType)
+			if ((currGameState == eCurrentGameState.RandomizeAttackType) && (!isWaiting))
 			{
 				stopSpinRouletteAtk = true;
 
@@ -260,11 +260,11 @@ public class GameSceneController : MonoBehaviour {
 				}
 
 				p1CurrAtkType = getRouletteValue(p1RouletteAtkBox);
-				Debug.Log("p1 currAtkType:"+p1CurrAtkType);
+//				Debug.Log("p1 currAtkType:"+p1CurrAtkType);
 
 				isWaiting = true;
 			}
-			else if (currGameState == eCurrentGameState.RandomizePowerType)
+			else if ((currGameState == eCurrentGameState.RandomizePowerType) && (!isWaiting))
 			{
 				stopSpinRoulettePower = true;
 
@@ -275,7 +275,7 @@ public class GameSceneController : MonoBehaviour {
 				}
 
 				p1CurrPower = getRouletteValue(p1RoulettePowerBox);
-				Debug.Log("p2 currPower:" + p1CurrPower);
+//				Debug.Log("p2 currPower:" + p1CurrPower);
 
 				isWaiting = true;
 			}
@@ -283,7 +283,7 @@ public class GameSceneController : MonoBehaviour {
 		#endregion
 
         if (currGameState == eCurrentGameState.CompareDamage) {
-            Debug.Log("compare power");
+//            Debug.Log("compare power");
             p1Pow = int.Parse(p1CurrPower);
             p2Pow = int.Parse(p2CurrPower);
             int p1AtkInt = getAttackIndex(p1CurrAtkType);
@@ -304,7 +304,7 @@ public class GameSceneController : MonoBehaviour {
                     //p1 focusatk
                     if (Random.value >= 0.5)
                     {
-                        Debug.Log("focus!");
+//                        Debug.Log("focus!");
                         focusMove = true;
                     }
                     else
@@ -326,7 +326,7 @@ public class GameSceneController : MonoBehaviour {
                     //p2 focusatk
                     if (Random.value >= 0.5)
                     {
-                        Debug.Log("focus!");
+//                        Debug.Log("focus!");
                         focusMove = true;
                     }
                     else
@@ -354,7 +354,7 @@ public class GameSceneController : MonoBehaviour {
                 StartCoroutine(ComparePowerAnim("Draw"));
                 currGameState = eCurrentGameState.ComparePowerAnimation;
                 enterStruggle = false;
-                Debug.Log("drawMultiplier:" + drawMultiplier);
+//                Debug.Log("drawMultiplier:" + drawMultiplier);
             }
             else
             {
@@ -364,7 +364,7 @@ public class GameSceneController : MonoBehaviour {
                     if (p1Pow > p2Pow)
                     {
                         //p1 winStruggle
-                        Debug.Log("p1Power: " + p1Char.charData.charPower);
+//                        Debug.Log("p1Power: " + p1Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier, false);
                         //currDmg = 5000;
                         StartCoroutine(ComparePowerAnim("P1Win"));
@@ -372,12 +372,12 @@ public class GameSceneController : MonoBehaviour {
                     else
                     {
                         //p2 winStruggle
-                        Debug.Log("p2Power: " + p2Char.charData.charPower);
+//                        Debug.Log("p2Power: " + p2Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier, false);
                         //currDmg = 5000;
                         StartCoroutine(ComparePowerAnim("P2Win"));
                     }
-                    Debug.Log("currDmg:" + currDmg);
+//                    Debug.Log("currDmg:" + currDmg);
                     resetBattleBool();
                     currGameState = eCurrentGameState.ComparePowerAnimation;
                 }
@@ -390,14 +390,14 @@ public class GameSceneController : MonoBehaviour {
         if (currGameState == eCurrentGameState.Struggle)
         {
             bool waitStruggle = true;
-            Debug.Log("struggle");
+//            Debug.Log("struggle");
             panelStruggle.SetActive(true);
 
             struggleTimer += Time.deltaTime;
 
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("tapCount: " + tapCount);
+//                Debug.Log("tapCount: " + tapCount);
                 if (tapCount < 10)
                 {
                     tapCount++;
@@ -409,8 +409,8 @@ public class GameSceneController : MonoBehaviour {
             }
 
             if (struggleTimer >= 4f) {
-                Debug.Log("Time's up");
-                Debug.Log("Tap Count: " + tapCount);
+//                Debug.Log("Time's up");
+//                Debug.Log("Tap Count: " + tapCount);
                 if (tapCount >= 10)
                 {
                     winStruggle = true;
@@ -427,46 +427,46 @@ public class GameSceneController : MonoBehaviour {
                 if (winStruggle)
                 {
                     struggleTimer = 0;
-                    Debug.Log("win struggle");
+//                    Debug.Log("win struggle");
                     //attackIndex = Q = 0,T=1,S=2
                     if (p1Pow > p2Pow)
                     {
-                        Debug.Log("p1Power: " + p1Char.charData.charPower);
+//                        Debug.Log("p1Power: " + p1Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier, true);
                         StartCoroutine(ComparePowerAnim("P1Win"));
                         //currDmg = 5000;
                     }
                     else
                     {
-                        Debug.Log("p2Power: " + p2Char.charData.charPower);
+//                        Debug.Log("p2Power: " + p2Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier, false);
                         StartCoroutine(ComparePowerAnim("P2Win"));
                         //currDmg = 5000;
                     }
-                    Debug.Log("currDmg:" + currDmg);
+//                    Debug.Log("currDmg:" + currDmg);
                     resetBattleBool();
                     panelStruggle.SetActive(false);
                     currGameState = eCurrentGameState.ComparePowerAnimation;
                 }
                 else
                 {
-                    Debug.Log("lost struggle");
+//                    Debug.Log("lost struggle");
 
                     if (p1Pow > p2Pow)
                     {
-                        Debug.Log("p1Power: " + p1Char.charData.charPower);
+//                        Debug.Log("p1Power: " + p1Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier, false);
                         StartCoroutine(ComparePowerAnim("P1Win"));
                         //currDmg = 5000;
                     }
                     else
                     {
-                        Debug.Log("p2Power: " + p2Char.charData.charPower);
+//                        Debug.Log("p2Power: " + p2Char.charData.charPower);
                         currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier, false);
                         StartCoroutine(ComparePowerAnim("P2Win"));
                         //currDmg = 5000;
                     }
-                    Debug.Log("currDmg:" + currDmg);
+//                    Debug.Log("currDmg:" + currDmg);
                     resetBattleBool();
                     panelStruggle.SetActive(false);
                     currGameState = eCurrentGameState.ComparePowerAnimation;
@@ -514,7 +514,7 @@ public class GameSceneController : MonoBehaviour {
 		}
 
         if (currGameState == eCurrentGameState.ApplyDamage) {
-            Debug.Log("apply dmg");
+//            Debug.Log("apply dmg");
 
 
 			if (animTimer == 0f) {
@@ -564,7 +564,7 @@ public class GameSceneController : MonoBehaviour {
 				{
 					if (p2Char.Life <= 0) {
 						p1RoundCount++;
-						Debug.Log("p1RoundCount: " + p1RoundCount); //start new round
+//						Debug.Log("p1RoundCount: " + p1RoundCount); //start new round
 						p1Win = true;
 					}
 				}
@@ -572,7 +572,7 @@ public class GameSceneController : MonoBehaviour {
 				{
 					if (p1Char.Life <= 0) {
 						p2RoundCount++;
-						Debug.Log("p2RoundCount: " + p2RoundCount); //start new round
+//						Debug.Log("p2RoundCount: " + p2RoundCount); //start new round
 						p1Win = false;
 					}
 				}
@@ -584,19 +584,19 @@ public class GameSceneController : MonoBehaviour {
         if (currGameState == eCurrentGameState.EndTurn) {
             drawMultiplier = 1;
             multiplierText.text = "";
-            Debug.Log("end round");
+//            Debug.Log("end round");
 
             if (p1RoundCount >= 2)
             {
                 //p1 wins
-                Debug.Log("p1 wins");
+//                Debug.Log("p1 wins");
                 p1Win = true;
                 currGameState = eCurrentGameState.EndGame;
             }
             else if (p2RoundCount >= 2)
             {
                 //p2 wins
-                Debug.Log("p2 wins");
+//                Debug.Log("p2 wins");
                 p1Win = false;
                 currGameState = eCurrentGameState.EndGame;
             }
@@ -604,7 +604,7 @@ public class GameSceneController : MonoBehaviour {
                 if (p1Char.Life <= 0 || p2Char.Life <= 0)
                 {
                     //new round
-                    Debug.Log("new round");
+//                    Debug.Log("new round");
                     if (p1Char.Life <= 0) {
                         p1Win = false;
                     }
@@ -616,7 +616,7 @@ public class GameSceneController : MonoBehaviour {
                 }
                 else {
                     //new turn (in the same round)
-                    Debug.Log("new turn");
+//                    Debug.Log("new turn");
                     currGameState = eCurrentGameState.RandomizeAttackType;
                 }
             }

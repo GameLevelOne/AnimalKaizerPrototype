@@ -22,6 +22,8 @@ public enum eCurrentGameState {
 }
 
 public class GameSceneController : MonoBehaviour {
+	public Animator mainCamAnim;
+
     public RouletteTrigger rouletteTrigger;
 
     public GameObject panelCountdown,panelEndBattle, panelStruggle;
@@ -223,6 +225,7 @@ public class GameSceneController : MonoBehaviour {
 
                 p2CurrAtkType = getRouletteValue(p2RouletteAtkBox);
 //                Debug.Log("p2 currAtkType:" + p2CurrAtkType);
+				isWaiting = true;
                 currGameState = eCurrentGameState.RandomizePowerType;
 
             }
@@ -261,8 +264,8 @@ public class GameSceneController : MonoBehaviour {
 
 				p1CurrAtkType = getRouletteValue(p1RouletteAtkBox);
 //				Debug.Log("p1 currAtkType:"+p1CurrAtkType);
-
-				isWaiting = true;
+				currGameState = eCurrentGameState.RandomizePowerType;
+//				isWaiting = true;
 			}
 			else if ((currGameState == eCurrentGameState.RandomizePowerType) && (!isWaiting))
 			{
@@ -278,6 +281,7 @@ public class GameSceneController : MonoBehaviour {
 //				Debug.Log("p2 currPower:" + p1CurrPower);
 
 				isWaiting = true;
+				currGameState = eCurrentGameState.RandomizeAttackType;
 			}
 		}
 		#endregion
@@ -694,6 +698,7 @@ public class GameSceneController : MonoBehaviour {
         timerAnim.SetTrigger("Round");
         timer.sprite = roundSprite[currRound-1];
         yield return new WaitForSeconds(2);
+		mainCamAnim.SetTrigger ("CountDown");
         timerAnim.SetTrigger("Count");
         timer.sprite = countSprite[2];
         yield return new WaitForSeconds(1);

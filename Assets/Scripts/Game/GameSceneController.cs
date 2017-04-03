@@ -112,6 +112,9 @@ public class GameSceneController : MonoBehaviour {
     private int p2Pow = 0;
     private int tapCount = 0;
 
+	private Animator p1Anim;
+	private Animator p2Anim;
+
     private eCurrentGameState currGameState = eCurrentGameState.Countdown;
 
     public Fader fader;
@@ -400,8 +403,10 @@ public class GameSceneController : MonoBehaviour {
 //            Debug.Log("struggle");
             panelStruggle.SetActive(true);
 
-			if (struggleTimer == 0f)
+			if (struggleTimer == 0f) {
 				mainCamAnim.SetTrigger ("Struggle");
+				p1Anim.SetTrigger ("Block");
+			}
 
             struggleTimer += Time.deltaTime;
 
@@ -486,6 +491,7 @@ public class GameSceneController : MonoBehaviour {
                     panelStruggle.SetActive(false);
                     currGameState = eCurrentGameState.ComparePowerAnimation;
                 }
+				p1Anim.SetTrigger ("Idle");
             }
         }
 
@@ -515,9 +521,11 @@ public class GameSceneController : MonoBehaviour {
 				if (p1Pow > p2Pow) {
 					charaAnim.SetTrigger(charaAnim_TriggerAttack);
 					mainCamAnim.SetTrigger ("PlayerAttack");
+					p1Anim.SetTrigger ("Attack");
 				} else {
 					charaAnim.SetTrigger(charaAnim_TriggerAttacked);
 					mainCamAnim.SetTrigger ("EnemyAttack");
+					p2Anim.SetTrigger ("Attack");
 				}
 			}
 
@@ -548,6 +556,8 @@ public class GameSceneController : MonoBehaviour {
 						p2Char.Life -= currDmg;
 					}
 					targetLife = p2Char.Life;
+
+					p2Anim.SetTrigger ("Hit");
 				} else {
 					damageText.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (-300,-200);
 					curLife = p1Char.Life;
@@ -557,6 +567,8 @@ public class GameSceneController : MonoBehaviour {
 						p1Char.Life -= currDmg;
 					}
 					targetLife = p1Char.Life;
+
+					p1Anim.SetTrigger ("Hit");
 				}
 				lifeDelta = (curLife-targetLife) * 1.5f;
 				damageText.text = currDmg.ToString ("N0");
@@ -810,6 +822,9 @@ public class GameSceneController : MonoBehaviour {
 //        p1SupportObj.transform.SetParent(p1SupportParent.transform,false);
         p2PlayerObj.transform.SetParent(p2PlayerParent.transform,false);
 //        p2SupportObj.transform.SetParent(p2SupportParent.transform,false);
+
+		p1Anim = p1PlayerObj.GetComponent<Animator> ();
+		p2Anim = p2PlayerObj.GetComponent<Animator> ();
 
 		p1NameDisplay.text = p1PlayerName.ToUpper();
 		p2NameDisplay.text = p2PlayerName.ToUpper();

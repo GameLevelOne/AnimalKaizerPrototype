@@ -14,7 +14,7 @@ public class UIContent_Prebattle_Vs : MonoBehaviour {
 	void FadeFinished()
 	{
 		fader.OnFadeOutFinished -= FadeFinished;
-        //SceneManager.LoadScene ("Scene Game");
-        SceneManager.LoadScene("Scene Game - Helga");
+        SceneManager.LoadScene ("Scene Game");
+        //SceneManager.LoadScene("Scene Game - Helga") ;
     }
 }

@@ -12,6 +12,7 @@ public enum eCurrentGameState {
     ComparePowerAnimation,
     Struggle,
     ApplyDamage,
+	MoveNameAnim,
     AttackAnim,
     EndTurn,
     AddRound,
@@ -45,6 +46,8 @@ public class GameSceneController : MonoBehaviour {
     public Image p2PowerLabel;
     public Sprite[] powerSprite;
     public Text multiplierText;
+	public Text moveNameText;
+	public Text damageText;
 
     public Image p1HPBar,p2HPBar;
 
@@ -94,6 +97,9 @@ public class GameSceneController : MonoBehaviour {
     private int p1CurrPowerIdx = 0;
     private int p2CurrPowerIdx = 0;
     private int currDmg = 0;
+	private float curLife = 0f;
+	private float targetLife = 0f;
+	private float lifeDelta = 0f;
     private int drawMultiplier = 1;
     private int p1RoundCount = 0;
     private int p2RoundCount = 0;
@@ -379,9 +385,6 @@ public class GameSceneController : MonoBehaviour {
                 }
             }
         }
-        if (currGameState == eCurrentGameState.ComparePowerAnimation)
-        {
-        }
 
         if (currGameState == eCurrentGameState.Struggle)
         {
@@ -470,68 +473,113 @@ public class GameSceneController : MonoBehaviour {
             }
         }
 
+		if (currGameState == eCurrentGameState.MoveNameAnim)
+		{
+			if (animTimer == 0f) {
+				moveNameText.gameObject.SetActive (true);
+			}
+
+			animTimer += Time.deltaTime;
+
+			if (animTimer > 2f)
+			{
+				animTimer = 0f;
+				currGameState = eCurrentGameState.AttackAnim;
+				moveNameText.gameObject.SetActive (false);
+			}
+		}
+
+		if (currGameState == eCurrentGameState.AttackAnim)
+		{
+			if (animTimer == 0f) {
+				if (p1Pow > p2Pow) {
+					charaAnim.SetTrigger(charaAnim_TriggerAttack);
+				} else {
+					charaAnim.SetTrigger(charaAnim_TriggerAttacked);
+				}
+			}
+
+			if (waitForAttackAnim)
+			{
+				animTimer += Time.deltaTime;
+			}
+
+			if (animTimer > 0.5f)
+			{
+				animTimer = 0f;
+				waitForAttackAnim = false;
+				currGameState = eCurrentGameState.ApplyDamage;
+			}
+		}
+
         if (currGameState == eCurrentGameState.ApplyDamage) {
             Debug.Log("apply dmg");
-            if (p1Pow > p2Pow)
-            {
-                charaAnim.SetTrigger(charaAnim_TriggerAttack);
-                Debug.Log("p2currHP: " + p2Char.Life);
-                if ((p2Char.Life-currDmg) <= 0)
-                    p2Char.Life = 0;
-                else
-                    p2Char.Life -= currDmg;
-                
-                p2HPBar.fillAmount = (float) p2Char.Life / p2Char.MaxLife;
 
-                Debug.Log(p2Char.Life);
-                Debug.Log(p2Char.MaxLife);
 
-                if (p2Char.Life <= 0) {
-                    p1RoundCount++;
-                    Debug.Log("p1RoundCount: " + p1RoundCount); //start new round
-                    p1Win = true;
-                }
-            }
-            else
-            {
-                charaAnim.SetTrigger(charaAnim_TriggerAttacked);
-                Debug.Log("p1currHP: " + p1Char.Life);
-                if ((p1Char.Life-currDmg) <= 0)
-                    p1Char.Life = 0;
-                else
-                    p1Char.Life -= currDmg;
+			if (animTimer == 0f) {
+				if (p1Pow > p2Pow) {
+					damageText.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (300,-200);
+					curLife = p2Char.Life;
+					if ((p2Char.Life - currDmg) <= 0) {
+						p2Char.Life = 0;
+					} else {
+						p2Char.Life -= currDmg;
+					}
+					targetLife = p2Char.Life;
+				} else {
+					damageText.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (-300,-200);
+					curLife = p1Char.Life;
+					if ((p1Char.Life - currDmg) <= 0) {
+						p1Char.Life = 0;
+					} else {
+						p1Char.Life -= currDmg;
+					}
+					targetLife = p1Char.Life;
+				}
+				lifeDelta = (curLife-targetLife) * 1.5f;
+				damageText.text = currDmg.ToString ("N0");
+				damageText.gameObject.SetActive (true);
+			}
+			if (animTimer < 2f) {
+				animTimer += Time.deltaTime;
 
-                p1HPBar.fillAmount = (float) p1Char.Life / p1Char.MaxLife;
+				if (curLife > targetLife) {
+					curLife -= (lifeDelta * Time.deltaTime);
+					if (curLife < targetLife)
+						curLife = targetLife;
+				} 
 
-                Debug.Log(p1Char.Life);
-                Debug.Log(p1Char.MaxLife);
+				if (p1Pow > p2Pow) {
+					p2HPBar.fillAmount = (float) curLife / p2Char.MaxLife;
+				} else {
+					p1HPBar.fillAmount = (float) curLife / p1Char.MaxLife;
+				}
 
-                if (p1Char.Life <= 0) {
-                    p2RoundCount++;
-                    Debug.Log("p2RoundCount: " + p2RoundCount); //start new round
-                    p1Win = false;
-                }
-            }
+			} else {
+				animTimer = 0f;
+				damageText.gameObject.SetActive (false);
 
-            waitForAttackAnim = true;
-            currGameState = eCurrentGameState.AttackAnim;
+				if (p1Pow > p2Pow)
+				{
+					if (p2Char.Life <= 0) {
+						p1RoundCount++;
+						Debug.Log("p1RoundCount: " + p1RoundCount); //start new round
+						p1Win = true;
+					}
+				}
+				else
+				{
+					if (p1Char.Life <= 0) {
+						p2RoundCount++;
+						Debug.Log("p2RoundCount: " + p2RoundCount); //start new round
+						p1Win = false;
+					}
+				}
+				currGameState = eCurrentGameState.EndTurn;
+			}
+
         }
-
-        if (currGameState == eCurrentGameState.AttackAnim)
-        {
-            if (waitForAttackAnim)
-            {
-                animTimer += Time.deltaTime;
-            }
-
-            if (animTimer > 1.25f)
-            {
-                animTimer = 0f;
-                waitForAttackAnim = false;
-                currGameState = eCurrentGameState.EndTurn;
-            }
-        }
-
+			
         if (currGameState == eCurrentGameState.EndTurn) {
             drawMultiplier = 1;
             multiplierText.text = "";
@@ -610,11 +658,17 @@ public class GameSceneController : MonoBehaviour {
 
         if (p1Pow > p2Pow)
         {
-            currGameState = eCurrentGameState.ApplyDamage;
+			animTimer = 0f;
+			waitForAttackAnim = true;
+			currGameState = eCurrentGameState.MoveNameAnim;
+			moveNameText.text = p1Char.charData.charAttackData [getAttackIndex (p1CurrAtkType)].attackName.ToUpper();
         }
         else if (p1Pow < p2Pow)
         {
-            currGameState = eCurrentGameState.ApplyDamage;
+			animTimer = 0f;
+			waitForAttackAnim = true;
+			currGameState = eCurrentGameState.MoveNameAnim;
+			moveNameText.text = p2Char.charData.charAttackData [getAttackIndex (p2CurrAtkType)].attackName.ToUpper();
         }
         else
         {
@@ -727,8 +781,8 @@ public class GameSceneController : MonoBehaviour {
         p2PlayerObj.transform.SetParent(p2PlayerParent.transform,false);
         p2SupportObj.transform.SetParent(p2SupportParent.transform,false);
 
-        p1NameDisplay.text = p1PlayerName;
-        p2NameDisplay.text = p2PlayerName;
+		p1NameDisplay.text = p1PlayerName.ToUpper();
+		p2NameDisplay.text = p2PlayerName.ToUpper();
 
         panelComparePower.SetActive(true);
     }

@@ -21,7 +21,6 @@ public class PlayerDataController : MonoBehaviour {
         }
         DontDestroyOnLoad(gameObject);
         //SceneManager.LoadScene("Scene Title");
-
 	}
 
 	public void ClearData(){
@@ -42,16 +41,5 @@ public class PlayerDataController : MonoBehaviour {
     public void SetEnemyCharacter(Character enemy) {
         enemyChar = enemy;
     }
-	public string getCharacterName(){
-		return GetComponent<Character>().charData.charName;
-	}
-
-	public string getSupportName(){
-		return GetComponent<Support>().supportSO.supportName;
-	}
-
-	public string getSopecialMoveName(){
-		return GetComponent<SpecialMove>().specialMoveSO.specialMoveName;
-	}
 
 }

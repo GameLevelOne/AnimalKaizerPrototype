@@ -21,6 +21,7 @@ public class UICharacterSelections : MonoBehaviour {
 	float x, distance;
 
 	void Awake(){
+		
 		Instance = this;
 	}
 	
@@ -55,13 +56,13 @@ public class UICharacterSelections : MonoBehaviour {
 	public void OnEndDrag(){
 		float xx = Scroll_Content.GetComponent<RectTransform>().anchoredPosition.x;
 
-		if (xx >= 200 || (xx < 200 && xx >= 0)) {
+		if (xx >= 200 || (xx < 200 && xx >= 50)) {
 //			Scroll_Content.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (200, 0);
 			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (200,0),0.2f));
 			SelectedIndex = 0;
-		} else if ((xx < 0 && xx > -200) || xx <= -200) {
+		} else if ((xx < 50 && xx > -300) || xx <= -300) {
 //			Scroll_Content.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (-200, 0);
-			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (-200,0),0.2f));
+			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (-300,0),0.2f));
 			SelectedIndex = 1;
 		}
 		ShowDetails();
@@ -71,7 +72,7 @@ public class UICharacterSelections : MonoBehaviour {
 		Character_Details[0].text = "NAME: "+Characters[SelectedIndex].charName;
 		Character_Details[1].text = "POWER: "+Characters[SelectedIndex].charHealth.ToString();
 		Character_Details[2].text = "HEALTH: "+Characters[SelectedIndex].charPower.ToString();
-		Character_Details[3].text = "ELEMENT: "+Characters[SelectedIndex].charType.ToString();
+		Character_Details[3].text = "TYPE: "+Characters[SelectedIndex].charType.ToString();
 	}
 	
 	public void ButtonSelect_OnClick(){

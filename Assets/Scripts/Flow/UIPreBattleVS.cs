@@ -3,36 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum eCharacter{
-	GENDERUWO = 0,
-	KUNTI,
-	KOLORIJO,
-	POCONG,
-	TUYUL,
-	SUSTER
-}
-
 public class UIPreBattleVS : MonoBehaviour {
 	public static UIPreBattleVS Instance;
-
-	public Sprite[] Spr_Characters = new Sprite[6];
 
 	public Image
 	Img_Player_Character,
 	Img_Player_Support,
+	Img_Player_SpecialMove,
+
 	Img_Enemy_Character,
-	Img_Enemy_Support;
+	Img_Enemy_Support,
+	Img_Enemy_SpecialMove;
 
 	public Text 
-	Text_Player_Name,
-	Text_Player_Support,
-	Text_Enemy_Name,
-	Text_Enemy_Support;
+	Text_PlayerChar_Name,
+	Text_PlayerChar_Power,
+	Text_PlayerChar_Health,
+	Text_PlayerChar_Type,
 
-	public GameObject Player, UIContent;
+	Text_EnemyChar_Name,
+	Text_EnemyChar_Power,
+	Text_EnemyChar_Health,
+	Text_EnemyChar_Type;
+
+	public GameObject UIContent;
 	public EnemyListSO EnemyList;
 
-	eCharacter chara;
 	Character Enemy;
 
 	void Awake(){
@@ -43,24 +39,24 @@ public class UIPreBattleVS : MonoBehaviour {
         Enemy = EnemyList.GetRandomEnemy();
         PlayerDataController.Instance.SetEnemyCharacter(Enemy);
 
-        string player_name = PlayerDataController.Instance.playerChar.charData.charName;
-		string player_support_name = PlayerDataController.Instance.playerChar.support.supportSO.supportName;
-		string enemy_name = Enemy.charData.charName;
-		string enemy_support_name = Enemy.support.supportSO.supportName;
+		//images
+		Img_Player_Character.sprite 	= UIPreBattleResult.Instance.Img_Thumbnails[0].sprite;
+		Img_Player_Support.sprite 		= UIPreBattleResult.Instance.Img_Thumbnails[1].sprite;
+		Img_Player_SpecialMove.sprite 	= UIPreBattleResult.Instance.Img_Thumbnails[2].sprite;
+		Img_Enemy_Character.sprite 		= UIPreBattleResult.Instance.Spr_Characters		[UIPreBattleResult.Instance.getCharIndex		(Enemy.charData.charName)];
+		Img_Enemy_Support.sprite 		= UIPreBattleResult.Instance.Spr_Supports		[UIPreBattleResult.Instance.getSupportIndex		(Enemy.support.supportSO.supportName)];
+		Img_Enemy_SpecialMove.sprite 	= UIPreBattleResult.Instance.Spr_SpecialMoves	[UIPreBattleResult.Instance.getSpecialMoveIndex	(Enemy.specialMove.specialMoveSO.specialMoveName)];
 
-		Text_Player_Name.text = player_name;
-		Text_Player_Support.text = player_support_name;
-		Text_Enemy_Name.text = enemy_name;
-		Text_Enemy_Support.text = enemy_support_name;
+		//texts
+		Text_PlayerChar_Name.text 	= UIPreBattleResult.Instance.Text_Detail_Character_Name.text;
+		Text_PlayerChar_Power.text 	= UIPreBattleResult.Instance.Text_Detail_Character_Power.text;
+		Text_PlayerChar_Health.text = UIPreBattleResult.Instance.Text_Detail_Character_Health.text;
+		Text_PlayerChar_Type.text 	= UIPreBattleResult.Instance.Text_Detail_Character_Type.text;
+		Text_EnemyChar_Name.text 	= "NAME : "		+ Enemy.charData.charName;
+		Text_EnemyChar_Power.text 	= "POWER : "	+ Enemy.charData.charPower.ToString();
+		Text_EnemyChar_Health.text 	= "HEALTH : "	+ Enemy.charData.charHealth.ToString();
+		Text_EnemyChar_Type.text 	= "TYPE : "		+ Enemy.charData.charType.ToString();
 
-		Img_Player_Character.sprite = Spr_Characters[getCharCode(player_name)];
-		Img_Player_Support.sprite = Spr_Characters[getCharCode(player_support_name)];
-		Img_Enemy_Character.sprite = Spr_Characters[getCharCode(enemy_name)];
-		Img_Enemy_Support.sprite = Spr_Characters[getCharCode(enemy_support_name)];
-		Img_Player_Character.SetNativeSize();
-		Img_Player_Support.SetNativeSize();
-		Img_Enemy_Character.SetNativeSize();
-		Img_Enemy_Support.SetNativeSize();
 		UIContent.SetActive(true);
 	}
 
@@ -68,16 +64,5 @@ public class UIPreBattleVS : MonoBehaviour {
 		UIContent.SetActive(false);
 	}
 
-	int getCharCode(string name){
-		int temp = -1;
-		switch (name){
-		case "Genderuwo"	: temp = 0; break;
-		case "Kunti"		: temp = 1; break;
-		case "Kolorijo" 	: temp = 2; break;
-		case "Pocong" 		: temp = 3; break;
-		case "Tuyul" 		: temp = 4; break;
-		case "Suster Ngesot": temp = 5; break;
-		}
-		return temp;
-	}
+
 }

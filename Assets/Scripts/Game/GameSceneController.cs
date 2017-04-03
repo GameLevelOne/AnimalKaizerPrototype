@@ -832,7 +832,7 @@ public class GameSceneController : MonoBehaviour {
         {
             for (int i = 0; i < currRoulette.Length; i++)
             {
-                currRoulette[i].transform.Translate(Vector3.down * 500 * Time.deltaTime, Space.Self);
+                currRoulette[i].transform.Translate(Vector3.down * 1000 * Time.deltaTime, Space.Self);
                 //rouletteAttackParent.transform.Translate(Vector3.down * 40, Space.Self);
             }
         }

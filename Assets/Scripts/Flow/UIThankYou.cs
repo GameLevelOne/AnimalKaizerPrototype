@@ -9,6 +9,7 @@ public class UIThankYou : MonoBehaviour {
 	public Text payoutText;
 
 	void Start () {
+		Application.targetFrameRate = 60;
 		fader.FadeIn ();
 
 		int payout = PlayerPrefs.GetInt ("PlayerPayout",100);

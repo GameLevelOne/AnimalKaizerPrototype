@@ -151,41 +151,6 @@ public class GameSceneController : MonoBehaviour {
             StartCoroutine(StartCountdown());
         }
 
-        #region mouse/touch input
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (currGameState == eCurrentGameState.RandomizeAttackType)
-            {
-                stopSpinRouletteAtk = true;
-
-                for (int i = 0; i < p1RouletteAtkBox.Length; i++)
-                {
-                    //boxes[i].transform.localPosition -= new Vector3(0, yOffset, 0);
-                    p1RouletteAtkBox[i].transform.localPosition = p1RouletteAtkBoxStartPos[i];
-                }
-
-                p1CurrAtkType = getRouletteValue(p1RouletteAtkBox);
-                Debug.Log("p1 currAtkType:"+p1CurrAtkType);
-
-                isWaiting = true;
-            }
-            else if (currGameState == eCurrentGameState.RandomizePowerType)
-            {
-                stopSpinRoulettePower = true;
-
-                for (int i = 0; i < p1RoulettePowerBox.Length; i++)
-                {
-                    //boxes[i].transform.localPosition -= new Vector3(0, yOffset, 0);
-                    p1RoulettePowerBox[i].transform.localPosition = p1RoulettePowerBoxStartPos[i];
-                }
-
-                p1CurrPower = getRouletteValue(p1RoulettePowerBox);
-                Debug.Log("p2 currPower:" + p1CurrPower);
-
-                isWaiting = true;
-            }
-        }
-        #endregion
 
         //start random atk/power
         if (!isWaiting)
@@ -279,6 +244,42 @@ public class GameSceneController : MonoBehaviour {
                 currGameState = eCurrentGameState.CompareDamage;
             }
         }
+
+		#region mouse/touch input
+		if (Input.GetMouseButtonDown(0))
+		{
+			if (currGameState == eCurrentGameState.RandomizeAttackType)
+			{
+				stopSpinRouletteAtk = true;
+
+				for (int i = 0; i < p1RouletteAtkBox.Length; i++)
+				{
+					//boxes[i].transform.localPosition -= new Vector3(0, yOffset, 0);
+					p1RouletteAtkBox[i].transform.localPosition = p1RouletteAtkBoxStartPos[i];
+				}
+
+				p1CurrAtkType = getRouletteValue(p1RouletteAtkBox);
+				Debug.Log("p1 currAtkType:"+p1CurrAtkType);
+
+				isWaiting = true;
+			}
+			else if (currGameState == eCurrentGameState.RandomizePowerType)
+			{
+				stopSpinRoulettePower = true;
+
+				for (int i = 0; i < p1RoulettePowerBox.Length; i++)
+				{
+					//boxes[i].transform.localPosition -= new Vector3(0, yOffset, 0);
+					p1RoulettePowerBox[i].transform.localPosition = p1RoulettePowerBoxStartPos[i];
+				}
+
+				p1CurrPower = getRouletteValue(p1RoulettePowerBox);
+				Debug.Log("p2 currPower:" + p1CurrPower);
+
+				isWaiting = true;
+			}
+		}
+		#endregion
 
         if (currGameState == eCurrentGameState.CompareDamage) {
             Debug.Log("compare power");
@@ -748,7 +749,8 @@ public class GameSceneController : MonoBehaviour {
         {
             for (int i = 0; i < currRoulette.Length; i++)
             {
-                currRoulette[i].transform.Translate(Vector3.down * 500 * Time.deltaTime, Space.Self);
+//                currRoulette[i].transform.Translate(Vector3.down * 500 * Time.deltaTime, Space.Self);
+				currRoulette[i].transform.Translate(Vector3.down * 1500 * Time.deltaTime);
                 //rouletteAttackParent.transform.Translate(Vector3.down * 40, Space.Self);
             }
         }

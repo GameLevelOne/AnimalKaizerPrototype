@@ -282,6 +282,7 @@ public class GameSceneController : MonoBehaviour {
 				p1CurrPower = getRouletteValue(p1RoulettePowerBox);
 //				Debug.Log("p2 currPower:" + p1CurrPower);
 
+				mainCamAnim.SetTrigger("EnemySelection");
 				isWaiting = true;
 				currGameState = eCurrentGameState.RandomizeAttackType;
 			}
@@ -399,6 +400,9 @@ public class GameSceneController : MonoBehaviour {
 //            Debug.Log("struggle");
             panelStruggle.SetActive(true);
 
+			if (struggleTimer == 0f)
+				mainCamAnim.SetTrigger ("Struggle");
+
             struggleTimer += Time.deltaTime;
 
             if (Input.GetMouseButtonDown(0))
@@ -489,6 +493,10 @@ public class GameSceneController : MonoBehaviour {
 		{
 			if (animTimer == 0f) {
 				moveNameText.gameObject.SetActive (true);
+				if (p1Pow>p2Pow)
+					mainCamAnim.SetTrigger ("PlayerMoveName");
+				else
+					mainCamAnim.SetTrigger ("EnemyMoveName");
 			}
 
 			animTimer += Time.deltaTime;
@@ -506,8 +514,10 @@ public class GameSceneController : MonoBehaviour {
 			if (animTimer == 0f) {
 				if (p1Pow > p2Pow) {
 					charaAnim.SetTrigger(charaAnim_TriggerAttack);
+					mainCamAnim.SetTrigger ("PlayerAttack");
 				} else {
 					charaAnim.SetTrigger(charaAnim_TriggerAttacked);
+					mainCamAnim.SetTrigger ("EnemyAttack");
 				}
 			}
 
@@ -629,6 +639,7 @@ public class GameSceneController : MonoBehaviour {
                     //new turn (in the same round)
 //                    Debug.Log("new turn");
                     currGameState = eCurrentGameState.RandomizeAttackType;
+					mainCamAnim.SetTrigger ("PlayerSelection");
                 }
             }
         }
@@ -656,6 +667,7 @@ public class GameSceneController : MonoBehaviour {
         Animator anim = panelComparePower.GetComponent<Animator>();
         p1PowerLabel.sprite = powerSprite[(p1Pow / 10) - 2];
         p2PowerLabel.sprite = powerSprite[(p2Pow / 10) - 2];
+		mainCamAnim.SetTrigger ("CompareResults");
         anim.SetTrigger(animTrigger);
         if (animTrigger=="Draw")
         {
@@ -685,6 +697,7 @@ public class GameSceneController : MonoBehaviour {
         else
         {
             currGameState = eCurrentGameState.RandomizeAttackType;
+			mainCamAnim.SetTrigger ("PlayerSelection");
         }
     }
     IEnumerator MultiplierChange()
@@ -720,6 +733,7 @@ public class GameSceneController : MonoBehaviour {
         yield return new WaitForSeconds(2);
         panelCountdown.SetActive(false);
         p1AtkRoulette.SetActive(true);
+		mainCamAnim.SetTrigger ("PlayerSelection");
         currGameState = eCurrentGameState.RandomizeAttackType;
     }
 
@@ -753,9 +767,11 @@ public class GameSceneController : MonoBehaviour {
         if (p1Win)
         {
             textEnd.sprite = youWinSprite;
+			mainCamAnim.SetTrigger ("PlayerWin");
         }
         else {
             textEnd.sprite = youLoseSprite;
+			mainCamAnim.SetTrigger ("EnemyWin");
         }
         textAnim.SetTrigger("RoundEnd");
         yield return new WaitForSeconds(2);
@@ -763,6 +779,7 @@ public class GameSceneController : MonoBehaviour {
         if (endGame)
         {
             textEnd.sprite = gameOverSprite;
+			mainCamAnim.SetTrigger ("GameOver");
             textAnim.SetTrigger("RoundGameOver");
             yield return new WaitForSeconds(2);
 			if (p1Win)

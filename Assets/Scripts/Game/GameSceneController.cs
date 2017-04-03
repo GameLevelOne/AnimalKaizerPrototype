@@ -48,6 +48,8 @@ public class GameSceneController : MonoBehaviour {
     public Text multiplierText;
 	public Text moveNameText;
 	public Text damageText;
+    public Sprite[] struggleButtonSprite;
+    public Image buttonStruggle;
 
     public Image p1HPBar,p2HPBar;
 
@@ -396,11 +398,16 @@ public class GameSceneController : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(0))
             {
+                buttonStruggle.sprite = struggleButtonSprite[0];
                 Debug.Log("tapCount: " + tapCount);
                 if (tapCount < 10)
                 {
                     tapCount++;
                 }
+            }
+
+            if (Input.GetMouseButtonUp(0)) {
+                buttonStruggle.sprite = struggleButtonSprite[1];
             }
 
             if (tapCount >= 10) {

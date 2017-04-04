@@ -21,6 +21,7 @@ public class Payout : MonoBehaviour {
 	}
 	public void AddPayout(int addPayout)
 	{
+        AudioManager.Instance.PlaySFX(eSFX.COIN);
 		int payout = PlayerPrefs.GetInt ("PlayerPayout",200);
 		if (payout < payoutThreshold) {
 			payout += addPayout;

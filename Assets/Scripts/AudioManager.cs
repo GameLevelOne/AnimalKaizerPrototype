@@ -20,7 +20,10 @@ public enum eSFX{
 	YOU_LOSE,
 	GAME_OVER,
 	BUTTON_PRESS,
-	PRE_BATTLE_VS
+	PRE_BATTLE_VS,
+    POWER_COMPARISON,
+    COIN,
+    ROULETTE_SPIN
 }
 
 public class AudioManager : MonoBehaviour{

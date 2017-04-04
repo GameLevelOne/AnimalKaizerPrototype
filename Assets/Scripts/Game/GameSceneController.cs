@@ -164,6 +164,7 @@ public class GameSceneController : MonoBehaviour {
         //start random atk/power
         if (!isWaiting)
         {
+            
             //p1
             if (currGameState == eCurrentGameState.RandomizeAttackType)
             {
@@ -262,7 +263,7 @@ public class GameSceneController : MonoBehaviour {
 		#region mouse/touch input
 		if (Input.GetMouseButtonDown(0))
 		{
-            AudioManager.Instance.PlaySFX(eSFX.ROULETTE_PRESS);
+            AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
 			if ((currGameState == eCurrentGameState.RandomizeAttackType) && (!isWaiting))
 			{
 				stopSpinRouletteAtk = true;
@@ -405,7 +406,6 @@ public class GameSceneController : MonoBehaviour {
 
         if (currGameState == eCurrentGameState.Struggle)
         {
-            AudioManager.Instance.PlaySFX(eSFX.STRUGGLE_START);
             bool waitStruggle = true;
 //            Debug.Log("struggle");
             panelStruggle.SetActive(true);
@@ -419,6 +419,7 @@ public class GameSceneController : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(0))
             {
+                AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
                 buttonStruggle.sprite = struggleButtonSprite[0];
                 Debug.Log("tapCount: " + tapCount);
                 if (tapCount < 10)
@@ -738,6 +739,7 @@ public class GameSceneController : MonoBehaviour {
         timer.enabled = true;
         timerAnim.SetTrigger("Round");
         timer.sprite = roundSprite[currRound-1];
+        RoundSFX(currRound);
         yield return new WaitForSeconds(2);
 		mainCamAnim.SetTrigger ("CountDown");
         timerAnim.SetTrigger("Count");
@@ -819,6 +821,19 @@ public class GameSceneController : MonoBehaviour {
             panelEndBattle.SetActive(false);
             textRound.sprite = roundSprite[currRound-1];
             currGameState = eCurrentGameState.Countdown;
+        }
+    }
+    void RoundSFX(int count) {
+        switch (count) {
+            case 1:
+                AudioManager.Instance.PlaySFX(eSFX.ROUND_ONE);
+                break;
+            case 2:
+                AudioManager.Instance.PlaySFX(eSFX.ROUND_TWO);
+                break;
+            case 3:
+                AudioManager.Instance.PlaySFX(eSFX.FINAL_ROUND);
+                break;
         }
     }
     void FinishedFadeOut()

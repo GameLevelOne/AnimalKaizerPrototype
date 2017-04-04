@@ -13,6 +13,7 @@ public class UISceneBet : MonoBehaviour {
 		fader.FadeIn ();
 	}
 	public void NextScene () {
+        AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
 		fader.FadeOut ();
 		fader.OnFadeOutFinished += FadeFinished;
 	}	

@@ -22,5 +22,7 @@ public class PlayerCoin : MonoBehaviour {
 		coin += coinMod;
 		coinAmount.text = coin.ToString ("N0");
 		PlayerPrefs.SetInt ("PlayerCoin",coin);
-	}
+        AudioManager.Instance.PlaySFX(eSFX.COIN);
+
+    }
 }

@@ -112,6 +112,9 @@ public class GameSceneController : MonoBehaviour {
     private int p2Pow = 0;
     private int tapCount = 0;
 
+	private Animator p1Anim;
+	private Animator p2Anim;
+
     private eCurrentGameState currGameState = eCurrentGameState.Countdown;
 
     public Fader fader;
@@ -282,6 +285,7 @@ public class GameSceneController : MonoBehaviour {
 				p1CurrPower = getRouletteValue(p1RoulettePowerBox);
 //				Debug.Log("p2 currPower:" + p1CurrPower);
 
+				mainCamAnim.SetTrigger("EnemySelection");
 				isWaiting = true;
 				currGameState = eCurrentGameState.RandomizeAttackType;
 			}
@@ -399,6 +403,11 @@ public class GameSceneController : MonoBehaviour {
 //            Debug.Log("struggle");
             panelStruggle.SetActive(true);
 
+			if (struggleTimer == 0f) {
+				mainCamAnim.SetTrigger ("Struggle");
+				p1Anim.SetTrigger ("Block");
+			}
+
             struggleTimer += Time.deltaTime;
 
             if (Input.GetMouseButtonDown(0))
@@ -482,6 +491,7 @@ public class GameSceneController : MonoBehaviour {
                     panelStruggle.SetActive(false);
                     currGameState = eCurrentGameState.ComparePowerAnimation;
                 }
+				p1Anim.SetTrigger ("Idle");
             }
         }
 
@@ -489,6 +499,10 @@ public class GameSceneController : MonoBehaviour {
 		{
 			if (animTimer == 0f) {
 				moveNameText.gameObject.SetActive (true);
+				if (p1Pow>p2Pow)
+					mainCamAnim.SetTrigger ("PlayerMoveName");
+				else
+					mainCamAnim.SetTrigger ("EnemyMoveName");
 			}
 
 			animTimer += Time.deltaTime;
@@ -506,8 +520,12 @@ public class GameSceneController : MonoBehaviour {
 			if (animTimer == 0f) {
 				if (p1Pow > p2Pow) {
 					charaAnim.SetTrigger(charaAnim_TriggerAttack);
+					mainCamAnim.SetTrigger ("PlayerAttack");
+					p1Anim.SetTrigger ("Attack");
 				} else {
 					charaAnim.SetTrigger(charaAnim_TriggerAttacked);
+					mainCamAnim.SetTrigger ("EnemyAttack");
+					p2Anim.SetTrigger ("Attack");
 				}
 			}
 
@@ -538,6 +556,8 @@ public class GameSceneController : MonoBehaviour {
 						p2Char.Life -= currDmg;
 					}
 					targetLife = p2Char.Life;
+
+					p2Anim.SetTrigger ("Hit");
 				} else {
 					damageText.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (-300,-200);
 					curLife = p1Char.Life;
@@ -547,6 +567,8 @@ public class GameSceneController : MonoBehaviour {
 						p1Char.Life -= currDmg;
 					}
 					targetLife = p1Char.Life;
+
+					p1Anim.SetTrigger ("Hit");
 				}
 				lifeDelta = (curLife-targetLife) * 1.5f;
 				damageText.text = currDmg.ToString ("N0");
@@ -629,6 +651,7 @@ public class GameSceneController : MonoBehaviour {
                     //new turn (in the same round)
 //                    Debug.Log("new turn");
                     currGameState = eCurrentGameState.RandomizeAttackType;
+					mainCamAnim.SetTrigger ("PlayerSelection");
                 }
             }
         }
@@ -656,6 +679,7 @@ public class GameSceneController : MonoBehaviour {
         Animator anim = panelComparePower.GetComponent<Animator>();
         p1PowerLabel.sprite = powerSprite[(p1Pow / 10) - 2];
         p2PowerLabel.sprite = powerSprite[(p2Pow / 10) - 2];
+		mainCamAnim.SetTrigger ("CompareResults");
         anim.SetTrigger(animTrigger);
         if (animTrigger=="Draw")
         {
@@ -685,6 +709,7 @@ public class GameSceneController : MonoBehaviour {
         else
         {
             currGameState = eCurrentGameState.RandomizeAttackType;
+			mainCamAnim.SetTrigger ("PlayerSelection");
         }
     }
     IEnumerator MultiplierChange()
@@ -720,6 +745,7 @@ public class GameSceneController : MonoBehaviour {
         yield return new WaitForSeconds(2);
         panelCountdown.SetActive(false);
         p1AtkRoulette.SetActive(true);
+		mainCamAnim.SetTrigger ("PlayerSelection");
         currGameState = eCurrentGameState.RandomizeAttackType;
     }
 
@@ -753,9 +779,11 @@ public class GameSceneController : MonoBehaviour {
         if (p1Win)
         {
             textEnd.sprite = youWinSprite;
+			mainCamAnim.SetTrigger ("PlayerWin");
         }
         else {
             textEnd.sprite = youLoseSprite;
+			mainCamAnim.SetTrigger ("EnemyWin");
         }
         textAnim.SetTrigger("RoundEnd");
         yield return new WaitForSeconds(2);
@@ -763,6 +791,7 @@ public class GameSceneController : MonoBehaviour {
         if (endGame)
         {
             textEnd.sprite = gameOverSprite;
+			mainCamAnim.SetTrigger ("GameOver");
             textAnim.SetTrigger("RoundGameOver");
             yield return new WaitForSeconds(2);
 			if (p1Win)
@@ -785,14 +814,17 @@ public class GameSceneController : MonoBehaviour {
         Vector3 tempPos = new Vector3(0, 0, 0);
 
         GameObject p1PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p1PlayerName)], tempPos, Quaternion.identity);
-        GameObject p1SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p1SupportName)], tempPos, Quaternion.identity);
+//        GameObject p1SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p1SupportName)], tempPos, Quaternion.identity);
         GameObject p2PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p2PlayerName)], tempPos, Quaternion.identity);
-        GameObject p2SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p2SupportName)], tempPos, Quaternion.identity);
+//        GameObject p2SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p2SupportName)], tempPos, Quaternion.identity);
 
         p1PlayerObj.transform.SetParent(p1PlayerParent.transform,false);
-        p1SupportObj.transform.SetParent(p1SupportParent.transform,false);
+//        p1SupportObj.transform.SetParent(p1SupportParent.transform,false);
         p2PlayerObj.transform.SetParent(p2PlayerParent.transform,false);
-        p2SupportObj.transform.SetParent(p2SupportParent.transform,false);
+//        p2SupportObj.transform.SetParent(p2SupportParent.transform,false);
+
+		p1Anim = p1PlayerObj.GetComponent<Animator> ();
+		p2Anim = p2PlayerObj.GetComponent<Animator> ();
 
 		p1NameDisplay.text = p1PlayerName.ToUpper();
 		p2NameDisplay.text = p2PlayerName.ToUpper();

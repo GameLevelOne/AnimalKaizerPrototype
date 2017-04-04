@@ -12,7 +12,7 @@ public class UIThankYou : MonoBehaviour {
 		Application.targetFrameRate = 60;
 		fader.FadeIn ();
 
-		int payout = PlayerPrefs.GetInt ("PlayerPayout",100);
+		int payout = PlayerPrefs.GetInt ("PlayerPayout",200);
 		int coin = PlayerPrefs.GetInt ("PlayerCoin", 5000);
 		int playerWin = PlayerPrefs.GetInt ("PlayerWin",0);
 		int totalCoin = playerWin > 0 ? coin + (500 * (payout / 100)) : coin;

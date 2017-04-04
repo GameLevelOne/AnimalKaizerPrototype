@@ -11,7 +11,7 @@ public class Payout : MonoBehaviour {
 	public Button addButton;
 
 	void OnEnable () {
-		int payout = PlayerPrefs.GetInt ("PlayerPayout",100);
+		int payout = PlayerPrefs.GetInt ("PlayerPayout",200);
 		payoutText.text = payout.ToString () + "%";
 	}
 
@@ -21,7 +21,7 @@ public class Payout : MonoBehaviour {
 	}
 	public void AddPayout(int addPayout)
 	{
-		int payout = PlayerPrefs.GetInt ("PlayerPayout",100);
+		int payout = PlayerPrefs.GetInt ("PlayerPayout",200);
 		if (payout < payoutThreshold) {
 			payout += addPayout;
 			PlayerPrefs.SetInt ("PlayerPayout",payout);

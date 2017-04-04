@@ -172,6 +172,7 @@ public class GameSceneController : MonoBehaviour {
                 //p1AttackType.text = attackTypeList[p1CurrAttackTypeIdx];
                 p1AtkRoulette.SetActive(true);
                 spinRoulette(p1RouletteAtkBox);
+                AudioManager.Instance.PlaySFX(eSFX.ROULETTE_SPIN);
             }
             else if (currGameState == eCurrentGameState.RandomizePowerType)
             {
@@ -179,6 +180,7 @@ public class GameSceneController : MonoBehaviour {
                 //p1Power.text = powerList[p1CurrPowerIdx];
                 p1PowerRoulette.SetActive(true);
                 spinRoulette(p1RoulettePowerBox);
+                AudioManager.Instance.PlaySFX(eSFX.ROULETTE_SPIN);
             }
         } else if (isWaiting){
             //p2
@@ -188,6 +190,7 @@ public class GameSceneController : MonoBehaviour {
                 //p2AttackType.text = attackTypeList[p1CurrAttackTypeIdx];
                 p2AtkRoulette.SetActive(true);
                 spinRoulette(p2RouletteAtkBox);
+                AudioManager.Instance.PlaySFX(eSFX.ROULETTE_SPIN);
             }
             else if (currGameState == eCurrentGameState.RandomizePowerType)
             {
@@ -195,6 +198,7 @@ public class GameSceneController : MonoBehaviour {
                 //p2Power.text = powerList[p1CurrAttackTypeIdx];
                 p2PowerRoulette.SetActive(true);
                 spinRoulette(p2RoulettePowerBox);
+                AudioManager.Instance.PlaySFX(eSFX.ROULETTE_SPIN);
             }
         }
 
@@ -258,6 +262,7 @@ public class GameSceneController : MonoBehaviour {
 		#region mouse/touch input
 		if (Input.GetMouseButtonDown(0))
 		{
+            AudioManager.Instance.PlaySFX(eSFX.ROULETTE_PRESS);
 			if ((currGameState == eCurrentGameState.RandomizeAttackType) && (!isWaiting))
 			{
 				stopSpinRouletteAtk = true;
@@ -400,6 +405,7 @@ public class GameSceneController : MonoBehaviour {
 
         if (currGameState == eCurrentGameState.Struggle)
         {
+            AudioManager.Instance.PlaySFX(eSFX.STRUGGLE_START);
             bool waitStruggle = true;
 //            Debug.Log("struggle");
             panelStruggle.SetActive(true);
@@ -734,15 +740,19 @@ public class GameSceneController : MonoBehaviour {
 		mainCamAnim.SetTrigger ("CountDown");
         timerAnim.SetTrigger("Count");
         timer.sprite = countSprite[2];
+        AudioManager.Instance.PlaySFX(eSFX.THREE);
         yield return new WaitForSeconds(1);
         timerAnim.SetTrigger("Count");
         timer.sprite = countSprite[1];
+        AudioManager.Instance.PlaySFX(eSFX.TWO);
         yield return new WaitForSeconds(1);
         timerAnim.SetTrigger("Count");
         timer.sprite = countSprite[0];
+        AudioManager.Instance.PlaySFX(eSFX.ONE);
         yield return new WaitForSeconds(1);
         timerAnim.SetTrigger("Fight");
         timer.sprite = fightSprite;
+        AudioManager.Instance.PlaySFX(eSFX.FIGHT);
         yield return new WaitForSeconds(2);
         panelCountdown.SetActive(false);
         p1AtkRoulette.SetActive(true);
@@ -781,10 +791,12 @@ public class GameSceneController : MonoBehaviour {
         {
             textEnd.sprite = youWinSprite;
 			mainCamAnim.SetTrigger ("PlayerWin");
+            AudioManager.Instance.PlaySFX(eSFX.YOU_WIN);
         }
         else {
             textEnd.sprite = youLoseSprite;
 			mainCamAnim.SetTrigger ("EnemyWin");
+            AudioManager.Instance.PlaySFX(eSFX.YOU_LOSE);
         }
         textAnim.SetTrigger("RoundEnd");
         yield return new WaitForSeconds(2);
@@ -794,6 +806,7 @@ public class GameSceneController : MonoBehaviour {
             textEnd.sprite = gameOverSprite;
 			mainCamAnim.SetTrigger ("GameOver");
             textAnim.SetTrigger("RoundGameOver");
+            AudioManager.Instance.PlaySFX(eSFX.GAME_OVER);
             yield return new WaitForSeconds(2);
 			if (p1Win)
 				PlayerPrefs.SetInt ("PlayerWin",1);

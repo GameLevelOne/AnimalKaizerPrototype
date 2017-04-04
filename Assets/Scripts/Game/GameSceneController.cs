@@ -122,6 +122,7 @@ public class GameSceneController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         fader.FadeIn();
+        AudioManager.Instance.PlayBGM(eBGM.GAME);
         for (int i = 0; i < 3; i++) {
             p1RouletteAtkBoxStartPos[i] = p1RouletteAtkBox[i].transform.localPosition;
             p2RouletteAtkBoxStartPos[i] = p2RouletteAtkBox[i].transform.localPosition;

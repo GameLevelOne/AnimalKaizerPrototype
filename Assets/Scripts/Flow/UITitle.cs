@@ -12,6 +12,7 @@ public class UITitle : MonoBehaviour {
 //        StartCoroutine(FadeTo(1, 0, false));
 
 		fader.FadeIn ();
+        AudioManager.Instance.PlayBGM(eBGM.MENU);
     }
 
 	public void OnTapAnywhere(){

@@ -86,11 +86,15 @@ public static UIPreBattleResult Instance;
 
 
 	public void ButtonOK_OnClick(){
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
+
 		Content.SetActive(false);
 		UIPreBattleVS.Instance.Show();
 	}
 	
 	public void ButtonBack_OnClick(){
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
+
 		Title.SetActive (true);
 		Content.SetActive(false);
 		UISpecialMoveSelection.Instance.Show();

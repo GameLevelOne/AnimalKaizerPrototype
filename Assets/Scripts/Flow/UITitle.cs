@@ -12,12 +12,14 @@ public class UITitle : MonoBehaviour {
 //        StartCoroutine(FadeTo(1, 0, false));
 
 		fader.FadeIn ();
-        AudioManager.Instance.PlayBGM(eBGM.MENU);
+		AudioManager.Instance.PlayBGM(eBGM.MENU);
     }
 
 	public void OnTapAnywhere(){
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_START);
 		fader.FadeOut ();
 		fader.OnFadeOutFinished += FinishedFadeOut;
+
 //        StartCoroutine(FadeTo(0, 1, true));
     }
 

@@ -7,25 +7,20 @@ public enum eBGM{
 }
 
 public enum eSFX{
-	BUTTON_PRESS = 0,
-	COIN,
-	PREBATTLE_VS,
-	ROUND,
-	ONE,
-	TWO,
+	BUTTON_START = 0,
+	LETS_FIGHT,
 	THREE,
-	COUNTDOWN,
+	TWO,
+	ONE,
 	FIGHT,
-	ROULETTE_SPIN,
-	ROULETTE_PRESS,
-	POWER_COMPARISON,
-	MOVE_NAME,
-	ATTACK_SWISH,
-	ATTACK_HIT,
-	STRUGGLE_START,
+	ROUND_ONE,
+	ROUND_TWO,
+	FINAL_ROUND,
 	YOU_WIN,
 	YOU_LOSE,
-	GAME_OVER
+	GAME_OVER,
+	BUTTON_PRESS,
+	PRE_BATTLE_VS
 }
 
 public class AudioManager : MonoBehaviour{
@@ -57,8 +52,11 @@ public class AudioManager : MonoBehaviour{
 	}
 
 	public void PlayBGM(eBGM bgm){
-		source.clip = Clip_BGM[(int)bgm];
-		source.Play();
+		if(source.clip == Clip_BGM[(int)bgm]) return;
+		else{
+			source.clip = Clip_BGM[(int)bgm];
+			source.Play();
+		}
 	}
 
 	public void Stop(){

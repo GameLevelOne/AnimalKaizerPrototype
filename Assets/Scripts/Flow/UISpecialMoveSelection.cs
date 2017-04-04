@@ -65,7 +65,9 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	public void ButtonSelect_OnClick(){
-        SpecialMove p1SpMove;
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
+
+		SpecialMove p1SpMove;
 
         p1SpMove = new SpecialMove(SpecialMoves[SelectedIndex]);
         PlayerDataController.Instance.SetSpecialMove(p1SpMove);
@@ -75,6 +77,8 @@ public class UISpecialMoveSelection : MonoBehaviour {
 	}
 	
 	public void ButtonBack_OnClick(){
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
+
 		UIContent.SetActive(false);
 		UISupportSelections.Instance.Show();
 	}

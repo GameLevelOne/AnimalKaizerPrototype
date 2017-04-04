@@ -227,7 +227,7 @@ public class GameSceneController : MonoBehaviour {
                 //p2AttackType.text = attackTypeList[p2CurrAttackTypeIdx];
                 //Debug.Log("p2 attack type:" + attackTypeList[p2CurrAttackTypeIdx]);
                 stopSpinRouletteAtk = true;
-
+				AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
                 for (int i = 0; i < p2RouletteAtkBox.Length; i++)
                 {
                     //boxes[i].transform.localPosition -= new Vector3(0, yOffset, 0);
@@ -247,7 +247,7 @@ public class GameSceneController : MonoBehaviour {
                 //Debug.Log("p2 power:" + powerList[p2CurrPowerIdx]);
 
                 stopSpinRoulettePower = true;
-
+				AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
                 for (int i = 0; i < p2RoulettePowerBox.Length; i++)
                 {
                     //boxes[i].transform.localPosition -= new Vector3(0, yOffset, 0);
@@ -263,9 +263,10 @@ public class GameSceneController : MonoBehaviour {
 		#region mouse/touch input
 		if (Input.GetMouseButtonDown(0))
 		{
-            AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
+            
 			if ((currGameState == eCurrentGameState.RandomizeAttackType) && (!isWaiting))
 			{
+				AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
 				stopSpinRouletteAtk = true;
 
 				for (int i = 0; i < p1RouletteAtkBox.Length; i++)
@@ -281,6 +282,7 @@ public class GameSceneController : MonoBehaviour {
 			}
 			else if ((currGameState == eCurrentGameState.RandomizePowerType) && (!isWaiting))
 			{
+				AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
 				stopSpinRoulettePower = true;
 
 				for (int i = 0; i < p1RoulettePowerBox.Length; i++)
@@ -583,6 +585,8 @@ public class GameSceneController : MonoBehaviour {
 				lifeDelta = (curLife-targetLife) * 1.5f;
 				damageText.text = currDmg.ToString ("N0");
 				damageText.gameObject.SetActive (true);
+
+				AudioManager.Instance.PlaySFX(eSFX.HIT);
 			}
 			if (animTimer < 2f) {
 				animTimer += Time.deltaTime;

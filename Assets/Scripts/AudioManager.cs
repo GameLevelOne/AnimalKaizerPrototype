@@ -23,7 +23,8 @@ public enum eSFX{
 	PRE_BATTLE_VS,
     POWER_COMPARISON,
     COIN,
-    ROULETTE_SPIN
+    ROULETTE_SPIN,
+	HIT
 }
 
 public class AudioManager : MonoBehaviour{

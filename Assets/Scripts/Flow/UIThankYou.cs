@@ -20,6 +20,7 @@ public class UIThankYou : MonoBehaviour {
 		payoutText.text = "PAYOUT:\n\n"+payout+"%";
 	}
 	public void NextScene () {
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
 		fader.FadeOut ();
 		fader.OnFadeOutFinished += FadeFinished;
 	}	
@@ -27,5 +28,9 @@ public class UIThankYou : MonoBehaviour {
 	{
 		fader.OnFadeOutFinished -= FadeFinished;
 		SceneManager.LoadScene ("Scene Title");
+	}
+	public void ButtonPress()
+	{
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
 	}
 }

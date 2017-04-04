@@ -30,7 +30,7 @@ public class GameSceneController : MonoBehaviour {
     public GameObject panelComparePower;
     public GameObject p1PlayerParent, p1SupportParent, p2PlayerParent, p2SupportParent, 
         p1AtkRoulette, p1PowerRoulette, p2AtkRoulette, p2PowerRoulette;
-
+	public Animator hitEffectAnim;
     public Text p1NameDisplay, p2NameDisplay;
 
     public Image textRound;
@@ -521,10 +521,12 @@ public class GameSceneController : MonoBehaviour {
 				if (p1Pow > p2Pow) {
 					charaAnim.SetTrigger(charaAnim_TriggerAttack);
 					mainCamAnim.SetTrigger ("PlayerAttack");
+					hitEffectAnim.SetTrigger ("EnemyHit");
 					p1Anim.SetTrigger ("Attack");
 				} else {
 					charaAnim.SetTrigger(charaAnim_TriggerAttacked);
 					mainCamAnim.SetTrigger ("EnemyAttack");
+					hitEffectAnim.SetTrigger ("PlayerHit");
 					p2Anim.SetTrigger ("Attack");
 				}
 			}

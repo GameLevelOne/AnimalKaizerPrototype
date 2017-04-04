@@ -66,7 +66,9 @@ public class UISupportSelections : MonoBehaviour {
 	}
 	
 	public void ButtonSelect_OnClick(){
-        Support p1Support;
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
+
+		Support p1Support;
 
         p1Support = new Support(Supports[SelectedIndex]);
         PlayerDataController.Instance.SetSupport(p1Support);
@@ -76,6 +78,8 @@ public class UISupportSelections : MonoBehaviour {
 	}
 	
 	public void ButtonBack_OnClick(){
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
+
 		UIContent.SetActive(false);
 		UICharacterSelections.Instance.Show();
 	}

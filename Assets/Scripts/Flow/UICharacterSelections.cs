@@ -77,6 +77,7 @@ public class UICharacterSelections : MonoBehaviour {
 	
 	public void ButtonSelect_OnClick(){
 		//PlayerDataController.Instance.SetCharacter(Characters[SelectedIndex]);
+		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
 
         p1Char = new Character(Characters[SelectedIndex]);
         PlayerDataController.Instance.SetCharacter(p1Char);

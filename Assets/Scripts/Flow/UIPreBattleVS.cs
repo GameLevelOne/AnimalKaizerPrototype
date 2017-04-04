@@ -36,6 +36,9 @@ public class UIPreBattleVS : MonoBehaviour {
 	}
 
 	public void Show(){
+		AudioManager.Instance.Stop();
+		AudioManager.Instance.PlaySFX(eSFX.PRE_BATTLE_VS);
+
         Enemy = EnemyList.GetRandomEnemy();
         PlayerDataController.Instance.SetEnemyCharacter(Enemy);
 

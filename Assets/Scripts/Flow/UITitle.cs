@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class UITitle : MonoBehaviour {
     //public Image blackScreen;
-	public Fader fader;
+	private Fader fader;
     
     void Start()
     {
 //        StartCoroutine(FadeTo(1, 0, false));
-
+		fader = GameObject.FindGameObjectWithTag("Fader").GetComponent<Fader>();
 		fader.FadeIn ();
 		AudioManager.Instance.PlayBGM(eBGM.MENU);
     }

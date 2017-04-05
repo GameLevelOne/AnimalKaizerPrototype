@@ -3,68 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UISupportSelections : MonoBehaviour {
+public class UISupportSelections : UICharacterSelections {
 	public static UISupportSelections Instance;
 	
-	public Image Title;
-	public Sprite TitleSource;
 	public Text[] Support_Details = new Text[4];
-	public GameObject UIContent ;
-	public GameObject Scroll_Content ;
 	public SupportSO[] Supports = new SupportSO[2];
 	
 	public int SelectedIndex = 0;
 	float x, distance;
 
-	void Awake(){
-		Instance = this;
+	public UICharacterSelections nextPanel;
+	public GameObject prevPanel;
+
+
+	new void Start()
+	{
 	}
-	
-	public void Show(){
+
+	public new void Show(){
 		Title.sprite = TitleSource;
 		UIContent.SetActive(true);
-		ShowDetails();
+		ShowDetails("NAME: ","ENHANCE: ","FOCUS: ","DETAILS: ");
 	}
 
 	public void hide(){
 		UIContent.SetActive(false);
 	}
 
-	public void OnPointerDown(){
-		StopAllCoroutines();
-	}
 
-	public void OnBeginDrag(){
-		x = Input.mousePosition.x;
-		distance = Scroll_Content.transform.position.x - x;
-	}
-	public void OnDrag(){
-		float temp = Input.mousePosition.x;
-		Scroll_Content.transform.position = new Vector3 (temp + distance, Scroll_Content.transform.position.y, Scroll_Content.transform.position.z);
-	}
-
-	public void OnEndDrag(){
-		float xx = Scroll_Content .GetComponent<RectTransform>().anchoredPosition.x;
-
-		if (xx >= 200 || (xx < 200 && xx >= 50)) {
-//			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = new Vector2 (200, 0);
-			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (200,0),0.2f));
-			SelectedIndex = 0;
-		} else if ((xx < 50 && xx > -300) || xx <= -300) {
-//			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = new Vector2 (-200, 0);
-			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (-300,0),0.2f));
-			SelectedIndex = 1;
-		}
-		ShowDetails();
-	}
-
-	void ShowDetails(){
-		Support_Details[0].text = "NAME: "+Supports[SelectedIndex].supportName;
-		Support_Details[1].text = "ENHANCE: "+Supports[SelectedIndex].supportEnhance.ToString();
-		Support_Details[2].text = "FOCUS: "+Supports[SelectedIndex].supportFocus.ToString();
-		Support_Details[3].text = "DEFENSE: "+Supports[SelectedIndex].supportDefense.ToString();
-	}
-	
 	public void ButtonSelect_OnClick(){
 		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
 
@@ -82,14 +48,15 @@ public class UISupportSelections : MonoBehaviour {
 
 		UIContent.SetActive(false);
 		UICharacterSelections.Instance.Show();
-	}
 
-	IEnumerator _SmoothMove(Vector2 startpos, Vector2 endpos, float duration){
-		float t = 0;
-		while(t <= 1){
-			t += Time.deltaTime / duration;
-			Scroll_Content.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(startpos,endpos, Mathf.SmoothStep(0,1,t));	
-			yield return null;
+	}
+	Text[] Blabla()
+	{
+		if (Support_Details == null) {
+			//blalblal
+			return Support_Details;
 		}
+
+		//sabdsajdbasdasndkl
 	}
 }

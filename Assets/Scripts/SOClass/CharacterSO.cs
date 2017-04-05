@@ -11,10 +11,12 @@ public enum CharacterType
 
 [CreateAssetMenu(fileName= "Char_", menuName = "Cards/Character", order = 1)]
 public class CharacterSO : ScriptableObject {
+	[Header("Main Data")]
 
     public string charName = "NewChar";
     public Mesh charMesh = null;
     public CharacterType charType = 0;
+	[Space(20)]
     public int charPower = 1000;
     public int charHealth = 1000;
     public AttackData[] charAttackData;

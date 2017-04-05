@@ -4,23 +4,35 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerDataController : MonoBehaviour {
-	public static PlayerDataController Instance;
+	private static PlayerDataController _instance;
 
     public EnemyListSO enemyList;
 
     public Character playerChar,enemyChar;
 
+	[SerializeField]
+	private int hasil;
+
+	RectTransform t;
+
 	void Awake(){
-        if (Instance == null)
+        if (_instance == null)
         {
-            Instance = this;
+			_instance = this;
         }
-        else if (Instance!=this)
+		else if (_instance!=this)
         {
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
         //SceneManager.LoadScene("Scene Title");
+	}
+
+	public static PlayerDataController Instance
+	{
+		get {
+			return _instance;
+		}
 	}
 
 	public void ClearData(){
@@ -41,5 +53,11 @@ public class PlayerDataController : MonoBehaviour {
     public void SetEnemyCharacter(Character enemy) {
         enemyChar = enemy;
     }
-
+	public void Fight()
+	{
+		
+//		t.anchoredPosition = new 
+//		p1.Attack ();
+//		p2.Hit ();
+	}
 }

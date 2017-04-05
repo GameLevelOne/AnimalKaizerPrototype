@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public enum eCurrentGameState {
-    Countdown = 0,
+    Countdown,
     RandomizeAttackType,
     RandomizePowerType,
     CompareDamage,
@@ -22,11 +23,18 @@ public enum eCurrentGameState {
 }
 
 public class GameSceneController : MonoBehaviour {
+	public TextMeshProUGUI tmText;
+
+	public Button screenButton;
+
 	public Animator mainCamAnim;
 
     public RouletteTrigger rouletteTrigger;
 
-    public GameObject panelCountdown,panelEndBattle, panelStruggle;
+    public GameObject panelCountdown;
+	public GameObject panelEndBattle;
+	public GameObject panelStruggle;
+
     public GameObject panelComparePower;
     public GameObject p1PlayerParent, p1SupportParent, p2PlayerParent, p2SupportParent, 
         p1AtkRoulette, p1PowerRoulette, p2AtkRoulette, p2PowerRoulette;
@@ -121,6 +129,10 @@ public class GameSceneController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		tmText.text = "CIIIAAAAT";
+
+		Debug.Log(currGameState.ToString ());
+
         fader.FadeIn();
         AudioManager.Instance.PlayBGM(eBGM.GAME);
         for (int i = 0; i < 3; i++) {
@@ -380,22 +392,30 @@ public class GameSceneController : MonoBehaviour {
                 if (!enterStruggle)
                 {
                     //attackIndex = Q = 0,T=1,S=2
+					Character attacker;
+					Character defender;
+					string attackType;
                     if (p1Pow > p2Pow)
                     {
+						attacker = p1Char;
+						attackType = p1CurrAtkType;
+						defender = p2Char;
                         //p1 winStruggle
 //                        Debug.Log("p1Power: " + p1Char.charData.charPower);
-                        currDmg = DamageCalculator.CalculateDamage(p1Char, getAttackIndex(p1CurrAtkType), p2Char, drawMultiplier, false);
                         //currDmg = 5000;
                         StartCoroutine(ComparePowerAnim("P1Win"));
                     }
                     else
                     {
+						attacker = p2Char;
+						attackType = p2CurrAtkType;
+						defender = p1Char;
                         //p2 winStruggle
 //                        Debug.Log("p2Power: " + p2Char.charData.charPower);
-                        currDmg = DamageCalculator.CalculateDamage(p2Char, getAttackIndex(p2CurrAtkType), p1Char, drawMultiplier, false);
                         //currDmg = 5000;
                         StartCoroutine(ComparePowerAnim("P2Win"));
                     }
+					currDmg = DamageCalculator.CalculateDamage(attacker, getAttackIndex(attackType), defender, drawMultiplier, false);
 //                    Debug.Log("currDmg:" + currDmg);
                     resetBattleBool();
                     currGameState = eCurrentGameState.ComparePowerAnimation;

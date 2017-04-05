@@ -37,7 +37,7 @@ public class UICharacterSelections : MonoBehaviour {
 		UIPreBattleResult.Instance.hide();
 
 		UIContent.SetActive(true);
-		ShowDetails();
+		ShowDetails("NAME: ","HEALTH: ","POWER: ","TYPE: ");
 	}
 
 	public void OnPointerDown(){
@@ -65,16 +65,20 @@ public class UICharacterSelections : MonoBehaviour {
 			StartCoroutine(_SmoothMove(Scroll_Content.GetComponent<RectTransform>().anchoredPosition,new Vector2 (-300,0),0.2f));
 			SelectedIndex = 1;
 		}
-		ShowDetails();
+		ShowDetails("NAME: ","HEALTH: ","POWER: ","TYPE: ");
 	}
 
-	void ShowDetails(){
-		Character_Details[0].text = "NAME: "+Characters[SelectedIndex].charName;
-		Character_Details[1].text = "POWER: "+Characters[SelectedIndex].charHealth.ToString();
-		Character_Details[2].text = "HEALTH: "+Characters[SelectedIndex].charPower.ToString();
-		Character_Details[3].text = "TYPE: "+Characters[SelectedIndex].charType.ToString();
+	protected void ShowDetails(string prefixa,string prefixb,string prefixc,string prefixd){
+		Character_Details[0].text = prefixa+Characters[SelectedIndex].charName;
+		Character_Details[1].text = prefixb+Characters[SelectedIndex].charHealth.ToString();
+		Character_Details[2].text = prefixc+Characters[SelectedIndex].charPower.ToString();
+		Character_Details[3].text = prefixd+Characters[SelectedIndex].charType.ToString();
 	}
-	
+	public virtual void HideDetails ()
+	{
+	}
+
+
 	public void ButtonSelect_OnClick(){
 		//PlayerDataController.Instance.SetCharacter(Characters[SelectedIndex]);
 		AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);

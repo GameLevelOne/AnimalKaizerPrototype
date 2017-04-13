@@ -141,6 +141,7 @@ public class GameSceneController : MonoBehaviour {
 
 //        Debug.Log("p1 HP: " + p1Char.Life);
 //        Debug.Log("p2 HP: " + p2Char.Life);
+		Debug.Log ("Scene Start");
 
         stageSetup(p1Char.charData.charName, p1Char.support.supportSO.supportName, 
             p2Char.charData.charName, p2Char.support.supportSO.supportName);
@@ -865,6 +866,8 @@ public class GameSceneController : MonoBehaviour {
 		p2NameDisplay.text = p2PlayerName.ToUpper();
 
         panelComparePower.SetActive(true);
+
+		Debug.Log ("Stage Setup Finished");
     }
 
     void spinRoulette(GameObject[] currRoulette) {

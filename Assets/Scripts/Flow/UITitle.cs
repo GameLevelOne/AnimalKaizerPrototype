@@ -26,7 +26,7 @@ public class UITitle : MonoBehaviour {
 	void FinishedFadeOut()
 	{
 		fader.OnFadeOutFinished -= FinishedFadeOut;
-		SceneManager.LoadScene("SceneBet");
+		SceneManager.LoadScene("SceneSelectionNew");
 	}
 
 //    IEnumerator FadeTo(float start,float end,bool changeScene)

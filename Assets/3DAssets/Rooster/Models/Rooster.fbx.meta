@@ -3,7 +3,92 @@ guid: 6db83daf798a7284a9651cb614e2b743
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: Beak
+    100002: Cockscomb
+    100004: Coral
+    100006: Head
+    100008: Hips
+    100010: left
+    100012: Left_Arm
+    100014: Left_Elbow
+    100016: Left_Finger
+    100018: Left_Foot
+    100020: Left_Knee
+    100022: Left_Leg
+    100024: Left_Neck_attack02
+    100026: Neck
+    100028: Neck1
+    100030: Neck_attack
+    100032: Neck_attack01
+    100034: Right_Arm
+    100036: Right_Elbow
+    100038: Right_Finger
+    100040: Right_Foot
+    100042: Right_Knee
+    100044: Right_Leg
+    100046: //RootNode
+    100048: Rooster_msh
+    100050: Rright_Neck_attack02
+    100052: Spin
+    100054: Spin1
+    100056: Tail
+    100058: Tail_01
+    100060: Tail_end
+    400000: Beak
+    400002: Cockscomb
+    400004: Coral
+    400006: Head
+    400008: Hips
+    400010: left
+    400012: Left_Arm
+    400014: Left_Elbow
+    400016: Left_Finger
+    400018: Left_Foot
+    400020: Left_Knee
+    400022: Left_Leg
+    400024: Left_Neck_attack02
+    400026: Neck
+    400028: Neck1
+    400030: Neck_attack
+    400032: Neck_attack01
+    400034: Right_Arm
+    400036: Right_Elbow
+    400038: Right_Finger
+    400040: Right_Foot
+    400042: Right_Knee
+    400044: Right_Leg
+    400046: //RootNode
+    400048: Rooster_msh
+    400050: Rright_Neck_attack02
+    400052: Spin
+    400054: Spin1
+    400056: Tail
+    400058: Tail_01
+    400060: Tail_end
     4300000: Rooster_msh
+    7400000: eat
+    7400002: walk
+    7400004: run
+    7400006: fightIdle
+    7400008: attack
+    7400010: attack/hit
+    7400012: attack/death
+    7400014: fightIdle/hitLeft
+    7400016: fightIdle/hitRight
+    7400018: attack(peck)
+    7400020: idle
+    7400022: hit(Idle)
+    7400024: hitLeft(Idle)
+    7400026: hitRight(Idle)
+    7400028: death
+    7400030: jump
+    7400032: crowing
+    7400034: startFly
+    7400036: flying
+    7400038: soar
+    7400040: landing
+    11100000: //RootNode
+    13700000: Rooster_msh
   materials:
     importMaterials: 1
     materialName: 0
@@ -338,7 +423,7 @@ ModelImporter:
       takeName: 
       firstFrame: 451
       lastFrame: 466
-      wrapMode: 2
+      wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0

@@ -112,8 +112,8 @@ public class GameSceneController : MonoBehaviour {
     private int p2Pow = 0;
     private int tapCount = 0;
 
-	private Animator p1Anim;
-	private Animator p2Anim;
+	private Animation p1Anim;
+	private Animation p2Anim;
 
     private eCurrentGameState currGameState = eCurrentGameState.Countdown;
 
@@ -415,7 +415,7 @@ public class GameSceneController : MonoBehaviour {
 
 			if (struggleTimer == 0f) {
 				mainCamAnim.SetTrigger ("Struggle");
-				p1Anim.SetTrigger ("Block");
+				p1Anim.Play("fightIdle");
 			}
 
             struggleTimer += Time.deltaTime;
@@ -502,7 +502,7 @@ public class GameSceneController : MonoBehaviour {
                     panelStruggle.SetActive(false);
                     currGameState = eCurrentGameState.ComparePowerAnimation;
                 }
-				p1Anim.SetTrigger ("Idle");
+				p1Anim.Play("idle");
             }
         }
 
@@ -533,12 +533,14 @@ public class GameSceneController : MonoBehaviour {
 					charaAnim.SetTrigger(charaAnim_TriggerAttack);
 					mainCamAnim.SetTrigger ("PlayerAttack");
 					hitEffectAnim.SetTrigger ("EnemyHit");
-					p1Anim.SetTrigger ("Attack");
+					p1Anim.Play ("attack");
+					p1Anim.PlayQueued ("idle");
 				} else {
 					charaAnim.SetTrigger(charaAnim_TriggerAttacked);
 					mainCamAnim.SetTrigger ("EnemyAttack");
 					hitEffectAnim.SetTrigger ("PlayerHit");
-					p2Anim.SetTrigger ("Attack");
+					p2Anim.Play ("attack");
+					p2Anim.PlayQueued ("idle");
 				}
 			}
 
@@ -570,7 +572,8 @@ public class GameSceneController : MonoBehaviour {
 					}
 					targetLife = p2Char.Life;
 
-					p2Anim.SetTrigger ("Hit");
+					p2Anim.Play ("hit(Idle)");
+					p2Anim.PlayQueued ("idle");
 				} else {
 					damageText.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (-300,-200);
 					curLife = p1Char.Life;
@@ -581,7 +584,8 @@ public class GameSceneController : MonoBehaviour {
 					}
 					targetLife = p1Char.Life;
 
-					p1Anim.SetTrigger ("Hit");
+					p1Anim.Play ("hit(Idle)");
+					p1Anim.PlayQueued ("idle");
 				}
 				lifeDelta = (curLife-targetLife) * 1.5f;
 				damageText.text = currDmg.ToString ("N0");
@@ -634,14 +638,14 @@ public class GameSceneController : MonoBehaviour {
             multiplierText.text = "";
 //            Debug.Log("end round");
 
-            if (p1RoundCount >= 2)
+            if (p1RoundCount >= 1)
             {
                 //p1 wins
 //                Debug.Log("p1 wins");
                 p1Win = true;
                 currGameState = eCurrentGameState.EndGame;
             }
-            else if (p2RoundCount >= 2)
+            else if (p2RoundCount >= 1)
             {
                 //p2 wins
 //                Debug.Log("p2 wins");
@@ -772,24 +776,24 @@ public class GameSceneController : MonoBehaviour {
     IEnumerator EndBattle(bool endGame,bool p1Win) {
         textEnd.enabled = false;
         panelEndBattle.SetActive(true);
-        if (p1RoundCount > 0)
-        {
-            p1WinCount.sprite = countSprite[p1RoundCount - 1];
-            p1WinCount.enabled = true;
-        }
-        else
-        {
-            p1WinCount.enabled = false;
-        }
-        if (p2RoundCount > 0)
-        {
-            p2WinCount.sprite = countSprite[p2RoundCount - 1];
-            p2WinCount.enabled = true;
-        }
-        else
-        {
-            p2WinCount.enabled = false;
-        }
+//        if (p1RoundCount > 0)
+//        {
+//            p1WinCount.sprite = countSprite[p1RoundCount - 1];
+//            p1WinCount.enabled = true;
+//        }
+//        else
+//        {
+//            p1WinCount.enabled = false;
+//        }
+//        if (p2RoundCount > 0)
+//        {
+//            p2WinCount.sprite = countSprite[p2RoundCount - 1];
+//            p2WinCount.enabled = true;
+//        }
+//        else
+//        {
+//            p2WinCount.enabled = false;
+//        }
         yield return new WaitForSeconds(1);
 
         textEnd.enabled = true;
@@ -849,18 +853,19 @@ public class GameSceneController : MonoBehaviour {
     void stageSetup(string p1PlayerName,string p1SupportName,string p2PlayerName,string p2SupportName) {
         Vector3 tempPos = new Vector3(0, 0, 0);
 
-        GameObject p1PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p1PlayerName)], tempPos, Quaternion.identity);
-//        GameObject p1SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p1SupportName)], tempPos, Quaternion.identity);
-        GameObject p2PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p2PlayerName)], tempPos, Quaternion.identity);
-//        GameObject p2SupportObj = GameObject.Instantiate(charactersObj[getCharCode(p2SupportName)], tempPos, Quaternion.identity);
+		GameObject p1PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p1PlayerName)], tempPos, Quaternion.identity);
+		GameObject p2PlayerObj = GameObject.Instantiate(charactersObj[getCharCode(p2PlayerName)], tempPos, Quaternion.identity);
+//		GameObject p1PlayerObj = GameObject.Instantiate(charactersObj[0], tempPos, Quaternion.identity);
+//		GameObject p2PlayerObj = GameObject.Instantiate(charactersObj[5], tempPos, Quaternion.identity);
 
         p1PlayerObj.transform.SetParent(p1PlayerParent.transform,false);
-//        p1SupportObj.transform.SetParent(p1SupportParent.transform,false);
         p2PlayerObj.transform.SetParent(p2PlayerParent.transform,false);
-//        p2SupportObj.transform.SetParent(p2SupportParent.transform,false);
 
-		p1Anim = p1PlayerObj.GetComponent<Animator> ();
-		p2Anim = p2PlayerObj.GetComponent<Animator> ();
+		p1Anim = p1PlayerObj.GetComponent<Animation> ();
+		p2Anim = p2PlayerObj.GetComponent<Animation> ();
+
+		p1Anim.Play ("idle");
+		p2Anim.Play ("idle");
 
 		p1NameDisplay.text = p1PlayerName.ToUpper();
 		p2NameDisplay.text = p2PlayerName.ToUpper();
@@ -958,15 +963,16 @@ public class GameSceneController : MonoBehaviour {
 
     int getCharCode(string name)
     {
+		Debug.Log (name);
         int temp = -1;
         switch (name)
         {
-            case "Genderuwo": temp = 0; break;
-            case "Kunti": temp = 1; break;
-            case "Kolorijo": temp = 2; break;
-            case "Pocong": temp = 3; break;
-            case "Tuyul": temp = 4; break;
-            case "Suster Ngesot": temp = 5; break;
+            case "Rooster1": temp = 0; break;
+            case "Rooster2": temp = 1; break;
+            case "Rooster3": temp = 2; break;
+            case "Rooster4": temp = 3; break;
+            case "Rooster5": temp = 4; break;
+            case "Rooster6": temp = 5; break;
         }
         return temp;
     }

@@ -35,7 +35,7 @@ public class PlayerChickenDataController : MonoBehaviour {
 		get{ return enemyChicken; }
 		set{ enemyChicken = value; }
 	}
-
+		
 	public float Multiplier{
 		get{ return multiplier; }
 		set{ multiplier = value; }
@@ -50,5 +50,11 @@ public class PlayerChickenDataController : MonoBehaviour {
 
 		// make it indestructible
 		DontDestroyOnLoad(this.gameObject); 
+	}
+
+	//biar ga error
+	public void SetSupport(Support sup){
+		playerChicken.support = sup;
+		enemyChicken.support = sup;
 	}
 }

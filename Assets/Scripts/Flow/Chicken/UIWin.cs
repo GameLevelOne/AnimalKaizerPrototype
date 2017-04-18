@@ -3,23 +3,18 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIWin : MonoBehaviour {
-
 	public Text textPayout,
 				textMultiplier,
 				textFinalPayout;
 
 	string tempSceneName;
 
-
-	void OnEnable(){
+	public void InitDetails(){
 		ScenePayoutManager.Instance.fader.OnFadeOutFinished += ButtonClick;
-		InitDetails ();
-	}
 
-	void InitDetails(){
-//		textPayout.text = 
-		textMultiplier.text = PlayerChickenDataController.Instance.Multiplier.ToString ();
-//		int finalPayout = Mathf.FloorToInt(/*get data nya*/ * PlayerChickenDataController.Instance.Multiplier);
+		textPayout.text = PlayerChickenDataController.Instance.PlayerChicken.charData.charPrice.ToString("N0");
+		textMultiplier.text = PlayerChickenDataController.Instance.Multiplier.ToString ("#.00");
+		textFinalPayout.text = "$ "+ScenePayoutManager.Instance.finalPayout.ToString();
 	}
 
 	public void ButtonOnClick(string sceneName){

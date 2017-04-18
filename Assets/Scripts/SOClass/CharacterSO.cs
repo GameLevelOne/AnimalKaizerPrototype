@@ -17,6 +17,7 @@ public class CharacterSO : ScriptableObject {
     public CharacterType charType = 0;
     public int charPower = 1000;
     public int charHealth = 1000;
+	public int charPrice = 0;
     public AttackData[] charAttackData;
     public SkillData[] charSkills;
 }

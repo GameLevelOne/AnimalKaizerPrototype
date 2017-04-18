@@ -133,8 +133,8 @@ public class GameSceneController : MonoBehaviour {
             p2RoulettePowerBoxStartPos[i] = p2RoulettePowerBox[i].transform.localPosition;
         }
 
-        p1Char = PlayerDataController.Instance.playerChar;
-        p2Char = PlayerDataController.Instance.enemyChar;
+		p1Char = PlayerChickenDataController.Instance.PlayerChicken;
+		p2Char = PlayerChickenDataController.Instance.EnemyChicken;
 
         p1Char.Life = p1Char.MaxLife;
         p2Char.Life = p2Char.MaxLife;
@@ -848,7 +848,7 @@ public class GameSceneController : MonoBehaviour {
     void FinishedFadeOut()
     {
         fader.OnFadeOutFinished -= FinishedFadeOut;
-        SceneManager.LoadScene("Scene ThankYou");
+        SceneManager.LoadScene("ScenePayout");
     }
     void stageSetup(string p1PlayerName,string p1SupportName,string p2PlayerName,string p2SupportName) {
         Vector3 tempPos = new Vector3(0, 0, 0);

@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIMultiplier : MonoBehaviour {
-
 	public Text[] textDigit = new Text[3];
 	int[] iDigit = new int[3];
 
+	public Image imageChicken;
+	public Text textChickenPrice;
+
 	void Start(){
+		imageChicken.sprite = PlayerChickenDataController.Instance.PlayerChickenSprite;
+		textChickenPrice.text = "$ " + PlayerChickenDataController.Instance.PlayerChicken.charData.charPrice.ToString ();
 		InitValue();
 	}
 
@@ -33,20 +37,14 @@ public class UIMultiplier : MonoBehaviour {
 	}
 
 	public void ButtonUpOnClick(int index){
-		AudioManager.Instance.PlaySFX (eSFX.BUTTON_PRESS);
 		ChangeValue(index,1);
 	}
 	public void ButtonDownOnClick(int index){
-		AudioManager.Instance.PlaySFX (eSFX.BUTTON_PRESS);
 		ChangeValue(index,-1);
 	}
 
 	public void BUttonOKOnClick(){
-		AudioManager.Instance.PlaySFX (eSFX.BUTTON_PRESS);
 		string temp = iDigit[0].ToString() +"."+ iDigit[1].ToString() + iDigit[2].ToString();
-//		PlayerPrefs.SetFloat("Multiplier",float.Parse(temp));
 		PlayerChickenDataController.Instance.Multiplier = float.Parse (temp);
 	}
-
-	public void ButtonBackOnClick(){AudioManager.Instance.PlaySFX (eSFX.BUTTON_PRESS);}
 }

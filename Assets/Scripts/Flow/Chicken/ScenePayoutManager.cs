@@ -9,6 +9,11 @@ public class ScenePayoutManager : MonoBehaviour {
 	public Fader fader;
 
 	public GameObject uiWin, uiLose;
+	public PlayerCoin playerCoin;
+
+	public int finalPayout = 0;
+
+	int tempCondition = 0;
 
 	void Awake(){
 		if (instance != null && instance != this) {
@@ -19,22 +24,50 @@ public class ScenePayoutManager : MonoBehaviour {
 	}
 
 	void Start(){
+		if (AudioManager.Instance) AudioManager.Instance.PlayBGM (eBGM.MENU);
+
 		ShowUIWinLose();
 		fader.FadeIn();
 	}
 
+
 	void ShowUIWinLose(){
-		int temp = PlayerPrefs.GetInt ("PlayerWin");
-		if (temp == 1) {
+		int tempCondition = PlayerPrefs.GetInt ("PlayerWin");
+
+		finalPayout = CalculatePayoutMultiplier(tempCondition);
+		playerCoin.ModCoin (finalPayout);
+
+		if (tempCondition == 1) {
 			uiWin.SetActive (true);
 			uiLose.SetActive (false);
-
-
+			uiWin.GetComponent<UIWin> ().InitDetails ();
 		}
 		else {
 			uiWin.SetActive (false);
 			uiLose.SetActive (true);
 		}
+
 	}
 
+//	public int finalPayout{ 
+//		get { return CalculatePayoutMultiplier (tempCondition); } 
+//	}
+
+	public void PlayButtonSound(){
+		if(AudioManager.Instance) AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
+	}
+
+	int CalculatePayoutMultiplier(int condition){
+		float multiplier = PlayerChickenDataController.Instance.Multiplier;
+		int playerChickenPrice = PlayerChickenDataController.Instance.PlayerChicken.charData.charPrice;
+		print (Mathf.CeilToInt (playerChickenPrice * multiplier));
+
+		int finalPayout = Mathf.CeilToInt (playerChickenPrice * multiplier);
+
+		if (condition > 0) {
+			return finalPayout;
+		} else {
+			return finalPayout * -1;
+		}
+	}
 }

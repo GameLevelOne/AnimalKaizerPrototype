@@ -11,6 +11,7 @@ public class UILose : MonoBehaviour {
 
 	public void ButtonOnClick(string sceneName){
 		tempSceneName = sceneName;
+		ScenePayoutManager.Instance.fader.FadeOut();
 	}
 
 	void ButtonClick(){

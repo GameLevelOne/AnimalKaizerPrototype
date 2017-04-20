@@ -11,6 +11,8 @@ public class ScenePayoutManager : MonoBehaviour {
 	public GameObject uiWin, uiLose;
 	public PlayerCoin playerCoin;
 
+	public int finalPayout = 0;
+
 	int tempCondition = 0;
 
 	void Awake(){
@@ -31,6 +33,10 @@ public class ScenePayoutManager : MonoBehaviour {
 
 	void ShowUIWinLose(){
 		int tempCondition = PlayerPrefs.GetInt ("PlayerWin");
+
+		finalPayout = CalculatePayoutMultiplier(tempCondition);
+		playerCoin.ModCoin (finalPayout);
+
 		if (tempCondition == 1) {
 			uiWin.SetActive (true);
 			uiLose.SetActive (false);
@@ -40,11 +46,15 @@ public class ScenePayoutManager : MonoBehaviour {
 			uiWin.SetActive (false);
 			uiLose.SetActive (true);
 		}
-		playerCoin.ModCoin (CalculatePayoutMultiplier (tempCondition));
+
 	}
 
-	public int finalPayout{ 
-		get { return CalculatePayoutMultiplier (tempCondition); } 
+//	public int finalPayout{ 
+//		get { return CalculatePayoutMultiplier (tempCondition); } 
+//	}
+
+	public void PlayButtonSound(){
+		if(AudioManager.Instance) AudioManager.Instance.PlaySFX(eSFX.BUTTON_PRESS);
 	}
 
 	int CalculatePayoutMultiplier(int condition){

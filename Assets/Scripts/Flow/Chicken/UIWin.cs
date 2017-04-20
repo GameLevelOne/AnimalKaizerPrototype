@@ -12,13 +12,14 @@ public class UIWin : MonoBehaviour {
 	public void InitDetails(){
 		ScenePayoutManager.Instance.fader.OnFadeOutFinished += ButtonClick;
 
-		textPayout.text = PlayerChickenDataController.Instance.PlayerChicken.charData.charPrice.ToString("N0");
+		textPayout.text = "$ "+PlayerChickenDataController.Instance.PlayerChicken.charData.charPrice.ToString("N0");
 		textMultiplier.text = PlayerChickenDataController.Instance.Multiplier.ToString ("#.00");
-		textFinalPayout.text = "$ "+ScenePayoutManager.Instance.finalPayout.ToString();
+		textFinalPayout.text = "$ "+ScenePayoutManager.Instance.finalPayout.ToString("N0");
 	}
 
 	public void ButtonOnClick(string sceneName){
 		tempSceneName = sceneName;
+		ScenePayoutManager.Instance.fader.FadeOut();
 	}
 
 	void ButtonClick(){
